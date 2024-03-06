@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %} Carro {% endblock %}
+{% block contenido %}
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    {% if carrito.productos.all %}
+        <h2 class="titulo">Carrito de Compras</h2>
+        <ul class="lista-carrito">
+            {% for detalle in carrito.detallecarrito_set.all %}
+                <li class="item-carrito">
+                    <span class="nombre">{{ detalle.producto.nombre }}</span>
+                    <form action="{% url 'aumentar_cantidad' detalle.id %}" method="post" class="cantidad-form">
+                        {% csrf_token %}
+                        <button type="submit" class="boton-agregar">+</button>
+                    </form>
+                    <span class="cantidad">Cantidad: {{ detalle.cantidad }}</span>
+                    <form action="{% url 'disminuir_cantidad' detalle.id %}" method="post" class="cantidad-form">
+                        {% csrf_token %}
+                        <button type="submit" class="boton-disminuir">-</button>
+                    </form>
+                    <span class="precio-unitario">Precio Unitario: ${{ detalle.producto.precio }}</span>
+                    <form action="{% url 'eliminar_del_carrito' detalle.producto.id %}" method="post" class="eliminar-form">
+                        {% csrf_token %}
+                        <button type="submit" class="boton-eliminar">Eliminar del Carrito</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <p class="total">Total: ${{ carrito.total }}</p>
+        <a href="{% url 'eliminar_carrito' %}" class="boton-vaciar">Vaciar Carrito</a>
+    {% else %}
+        <p class="mensaje-vacio">El carrito está vacío.</p>
+    {% endif %}
+</div>
+
+
+{% endblock %}
