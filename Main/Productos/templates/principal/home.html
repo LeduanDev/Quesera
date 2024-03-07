@@ -3,99 +3,11 @@
 
 {% block titulo %} Home {% endblock %}
 {% block contenido %}
-<script src="{% static 'js/slider.js' %}"></script>
+
 <link rel="stylesheet" href="{% static 'css/header.css' %}?v=1">
+<link rel="stylesheet" href="{% static 'css/home_tarjetas.css' %}?v=1">
 
 
-<style>  
-.contenedor-tarjetas {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 20px;
-}
-
-.tarjeta {
-   
-    max-width: 200px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease;
-    display: flex;
-    flex-direction: column; 
-}
-
-.tarjeta:hover {
-    transform: translateY(-5px);
-}
-
-.img-item {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-bottom: 1px solid #dee2e6;
-}
-
-.contenido-tarjeta {
-    flex-grow: 1; 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-    padding: 10px;
-}
-
-.titulo-item {
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 10px; /* Espacio entre el título y la imagen */
-}
-
-.precio-item {
-    color: #007bff;
-    text-align: center;
-    margin-top: auto; /* Empujar el precio al fondo */
-}
-
-.boton-item {
-    width: 100%;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 0px 0px 10px 10px;
-    transition: background-color 0.3s ease;
-}
-
-.boton-item:hover {
-    background-color: #0056b3;
-}
-
-
-@media (min-width: 992px) {
-    .tarjeta {
-        width: calc(25% - 20px); /* Cuatro tarjetas por fila en pantallas grandes */
-    }
-}
-
-@media (max-width: 992px) {
-    .tarjeta {
-        width: calc(50% - 20px); /* Dos tarjetas por fila en pantallas medianas */
-    }
-}
-
-@media (max-width: 576px) {
-    .tarjeta {
-        width: calc(100% - 20px); /* Una tarjeta por fila en pantallas pequeñas */
-    }
-}
-</style>
-<br>
-<br>
-<br>
 <style>
     @keyframes backgroundFade {
      
@@ -127,11 +39,11 @@
 
     </div>
     <div class="info">
-        <h4><a href="#category">patrocinado por play station</a></h4>
-        <h1>LOS MEJORES JUEGOS CON LOS MEJORES DESCUENTOS</h1>
+        <h4><a href="#category">Quesos de alta calidad</a></h4>
+        <h1>LOS MEJORES QUESOS CON LOS MEJORES DESCUENTOS</h1>
         <div class="meta">
             <a href="https://twitter.com/nodws" target="_b" class="author"></a><br>
-            By <a href="" target="_b">Leduan Zapata</a> on octuber 10, 2023
+            By <a href="" target="_b">Leduan Zapata</a> on octuber 10, 2023421
         </div>
 
     </div>
@@ -141,24 +53,58 @@
 
 <br>
 
-<h1>Productos</h1>
 
-<div class="contenedor-tarjetas">
+
+<!-- <div class="productos-container">
     {% for p in producto %}
-    <div class="tarjeta">
-        <div class="contenido-tarjeta">
+        <div class="producto">
             <span class="titulo-item">{{ p.nombre }}</span>
             <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="img-item">
             <span class="precio-item">{{ p.precio }}</span>
+            <form action="{% url 'agregar_al_carrito' producto_id=p.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="boton-item">Agregar al carrito</button>
+            </form>
         </div>
-        <form action="{% url 'agregar_al_carrito' producto_id=p.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="boton-item">Agregar al carrito</button>
-        </form>
-    </div>
     {% endfor %}
-</div>
+</div> -->
+
+<section class="products">
+    <div class="five">
+        <h1>Nuestros productos
+          <span>Principales</span>
+        </h1>
+      </div>
+      <br>
+      <br>
+    
+    <div class="all-products"> 
+        {% for p in productos %}
+        <div class="product">
+            <img src="{{ p.imagen.url }}" alt="">
+            <div class="product-info">
+                <h4 class="product-title">
+                    {{ p.nombre }}
+                </h4>
+                <p class="product-price">{{ p.precio }}</p> 
+                <form action="{% url 'agregar_al_carrito' producto_id=p.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="bn632-hover bn25">Agregar al carrito</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
 
 
+
+
+
+
+      
+
+
+<script src="{% static 'js/slider.js' %}"></script>
 
 {% endblock %}

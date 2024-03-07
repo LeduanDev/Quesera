@@ -127,7 +127,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MEDIA_URL = '/slider_images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "slider_images")
-STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
