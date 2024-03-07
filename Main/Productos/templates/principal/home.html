@@ -15,16 +15,34 @@
                     background-image: url('{{ imagen.0.image.url }}');
                 }
 
-                
-                25% {
+                15% {
                     background-image: url('{{ imagen.1.image.url }}');
+                }
+
+                
+                30% {
+                    background-image: url('{{ imagen.2.image.url }}');
                 }
      
           
-       
-                50% {
-                    background-image: url('{{ imagen.0.image.url }}');
+                45% {
+                    background-image: url('{{ imagen.3.image.url }}');
                 }    
+
+                60% {
+                    background-image: url('{{ imagen.0.image.url }}');
+                }
+
+                75% {
+                    background-image: url('{{ imagen.1.image.url }}');
+                }
+                90% {
+                    background-image: url('{{ imagen.0.image.url }}');
+                }
+                100% {
+                    background-image: url('{{ imagen.1.image.url }}');
+                }
+  
   
     }
 </style>
@@ -102,9 +120,10 @@
 
 
 
-      
+    <br>
+    <br>
 
 
-<script src="{% static 'js/slider.js' %}"></script>
+
 
 {% endblock %}
