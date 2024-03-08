@@ -4,8 +4,12 @@
 {% block titulo %} Home {% endblock %}
 {% block contenido %}
 
-<link rel="stylesheet" href="{% static 'css/header.css' %}?v=1">
 <link rel="stylesheet" href="{% static 'css/home_tarjetas.css' %}?v=1">
+
+
+<!-- <link rel="stylesheet" href="{% static 'css/boots.css' %}?v=1"> -->
+<link rel="stylesheet" href="{% static 'css/header.css' %}?v=1">
+<link rel="stylesheet" href="{% static 'css/font.css' %}?v=1">
 
 
 <style>
@@ -48,82 +52,103 @@
 </style>
     
 
-
-<div class="header2">
-    <div class="sides">
-        <a href="{% url 'home' %}" class="logo">Play Games</a>
-    </div>
-    <div class="sides">
-
-    </div>
-    <div class="info">
-        <h4><a href="#category">Quesos de alta calidad</a></h4>
-        <h1>LOS MEJORES QUESOS CON LOS MEJORES DESCUENTOS</h1>
-        <div class="meta">
-            <a href="https://twitter.com/nodws" target="_b" class="author"></a><br>
-            By <a href="" target="_b">Leduan Zapata</a> on octuber 10, 2023421
+<!-- 
+    <div class="header2">
+        <div class="sides">
+            <a href="{% url 'home' %}" class="logo">Play Games</a>
         </div>
+        <div class="sides">
 
-    </div>
-</div>
-
-<br>
-
-<br>
-
-
-
-<!-- <div class="productos-container">
-    {% for p in producto %}
-        <div class="producto">
-            <span class="titulo-item">{{ p.nombre }}</span>
-            <img src="{{ p.imagen.url }}" alt="{{ p.nombre }}" class="img-item">
-            <span class="precio-item">{{ p.precio }}</span>
-            <form action="{% url 'agregar_al_carrito' producto_id=p.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="boton-item">Agregar al carrito</button>
-            </form>
         </div>
-    {% endfor %}
-</div> -->
-
-<section class="products">
-    <div class="five">
-        <h1>Nuestros productos
-          <span>Principales</span>
-        </h1>
-      </div>
-      <br>
-      <br>
-    
-    <div class="all-products"> 
-        {% for p in productos %}
-        <div class="product">
-            <img src="{{ p.imagen.url }}" alt="">
-            <div class="product-info">
-                <h4 class="product-title">
-                    {{ p.nombre }}
-                </h4>
-                <p class="product-price">{{ p.precio }}</p> 
-                <form action="{% url 'agregar_al_carrito' producto_id=p.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="bn632-hover bn25">Agregar al carrito</button>
-                </form>
+        <div class="info">
+            <h4><a href="#category">Quesos de alta calidad</a></h4>
+            <h1>LOS MEJORES QUESOS CON LOS MEJORES DESCUENTOS</h1>
+            <div class="meta">
+                <a href="https://twitter.com/nodws" target="_b" class="author"></a><br>
+                By <a href="" target="_b">Leduan Zapata</a> on octuber 10, 2023421
             </div>
+
         </div>
-        {% endfor %}
+    </div> -->
+<br>
+    
+<div class="slider-container">
+    <div class="slider">
+      {% for image in imagen %}
+      <div class="slide">
+        <img src="{{ image.image.url }}" alt="{{ image.title }}">
+        <div class="slide-content">
+          <h2>{{ image.title }}</h2>
+          <p>{{ image.description }}</p>
+        </div>
+      </div>
+      {% endfor %}
     </div>
-</section>
+  </div>
+  
+
+        <br>
+
+        <br>
 
 
-
-
+    <section class="products">
+        <div class="five">
+            <h1>Nuestros productos
+            <span>Principales</span>
+            </h1>
+        </div>
+        <br>
+        <br>
+        
+        <div class="all-products"> 
+            {% for p in productos %}
+            <div class="product">
+                <img src="{{ p.imagen.url }}" alt="">
+                <div class="product-info">
+                    <h4 class="product-title">
+                        {{ p.nombre }}
+                    </h4>
+                    <p class="product-price">{{ p.precio }}</p> 
+                    <form action="{% url 'agregar_al_carrito' producto_id=p.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="bn632-hover bn25">Agregar al carrito</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 
 
     <br>
     <br>
 
+    <script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/templatemo.js' %}"></script>
+    <script src="{% static   'js/custom.js' %}"></script>
 
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+  const slider = document.querySelector('.slider');
+  const slides = document.querySelectorAll('.slide');
 
+  let slideIndex = 0;
+  const slideWidth = slides[0].clientWidth;
+
+  function slide() {
+    if (slideIndex === slides.length) {
+      slideIndex = 0;
+    }
+    slider.style.transform = `translateX(${-slideIndex * slideWidth}px)`;
+    slideIndex++;
+  }
+
+  setInterval(slide, 3000); // Cambia las imágenes cada 3 segundos
+});
+
+    </script>
 {% endblock %}

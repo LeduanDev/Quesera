@@ -32,12 +32,12 @@
     align-items: center;
     justify-content: center;
     border-radius: 1.2rem;
-    box-shadow: 5px 15px 25px #c9c7c7;
+    box-shadow: 5px 15px 25px #fffefe;
     transition: box-shadow 0.3s ease;
 }
 
 .product:hover {
-    box-shadow: 5px 15px 35px #aaaaaa;
+    box-shadow: 5px 15px 35px #f7f7f7;
 }
 
 .product img {
@@ -146,7 +146,7 @@ button:hover {
     content: "";
     left: 50%;
     margin-left: -30px;
-    background-color: #dfdfdf;
+    background-color: #ffffff;
   }
   
   /* STYLE 6
