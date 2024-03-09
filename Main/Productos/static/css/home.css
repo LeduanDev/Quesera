@@ -327,3 +327,24 @@ a {
     margin-inline: auto;
   }
 }
+
+/* Estilos para el título */
+.titulo {
+  font-size: 2.5rem; /* Tamaño de fuente inicial */
+  text-align: center;
+}
+
+/* Estilos para pantallas más pequeñas */
+@media screen and (max-width: 768px) {
+  .titulo {
+      font-size: 2rem; /* Reducir el tamaño de fuente para pantallas más pequeñas */
+  }
+}
+
+/* Estilos para pantallas aún más pequeñas */
+@media screen and (max-width: 480px) {
+  .titulo {
+      font-size: 1.5rem; /* Reducir aún más el tamaño de fuente para dispositivos móviles */
+  }
+}
+

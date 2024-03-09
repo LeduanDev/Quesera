@@ -3,21 +3,24 @@
 
 {% block titulo %} Home {% endblock %}
 {% block contenido %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <link rel="stylesheet" href="{% static 'css/home_tarjetas.css' %}?v=1">
+    
+    <section class="products">
+        <div class="all-products">
+            {% for producto in productos %}
+                <div class="product">
+                    <img src="{{ producto.imagen.url }}" alt="">
+                    <div class="product-info">
+                        <h4 class="product-title">{{ producto.nombre }}</h4>
+                        <p class="product-price">$  {{ producto.precio }}</p>
+                        <form action="{% url 'agregar_al_carrito' producto_id=producto.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="bn632-hover bn25">Agregar al carrito</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
 
 {% endblock %}

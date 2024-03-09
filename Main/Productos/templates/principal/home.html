@@ -1,125 +1,74 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block titulo %} Home {% endblock %}
+{% block titulo %}
+    Home
+{% endblock %}
+
 {% block contenido %}
+    <link rel="stylesheet" href="{% static 'css/home_tarjetas.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'css/font.css' %}?v=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="{% static 'css/home_tarjetas.css' %}?v=1">
-
-
-<!-- <link rel="stylesheet" href="{% static 'css/boots.css' %}?v=1"> -->
-<link rel="stylesheet" href="{% static 'css/header.css' %}?v=1">
-<link rel="stylesheet" href="{% static 'css/font.css' %}?v=1">
-
-
-<style>
-    @keyframes backgroundFade {
-     
-                0% {
-                    background-image: url('{{ imagen.0.image.url }}');
-                }
-
-                15% {
-                    background-image: url('{{ imagen.1.image.url }}');
-                }
-
-                
-                30% {
-                    background-image: url('{{ imagen.2.image.url }}');
-                }
-     
-          
-                45% {
-                    background-image: url('{{ imagen.3.image.url }}');
-                }    
-
-                60% {
-                    background-image: url('{{ imagen.0.image.url }}');
-                }
-
-                75% {
-                    background-image: url('{{ imagen.1.image.url }}');
-                }
-                90% {
-                    background-image: url('{{ imagen.0.image.url }}');
-                }
-                100% {
-                    background-image: url('{{ imagen.1.image.url }}');
-                }
-  
-  
-    }
-</style>
-    
-
-<!-- 
-    <div class="header2">
-        <div class="sides">
-            <a href="{% url 'home' %}" class="logo">Play Games</a>
-        </div>
-        <div class="sides">
-
-        </div>
-        <div class="info">
-            <h4><a href="#category">Quesos de alta calidad</a></h4>
-            <h1>LOS MEJORES QUESOS CON LOS MEJORES DESCUENTOS</h1>
-            <div class="meta">
-                <a href="https://twitter.com/nodws" target="_b" class="author"></a><br>
-                By <a href="" target="_b">Leduan Zapata</a> on octuber 10, 2023421
-            </div>
-
-        </div>
-    </div> -->
-<br>
-    
-<div class="slider-container">
     <div class="slider">
-      {% for image in imagen %}
-      <div class="slide">
-        <img src="{{ image.image.url }}" alt="{{ image.title }}">
-        <div class="slide-content">
-          <h2>{{ image.title }}</h2>
-          <p>{{ image.description }}</p>
+        <!-- list Items -->
+        <div class="list">
+            {% for slide in imagen %}
+                <div class="item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ slide.image.url }}">
+                    <div class="content">
+                        <p>Novedades</p>
+                        <h2>{{ slide.title }}</h2>
+                        <p>{{ slide.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-      </div>
-      {% endfor %}
+
+        <!-- button arrows -->
+        <div class="arrows">
+            <button id="prev">&lt;</button>
+            <button id="next">&gt;</button>
+        </div>
+
+        <!-- thumbnail -->
+        <div class="thumbnail">
+            {% for slide in imagen %}
+                <div class="item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ slide.image.url }}">
+                    <div class="content">{{ slide.title }}</div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-  </div>
-  
-
-        <br>
-
-        <br>
-
+<br>
+<br>
+<br>
 
     <section class="products">
         <div class="five">
-            <h1>Nuestros productos
-            <span>Principales</span>
-            </h1>
+            <h1 class="titulo">Nuestros productos <span>Principales</span></h1>
         </div>
-        <br>
-        <br>
-        
-        <div class="all-products"> 
+
+ 
+
+        <div class="all-products">
             {% for p in productos %}
-            <div class="product">
-                <img src="{{ p.imagen.url }}" alt="">
-                <div class="product-info">
-                    <h4 class="product-title">
-                        {{ p.nombre }}
-                    </h4>
-                    <p class="product-price">{{ p.precio }}</p> 
-                    <form action="{% url 'agregar_al_carrito' producto_id=p.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="bn632-hover bn25">Agregar al carrito</button>
-                    </form>
+                <div class="product">
+                    <img src="{{ p.imagen.url }}" alt="">
+                    <div class="product-info">
+                        <h4 class="product-title">{{ p.nombre }}</h4>
+                        <p class="product-price">$  {{ p.precio }}</p>
+                        <form action="{% url 'agregar_al_carrito' producto_id=p.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="bn632-hover bn25">Agregar al carrito</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
             {% endfor %}
         </div>
     </section>
-
 
     <br>
     <br>
@@ -128,27 +77,5 @@
     <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/templatemo.js' %}"></script>
-    <script src="{% static   'js/custom.js' %}"></script>
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-  const slider = document.querySelector('.slider');
-  const slides = document.querySelectorAll('.slide');
-
-  let slideIndex = 0;
-  const slideWidth = slides[0].clientWidth;
-
-  function slide() {
-    if (slideIndex === slides.length) {
-      slideIndex = 0;
-    }
-    slider.style.transform = `translateX(${-slideIndex * slideWidth}px)`;
-    slideIndex++;
-  }
-
-  setInterval(slide, 3000); // Cambia las imágenes cada 3 segundos
-});
-
-    </script>
+    <script src="{% static 'js/custom.js' %}"></script>
 {% endblock %}

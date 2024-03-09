@@ -6,7 +6,6 @@
     box-shadow: border-box;
 }
 
-
 .title-p{
     text-align: center;
     margin-bottom: 4rem;
@@ -18,6 +17,7 @@
     gap: 2rem;
     justify-items: center;
     padding: 0 2rem; /* Ajusta el padding según necesidades */
+    
 }
 
 .product {
@@ -50,21 +50,6 @@
     transform: scale(1.1);
 }
 
-/* button {
-    background-color: #000000;
-    color: #ffffff;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 0.3rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #2980b9;
-} */
-
-/* Media queries para hacer la tarjeta responsive */
 @media screen and (max-width: 768px) {
     .all-products {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Cambia el tamaño de las columnas en pantallas más pequeñas */
@@ -149,6 +134,5 @@ button:hover {
     background-color: #ffffff;
   }
   
-  /* STYLE 6
  
   
