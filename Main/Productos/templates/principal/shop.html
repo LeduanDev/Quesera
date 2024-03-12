@@ -4,8 +4,20 @@
 {% block titulo %} Home {% endblock %}
 {% block contenido %}
     <link rel="stylesheet" href="{% static 'css/home_tarjetas.css' %}?v=1">
-    
+    <br>
+    <br>
+
     <section class="products">
+        <div class="filters">
+            <label class="categoria-label" for="categoria">Selecciona una categoría:</label>
+            <select name="categoria" id="categoria" class="categoria-select">
+                <option value="">Todas</option>
+                {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}" {% if categoria_seleccionada == categoria %}selected{% endif %}>{{ categoria.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+            
         <div class="all-products">
             {% for producto in productos %}
                 <div class="product">
@@ -22,5 +34,11 @@
             {% endfor %}
         </div>
     </section>
-
+    
+    <script>
+        document.getElementById('categoria').addEventListener('change', function() {
+            var categoriaId = this.value;
+            window.location.href = "{% url 'shop' %}?categoria_id=" + categoriaId;
+        });
+    </script>
 {% endblock %}

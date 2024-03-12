@@ -1,53 +1,50 @@
-let items = document.querySelectorAll('.slider .list .item');
-let next = document.getElementById('next');
-let prev = document.getElementById('prev');
-let thumbnails = document.querySelectorAll('.thumbnail .item');
-
-// config param
-let countItem = items.length;
-let itemActive = 0;
-// event next click
-next.onclick = function(){
-    itemActive = itemActive + 1;
-    if(itemActive >= countItem){
-        itemActive = 0;
-    }
-    showSlider();
-}
-//event prev click
-prev.onclick = function(){
-    itemActive = itemActive - 1;
-    if(itemActive < 0){
-        itemActive = countItem - 1;
-    }
-    showSlider();
-}
-// auto run slider
-let refreshInterval = setInterval(() => {
-    next.click();
-}, 5000)
-function showSlider(){
-    // remove item active old
-    let itemActiveOld = document.querySelector('.slider .list .item.active');
-    let thumbnailActiveOld = document.querySelector('.thumbnail .item.active');
-    itemActiveOld.classList.remove('active');
-    thumbnailActiveOld.classList.remove('active');
-
-    // active new item
-    items[itemActive].classList.add('active');
-    thumbnails[itemActive].classList.add('active');
-
-    // clear auto time run slider
-    clearInterval(refreshInterval);
-    refreshInterval = setInterval(() => {
-        next.click();
-    }, 5000)
-}
-
-// click thumbnail
-thumbnails.forEach((thumbnail, index) => {
-    thumbnail.addEventListener('click', () => {
-        itemActive = index;
-        showSlider();
-    })
-})
+if(document.querySelector('#container-slider')){
+    setInterval('fntExecuteSlide("next")',5000);
+ }
+ //------------------------------ LIST SLIDER -------------------------
+ if(document.querySelector('.listslider')){
+    let link = document.querySelectorAll(".listslider li a");
+    link.forEach(function(link) {
+       link.addEventListener('click', function(e){
+          e.preventDefault();
+          let item = this.getAttribute('itlist');
+          let arrItem = item.split("_");
+          fntExecuteSlide(arrItem[1]);
+          return false;
+       });
+     });
+ }
+ 
+ function fntExecuteSlide(side){
+     let parentTarget = document.getElementById('slider');
+     let elements = parentTarget.getElementsByTagName('li');
+     let curElement, nextElement;
+ 
+     for(var i=0; i<elements.length;i++){
+ 
+         if(elements[i].style.opacity==1){
+             curElement = i;
+             break;
+         }
+     }
+     if(side == 'prev' || side == 'next'){
+ 
+         if(side=="prev"){
+             nextElement = (curElement == 0)?elements.length -1:curElement -1;
+         }else{
+             nextElement = (curElement == elements.length -1)?0:curElement +1;
+         }
+     }else{
+         nextElement = side;
+         side = (curElement > nextElement)?'prev':'next';
+ 
+     }
+     //RESALTA LOS PUNTOS
+     let elementSel = document.getElementsByClassName("listslider")[0].getElementsByTagName("a");
+     elementSel[curElement].classList.remove("item-select-slid");
+     elementSel[nextElement].classList.add("item-select-slid");
+     elements[curElement].style.opacity=0;
+     elements[curElement].style.zIndex =0;
+     elements[nextElement].style.opacity=1;
+     elements[nextElement].style.zIndex =1;
+ }

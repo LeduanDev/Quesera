@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="{% static 'css/font.css' %}?v=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div class="slider">
-        <!-- list Items -->
+    <!-- <div class="slider">
+        
         <div class="list">
             {% for slide in imagen %}
                 <div class="item {% if forloop.first %}active{% endif %}">
@@ -26,13 +26,11 @@
             {% endfor %}
         </div>
 
-        <!-- button arrows -->
         <div class="arrows">
             <button id="prev">&lt;</button>
             <button id="next">&gt;</button>
         </div>
 
-        <!-- thumbnail -->
         <div class="thumbnail">
             {% for slide in imagen %}
                 <div class="item {% if forloop.first %}active{% endif %}">
@@ -41,7 +39,31 @@
                 </div>
             {% endfor %}
         </div>
+    </div> -->
+
+    <div id="container-slider">
+        <a href="#" onclick="fntExecuteSlide('prev');" class="arrowPrev"><i class="fas fa-chevron-circle-left"></i></a>
+        <a href="#" onclick="fntExecuteSlide('next');" class="arrowNext"><i class="fas fa-chevron-circle-right"></i></a>
+        <ul class="listslider">
+            {% for slide in imagen %}
+            <li><a itlist="itList_{{ forloop.counter0 }}" href="#" class="item-select-slid"></a></li>
+            {% endfor %}
+        </ul>
+        <ul id="slider">
+            {% for slide in imagen %}
+            <li style="background-image: url('{{ slide.image.url }}'); z-index:{{ forloop.counter0 }}; opacity: {{ forloop.first|yesno:'1,0' }}"> <!-- Ajusta el estilo del slide -->
+                <div class="content_slider">
+                    <div>
+                        <h2>{{ slide.title }}</h2>
+                        <p>{{ slide.description }}</p>
+                        <!-- <a href="#" class="btnSlider">Ver más</a> -->
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
+    
 <br>
 <br>
 <br>

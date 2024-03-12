@@ -30,6 +30,14 @@ class Producto(models.Model):
         self.imagen.storage.delete(self.imagen.name)
         super().delete(using=using, keep_parents=keep_parents)
 
+# class Pedido(models.Model):
+#     id =  models.AutoField(primary_key=True)
+#     nombre_persona = models.CharField()
+#     telefono = models.IntegerField()
+#     descripcion = models.TextField(null = True, blank = True)
+#     direccion = models.CharField(null = False, blank= False)
+    
+
 
 class Carrito(models.Model):
     productos = models.ManyToManyField('Producto', through='DetalleCarrito')

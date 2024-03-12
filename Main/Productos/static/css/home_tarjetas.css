@@ -63,7 +63,7 @@
 
 
 .bn632-hover {
-    width: 160px;
+    width: 120px;
     font-size: 16px;
     font-weight: 600;
     color: #fff;
@@ -136,3 +136,41 @@
   
  
   
+  /* Estilos para el contenedor de filtros */
+.filters {
+  margin-bottom: 20px; /* Espacio entre el contenedor de filtros y otros elementos */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos para el label */
+.categoria-label {
+  font-size: 16px; /* Tamaño de la fuente */
+  font-weight: bold; /* Peso de la fuente */
+  color: #333; /* Color del texto */
+  margin-right: 10px; /* Espacio entre el label y el select */
+}
+
+/* Estilos para el select */
+.categoria-select {
+  padding: 8px; /* Espacio de relleno */
+  font-size: 16px; /* Tamaño de la fuente */
+  border: 1px solid #ccc; /* Borde del select */
+  border-radius: 5px; /* Radio de borde */
+  background-color: #fff; /* Color de fondo */
+  color: #333; /* Color del texto */
+  cursor: pointer; /* Cursor al pasar por encima */
+  outline: none; /* Elimina el contorno al enfocar */
+}
+
+/* Estilos para el hover del select */
+.categoria-select:hover {
+  border-color: #666; /* Cambia el color del borde al pasar por encima */
+}
+
+/* Estilos para el focus del select */
+.categoria-select:focus {
+  border-color: #007bff; /* Cambia el color del borde al enfocar */
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Agrega una sombra al enfocar */
+}

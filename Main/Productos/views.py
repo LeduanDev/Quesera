@@ -15,12 +15,20 @@ def home(request):
 
 
 
+
 def shop(request):
-    imagen = SliderImage.objects.all()
     categorias = Categoria.objects.all()
+    categoria_seleccionada = None
     productos = Producto.objects.all()
 
-    return render(request, 'principal/shop.html', {'imagen': imagen, 'categorias': categorias, 'productos': productos})
+    if 'categoria_id' in request.GET:
+        categoria_id = request.GET['categoria_id']
+        if categoria_id:
+            categoria_seleccionada = get_object_or_404(Categoria, id=categoria_id)
+            productos = productos.filter(categoria=categoria_seleccionada)
+
+    return render(request, 'principal/shop.html', {'categorias': categorias, 'productos': productos, 'categoria_seleccionada': categoria_seleccionada})
+
 
 
 
