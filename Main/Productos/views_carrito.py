@@ -10,7 +10,7 @@ from django.db import transaction
 def agregar_al_carrito(request, producto_id):
     producto = get_object_or_404(Producto, pk=producto_id)
     carrito_id = request.session.get("carrito_id")
-
+    
     if not carrito_id:
         carrito = Carrito.objects.create()
         request.session["carrito_id"] = carrito.id
@@ -147,3 +147,13 @@ def disminuir_cantidad(request, detalle_id):
         detalle.delete()
     detalle.carrito.calcular_total()
     return redirect('carrito')
+
+
+def obtener_numero_productos_en_carrito(request):
+    carrito_id = request.session.get("carrito_id")
+    if carrito_id:
+        carrito = Carrito.objects.get(id=carrito_id)
+        numero_productos = carrito.detallecarrito_set.count()
+    else:
+        numero_productos = 0
+    return JsonResponse({'numero_productos': numero_productos})

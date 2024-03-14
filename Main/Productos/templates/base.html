@@ -39,7 +39,8 @@
                     </li>
 
                     <li>
-                        <a href="{% url 'carrito' %}" class="nav__link">Carrito : {{ carrito.productos.count }}</a>
+                        <a href="{% url 'carrito' %}" class="nav__link">   <span> Carrito: <span id="numero-productos-carrito">0</span> </span>
+                         </a>
                     </li>
                     <!--=============== DROPDOWN 1 ===============-->
                     <li class="dropdown__item">                      
@@ -140,7 +141,20 @@
 <br>
 <br>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        actualizarNumeroProductosCarrito();
+    });
 
+    function actualizarNumeroProductosCarrito() {
+        fetch('{% url "obtener_numero_productos_en_carrito" %}')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('numero-productos-carrito').textContent = data.numero_productos;
+            })
+            .catch(error => console.error('Error al obtener el número de productos en el carrito:', error));
+    }
+</script>
 
     {% block contenido %} {% endblock %}
 
