@@ -30,15 +30,6 @@ class Producto(models.Model):
         self.imagen.storage.delete(self.imagen.name)
         super().delete(using=using, keep_parents=keep_parents)
 
-# class Pedido(models.Model):
-#     id =  models.AutoField(primary_key=True)
-#     nombre_persona = models.CharField()
-#     telefono = models.IntegerField()
-#     descripcion = models.TextField(null = True, blank = True)
-#     direccion = models.CharField(null = False, blank= False)
-    
-
-
 class Carrito(models.Model):
     productos = models.ManyToManyField('Producto', through='DetalleCarrito')
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -55,4 +46,14 @@ class DetalleCarrito(models.Model):
 
     def precio_total(self):
         return self.producto.precio * self.cantidad
-    
+
+class Pedido(models.Model):
+    nombre = models.CharField(max_length=100)
+    direccion = models.CharField(max_length=200)
+    numero = models.CharField(max_length=20)
+    descripcion = models.TextField(blank=True)
+    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Pedido de {self.nombre} - {self.fecha_creacion}"

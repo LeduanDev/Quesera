@@ -8,6 +8,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 </head>
 
 <body>
@@ -36,7 +39,7 @@
                     </li>
 
                     <li>
-                        <a href="{% url 'carrito' %}" class="nav__link">Carrito</a>
+                        <a href="{% url 'carrito' %}" class="nav__link">Carrito : {{ carrito.productos.count }}</a>
                     </li>
                     <!--=============== DROPDOWN 1 ===============-->
                     <li class="dropdown__item">                      

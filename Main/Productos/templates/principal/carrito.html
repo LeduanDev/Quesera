@@ -43,7 +43,11 @@
             {% endfor %}
             <div class="back-to-shop"><a href="{% url  'home' %}">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
             <div class="back-to-shop"><a href="{% url 'eliminar_carrito' %}">&leftarrow;</a><span class="button">Vaciar el carro</span></div>
-       
+            
+
+            <div class="go-to-order">
+                <a href="{% url 'pedido' %}" class="button" onclick="return irAlPedido();">Ir al Pedido</a>
+            </div>
         </div>
         
         <div class="col-md-4 summary">
@@ -60,5 +64,22 @@
 </div>
 
 <br>
+
+<script>
+    function irAlPedido() {
+        // Verificar si el carrito está vacío
+        if ({{ carrito.productos.count }} === 0) {
+                Swal.fire({
+            icon: 'warning',
+            title: 'Tu carrito está vacío',
+            text: 'Por favor, agrega productos antes de proceder al pedido.',
+            showConfirmButton: false,
+            timer: 3000
+        });
+            return false; // Detener la acción del enlace
+        }
+        return true; // Permitir la acción del enlace si el carrito no está vacío
+    }
+</script>
 
 {% endblock %}

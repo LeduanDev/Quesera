@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %} Pedido {% endblock %}
+
+{% block contenido %}
+
+<br>
+<br>
+
+
+<!-- pedido.html -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Ejecutar Pedido</button>
+</form>
+
+
+
+Pagina del pedido 
+
+{% endblock %}

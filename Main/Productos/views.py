@@ -15,6 +15,9 @@ def home(request):
 
 
 
+def pedido_correcto(request):
+    hola = "sdas"
+    return render(request, 'principal/correcto.html')
 
 def shop(request):
     categorias = Categoria.objects.all()
