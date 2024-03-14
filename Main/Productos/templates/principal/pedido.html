@@ -7,17 +7,45 @@
 
 <br>
 <br>
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
 
 
-<!-- pedido.html -->
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Ejecutar Pedido</button>
-</form>
+    <div class="container">
+        <h1>¡Compartenos tu información!</h1>
+        <p>Llena los campos con tus datos para efectuar el pedido</p>  
+        
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="row">
+                <div class="column">
+                    <label for="id_nombre">Nombre</label>
+                    {{ form.nombre   }}
+                    {{ form.nombre.errors }}
+                </div>
+                <div class="column">
+                    <label for="id_nombre">Dirección</label>
+                    {{ form.direccion   }}
+                    {{ form.nombre.errors }}
+                </div>
+                <div class="column">
+                    <label for="id_maquina">Máquina</label>
+                    {{ form.numero }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <label for="id_descripcion">Descripción de la idea</label>
+                    {{ form.descripcion }}
+                </div>
+            </div>
+            <button class="boton" type="submit">Submit</button>
+            
+        </form>  
+        <br>
+        <div id="alerta"></div> 
+    </div>
 
 
-
-Pagina del pedido 
 
 {% endblock %}
