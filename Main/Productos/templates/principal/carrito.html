@@ -19,7 +19,7 @@
                 </div>
             </div>    
             {% for detalle in carrito.detallecarrito_set.all %}
-            <div class="row border-top border-bottom">
+            <div class="row border-top border-bottom detalle-carrito" data-detalle-id="{{ detalle.id }}">
                 <div class="row main align-items-center">
                     <div class="col-2"><img class="img-fluid" src="{{ detalle.producto.imagen.url }}"></div>
                     <div class="col">
@@ -27,17 +27,21 @@
                         <div class="row">{{ detalle.producto.descripcion }}</div>
                     </div>
                     <div class="col">
-                        <form action="{% url 'aumentar_cantidad' detalle.id %}" method="post" class="cantidad-form">
+                        <form action="{% url 'aumentar_cantidad' detalle.id %}" method="post" class="cantidad-form" data-detalle-id="{{ detalle.id }}">
                             {% csrf_token %}
                             <button type="submit" class="border">+</button>
                         </form>
-                        <span>{{ detalle.cantidad }}</span>
-                        <form action="{% url 'disminuir_cantidad' detalle.id %}" method="post" class="cantidad-form">
+                        
+                        <span class="cantidad">{{ detalle.cantidad }}</span>
+                        
+                        <form action="{% url 'disminuir_cantidad' detalle.id %}" method="post" class="cantidad-form" data-detalle-id="{{ detalle.id }}">
                             {% csrf_token %}
                             <button type="submit">-</button>
                         </form>
                     </div>
-                    <div class="col">&euro; {{ detalle.precio_total }}</div>
+                    <div class="col">COP <span class="precio-total">{{ detalle.precio_total }}</span></div>
+
+                    
                 </div>
             </div>
             {% endfor %}
@@ -52,19 +56,17 @@
         
         <div class="col-md-4 summary">
             <div><h5><b>Summary</b></h5></div>
-      
-
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div class="col">TOTAL PRICE</div>
-                <div class="col text-right">&euro; {{ carrito.total }}</div>
+                <div class="col text-right" id="total-neto">COP {{ carrito.total|floatformat:2 }}</div>
             </div>
            
         </div>
     </div>
 </div>
 
-<br>
 
+<script src="{% static 'js/carrito.js' %}"></script>
 <script>
     function irAlPedido() {
         // Verificar si el carrito está vacío

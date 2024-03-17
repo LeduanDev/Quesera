@@ -76,21 +76,21 @@
  
 
         <div class="all-products">
-            {% for p in productos %}
+            {% for producto in productos %}
                 <div class="product">
-                    <img src="{{ p.imagen.url }}" alt="">
+                    <img src="{{ producto.imagen.url }}" alt="">
                     <div class="product-info">
-                        <h4 class="product-title">{{ p.nombre }}</h4>
-                        <p class="product-price">$  {{ p.precio }}</p>
-                        <form action="{% url 'agregar_al_carrito' producto_id=p.id %}" method="post">
-                            {% csrf_token %}
-                            <button type="submit" class="bn632-hover bn25">Agregar al carrito</button>
-                        </form>
+                        <h4 class="product-title">{{ producto.nombre }}</h4>
+                        <p class="product-price">$  {{ producto.precio }}</p>
+                        <div style="display: grid; grid-template-columns: auto auto; grid-column-gap: 1px;">
+                            <button class="bn632-hover bn25 agregar-al-carrito">Detalles</button>
+                            <button type="button" class="bn632-hover bn25 agregar-al-carrito" data-producto-id="{{ producto.id }}">Agregar al carrito</button>
+                        </div>
+                                   
                     </div>
                 </div>
             {% endfor %}
         </div>
-
         
     </section>
 

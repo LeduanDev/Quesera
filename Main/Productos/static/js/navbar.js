@@ -105,6 +105,9 @@ const showMenu = (toggleId, navId) =>{
             }
         })
         .then(data => {
+            // Llamar a la función para actualizar el número de productos en el carrito
+            actualizarNumeroProductosCarrito();
+            
             // Muestra el mensaje de éxito en una alerta
             Swal.fire({
                 icon: 'success',

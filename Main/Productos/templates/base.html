@@ -141,7 +141,7 @@
 <br>
 <br>
 
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         actualizarNumeroProductosCarrito();
     });
@@ -154,6 +154,28 @@
             })
             .catch(error => console.error('Error al obtener el número de productos en el carrito:', error));
     }
+</script> -->
+<script>
+    function actualizarNumeroProductosCarrito() {
+    fetch('{% url "obtener_numero_productos_en_carrito" %}')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('numero-productos-carrito').textContent = data.numero_productos;
+        })
+        .catch(error => console.error('Error al obtener el número de productos en el carrito:', error));
+}
+
+// Llamar a esta función después de agregar o eliminar un producto del carrito
+function actualizarCarritoYProductos() {
+    actualizarNumeroProductosCarrito();
+    // Aquí puedes realizar cualquier otra actualización necesaria después de agregar o eliminar un producto del carrito
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    actualizarNumeroProductosCarrito();
+});
+
+
 </script>
 
     {% block contenido %} {% endblock %}

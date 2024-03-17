@@ -63,46 +63,32 @@
 
 
 .bn632-hover {
-    width: 120px;
-    font-size: 16px;
-    font-weight: 600;
+    width: 100px; /* Reducir el ancho */
+    font-size: 14px; /* Reducir el tamaño del texto */
+    font-weight: 500; /* Modificar el peso de la fuente */
     color: #fff;
     cursor: pointer;
-    margin: 20px;
-    height: 55px;
-    text-align:center;
+    margin: 10px; /* Reducir el margen */
+    height: 45px; /* Reducir la altura */
+    text-align: center;
     border: none;
+    border-radius: 25px; /* Reducir el radio del borde */
     background-size: 300% 100%;
-    border-radius: 50px;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-  }
-  
-  .bn632-hover:hover {
-    background-position: 100% 0;
-    moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-  }
-  
-  .bn632-hover:focus {
-    outline: none;
-  }
-  
-  .bn632-hover.bn25 {
-    background-image: linear-gradient(
-      to right,
-      #29323c,
-      #485563,
-      #2b5876,
-      #4e4376
-    );
-    box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
-  }
+    transition: background-position 0.4s ease-in-out;
+}
 
+.bn632-hover:hover {
+    background-position: 100% 0;
+}
+
+.bn632-hover:focus {
+    outline: none;
+}
+
+.bn632-hover.bn25 {
+    background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+    box-shadow: 0 4px 10px rgba(45, 54, 65, 0.5); /* Reducir el tamaño de la sombra */
+}
 
 
   /* === HEADING STYLE #5 === */

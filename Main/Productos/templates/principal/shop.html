@@ -18,6 +18,7 @@
             </select>
         </div>
             
+
         <div class="all-products">
             {% for producto in productos %}
                 <div class="product">
@@ -25,7 +26,11 @@
                     <div class="product-info">
                         <h4 class="product-title">{{ producto.nombre }}</h4>
                         <p class="product-price">$  {{ producto.precio }}</p>
-                            <button type="button" class="bn632-hover bn25 agregar-al-carrito" data-producto-id="{{ producto.id }}">Agregar al carrito</button>               
+                        <div style="display: grid; grid-template-columns: auto auto; grid-column-gap: 1px;">
+                            <button class="bn632-hover bn25 agregar-al-carrito">Detalles</button>
+                            <button type="button" class="bn632-hover bn25 agregar-al-carrito" data-producto-id="{{ producto.id }}">Agregar al carrito</button>
+                        </div>
+                                   
                     </div>
                 </div>
             {% endfor %}
