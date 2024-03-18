@@ -4,6 +4,7 @@ from .models import Carrito, Producto, DetalleCarrito, Categoria
 
 
 
+
 def home(request):
     imagen = SliderImage.objects.all()
     # Esto solo carga los productos que esten marcados como especiales, en este caso carga al menos 10 como maximo

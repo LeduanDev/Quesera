@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <!-- SweetAlert2 CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"> -->
+    <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
 
 </head>
 
@@ -140,7 +142,74 @@
     <br>
 <br>
 <br>
+{% block contenido %} {% endblock %}
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<footer style="background-color: #edf2f7; padding-top: 2rem; padding-bottom: 1.5rem;">
+    <div style="max-width: 1140px; margin: 0 auto; padding: 0 15px;">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; text-align: left;">
+        <div style="width: 100%; max-width: 48%; padding-right: 15px; padding-left: 15px;">
+          <h4 style="font-size: 1.875rem; font-weight: 600; color: #4a5568;">Let's keep in touch!</h4>
+          <h5 style="font-size: 1.125rem; margin-top: 0; margin-bottom: 0.5rem; color: #4a5568;">
+            Find us on any of these platforms, we respond 1-2 business days.
+          </h5>
+          <div style="margin-top: 1.5rem;">
+            <button style="background-color: #fff; color: #63b3ed; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-weight: 400; height: 2.5rem; width: 2.5rem; display: inline-flex; justify-content: center; align-items: center; border-radius: 9999px; outline: none; border: none; margin-right: 0.5rem;">
+              <i class="fab fa-twitter"></i>
+            </button>
+            <button style="background-color: #fff; color: #3182ce; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-weight: 400; height: 2.5rem; width: 2.5rem; display: inline-flex; justify-content: center; align-items: center; border-radius: 9999px; outline: none; border: none; margin-right: 0.5rem;">
+              <i class="fab fa-facebook-square"></i>
+            </button>
+            <button style="background-color: #fff; color: #ed64a6; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-weight: 400; height: 2.5rem; width: 2.5rem; display: inline-flex; justify-content: center; align-items: center; border-radius: 9999px; outline: none; border: none; margin-right: 0.5rem;">
+              <i class="fab fa-dribbble"></i>
+            </button>
+            <button style="background-color: #fff; color: #4a5568; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-weight: 400; height: 2.5rem; width: 2.5rem; display: inline-flex; justify-content: center; align-items: center; border-radius: 9999px; outline: none; border: none; margin-right: 0.5rem;">
+              <i class="fab fa-github"></i>
+            </button>
+          </div>
+        </div>
+        <div style="width: 100%; max-width: 48%; padding-right: 15px; padding-left: 15px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+            <div style="width: 100%; max-width: 48%; padding-right: 15px; padding-left: 15px;">
+              <span style="text-transform: uppercase; font-size: 0.875rem; font-weight: 600; color: #4299e1; margin-bottom: 0.5rem;">Useful Links</span>
+              <ul style="list-style: none; padding-left: 0;">
+                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">About Us</a></li>
+                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Blog</a></li>
+                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Github</a></li>
+                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Free Products</a></li>
+              </ul>
+            </div>
+            <div style="width: 100%; max-width: 48%; padding-right: 15px; padding-left: 15px;">
+              <span style="text-transform: uppercase; font-size: 0.875rem; font-weight: 600; color: #4299e1; margin-bottom: 0.5rem;">Other Resources</span>
+              <ul style="list-style: none; padding-left: 0;">
+                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">MIT License</a></li>
+                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Terms & Conditions</a></li>
+                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Privacy Policy</a></li>
+                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Contact Us</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr style="margin-top: 2rem; margin-bottom: 2rem; border-color: #cbd5e0;">
+      <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+        <div style="width: 100%; max-width: 50%; padding-right: 15px; padding-left: 15px; margin: auto;">
+          <div style="font-size: 0.75rem; color: #4a5568; font-weight: 600; padding-top: 0.25rem;">
+            Copyright © <span id="get-current-year">2021</span>
+            <a href="https://www.creative-tim.com/product/notus-js" style="color: #4a5568; text-decoration: none; font-weight: 600; transition: color 0.2s ease-in-out;" target="_blank"> Notus JS</a> by
+            <a href="https://www.creative-tim.com" style="color: #4a5568; text-decoration: none; font-weight: 600; transition: color 0.2s ease-in-out;">Creative Tim</a>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
 <!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         actualizarNumeroProductosCarrito();
@@ -178,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </script>
 
-    {% block contenido %} {% endblock %}
+
 
     <script src="{% static 'js/navbar.js' %}"></script>
 </body>
