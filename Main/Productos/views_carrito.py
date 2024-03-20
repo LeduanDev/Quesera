@@ -6,6 +6,9 @@ from .models import Pedido, SliderImage
 from .models import Carrito, Producto, DetalleCarrito, Categoria
 from django.db import transaction
 from django.template.defaultfilters import floatformat
+from django.db.models import Q
+from django.contrib.postgres.search import SearchVector
+
 
 def carrito(request):
     # Obtenemos el ID del carrito de la sesión del usuario
@@ -187,3 +190,26 @@ def obtener_numero_productos_en_carrito(request):
     else:
         numero_productos = 0
     return JsonResponse({"numero_productos": numero_productos})
+
+
+
+
+def buscar_productos(request):
+    query = request.GET.get('q')
+    palabras_clave = query.split() if query else []
+
+    # Inicializar una consulta vacía
+    consulta = Q()
+
+    # Agregar condiciones de búsqueda para cada palabra clave
+    for palabra in palabras_clave:
+        consulta |= (
+            Q(nombre__icontains=palabra) |
+            Q(categoria__nombre__icontains=palabra) 
+          # Asegúrate de que "descripcion" sea un campo en tu modelo Producto
+        )
+
+    # Ejecutar la consulta
+    productos = Producto.objects.filter(consulta)
+
+    return render(request, 'principal/shop.html', {'productos': productos, 'query': query})

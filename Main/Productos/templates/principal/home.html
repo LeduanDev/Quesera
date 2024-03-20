@@ -8,38 +8,10 @@
 {% block contenido %}
     <link rel="stylesheet" href="{% static 'css/home_tarjetas.css' %}?v=1">
     <link rel="stylesheet" href="{% static 'css/header.css' %}?v=1">
-    <link rel="stylesheet" href="{% static 'css/font.css' %}?v=1">
+  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- <div class="slider">
-        
-        <div class="list">
-            {% for slide in imagen %}
-                <div class="item {% if forloop.first %}active{% endif %}">
-                    <img src="{{ slide.image.url }}">
-                    <div class="content">
-                        <p>Novedades</p>
-                        <h2>{{ slide.title }}</h2>
-                        <p>{{ slide.description }}</p>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
 
-        <div class="arrows">
-            <button id="prev">&lt;</button>
-            <button id="next">&gt;</button>
-        </div>
-
-        <div class="thumbnail">
-            {% for slide in imagen %}
-                <div class="item {% if forloop.first %}active{% endif %}">
-                    <img src="{{ slide.image.url }}">
-                    <div class="content">{{ slide.title }}</div>
-                </div>
-            {% endfor %}
-        </div>
-    </div> -->
 
     <div id="container-slider">
         <a href="#" onclick="fntExecuteSlide('prev');" class="arrowPrev"><i class="fas fa-chevron-circle-left"></i></a>

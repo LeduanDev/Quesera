@@ -17,7 +17,7 @@ class Categoria(models.Model):
         return self.nombre
 
 class Producto(models.Model):
-    nombre = models.CharField(max_length=40, verbose_name="Nombre del Producto")
+    nombre = models.CharField(max_length=40, verbose_name="Nombre del Producto", db_index=True)
     categoria = models.ForeignKey(Categoria, on_delete= models.CASCADE, null=False)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     imagen = models.ImageField( upload_to='imagenes/', verbose_name="Imagen", null=True, blank=True)

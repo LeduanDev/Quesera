@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -16,132 +17,106 @@
 </head>
 
 <body>
-    
-    <header class="header">
+      
+      <!--==================== HEADER ====================-->
+      <header class="header" id="header">
         <nav class="nav container">
-            <div class="nav__data">
-                <a href="#" class="nav__logo">
-                    <i class="ri-code-s-slash-line"></i> Quesera la moraleña
-                </a>
+           <a href="#" class="nav__logo">Qusera la moraleña</a>
 
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class="ri-menu-line nav__toggle-menu"></i>
-                    <i class="ri-close-line nav__toggle-close"></i>
-                </div>
-            </div>
+           <div class="nav__menu" id="nav-menu">
+              <ul class="nav__list">
+                 <li class="nav__item">
+                    <a href="{% url 'home' %}" class="nav__link">Inicio</a>
+                 </li>
 
-            <!--=============== NAV MENU ===============-->
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li>
-                        <a href="{% url 'home' %}" class="nav__link">Inicio</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'shop' %}" class="nav__link">Shop</a>
-                    </li>
+                 <li class="nav__item">
+                    <a href="{% url 'shop' %}" class="nav__link">Producos y categoria</a>
+                 </li>
 
-                    <li>
-                        <a href="{% url 'carrito' %}" class="nav__link">   <span> Carrito: <span id="numero-productos-carrito">0</span> </span>
-                         </a>
-                    </li>
-                    <!--=============== DROPDOWN 1 ===============-->
-                    <li class="dropdown__item">                      
-                        <div class="nav__link dropdown__button">
-                        Categorias <i class="ri-arrow-down-s-line dropdown__arrow"></i>
-                        </div>
+                 <li class="nav__item">
+                    <a href="#" class="nav__link">Contact Me</a>
+                 </li>
 
-                        <div class="dropdown__container">
-                            <div class="dropdown__content">
-                                <div class="dropdown__group">
-                                    <div class="dropdown__icon">
-                                        <i class="ri-flashlight-line"></i>
-                                    </div>
+                 <li>
+   
+              </ul>
 
-                                    <span class="dropdown__title">Most viewed courses</span>
+              <!-- Close button -->
+              <div class="nav__close" id="nav-close">
+                 <i class="ri-close-line"></i>
+              </div>
+           </div>
 
-                                    <ul class="dropdown__list">
-                                        <li>
-                                            <a href="{% url 'carrito' %}" class="dropdown__link">Carrito </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dropdown__link">Advanced CSS</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dropdown__link">JavaScript OOP</a>
-                                        </li>
-                                    </ul>
-                                </div>
+           <div class="nav__actions">
+              <!-- Search button -->
+              <i class="ri-search-line nav__search" id="search-btn"></i>
 
-                                <div class="dropdown__group">
-                                    <div class="dropdown__icon">
-                                        <i class="ri-heart-3-line"></i>
-                                    </div>
+              <!-- Login button -->
+              <!-- <i class="ri-car-line nav__login" id="login-btn"></i> -->
 
-                                    <span class="dropdown__title">Popular courses</span>
+              <i class="ri-shopping-cart-2-fill"></i> <a href="{% url 'carrito' %}" class="nav__link">   <span> Carrito: <span id="numero-productos-carrito">0</span> </span>
+              </a>
 
-                                    <ul class="dropdown__list">
-                                        <li>
-                                            <a href="#" class="dropdown__link">Development with Flutter</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dropdown__link">Web development with React</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dropdown__link">Backend development expert</a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="dropdown__group">
-                                    <div class="dropdown__icon">
-                                        <i class="ri-book-mark-line"></i>
-                                    </div>
-
-                                    <span class="dropdown__title">Careers</span>
-
-                                    <ul class="dropdown__list">
-                                        <li>
-                                            <a href="#" class="dropdown__link">Web development</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dropdown__link">Applications development</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dropdown__link">UI/UX design</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dropdown__link">Informatic security</a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="dropdown__group">
-                                    <div class="dropdown__icon">
-                                        <i class="ri-file-paper-2-line"></i>
-                                    </div>
-
-                                    <span class="dropdown__title">Certifications</span>
-
-                                    <ul class="dropdown__list">
-                                        <li>
-                                            <a href="#" class="dropdown__link">Course certificates</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="dropdown__link">Free certifications</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                </ul>
-            </div>
+              <!-- Toggle button -->
+              <div class="nav__toggle" id="nav-toggle">
+                 <i class="ri-menu-line"></i>
+              </div>
+           </div>
+  
         </nav>
-    </header>
+     </header>
+
+     <!--==================== SEARCH ====================-->
+     <div class="search" id="search">
+        <form  class="search__form" method="GET" action="{% url 'buscar_productos' %}">
+           <i class="ri-search-line search__icon"></i>
+           <input type="search" placeholder="Buscar tu producto" class="search__input" name="q" arial-label="Buscar">
+           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+
+
+
+
+        <i class="ri-close-line search__close" id="search-close"></i>
+     </div>
+
+     <!--==================== LOGIN ====================-->
+     <div class="login" id="login">
+        <form action="" class="login__form">
+           <h2 class="login__title">Log In</h2>
+           
+           <div class="login__group">
+              <div>
+                 <label for="email" class="login__label">Email</label>
+                 <input type="email" placeholder="Write your email" id="email" class="login__input">
+              </div>
+              
+              <div>
+                 <label for="password" class="login__label">Password</label>
+                 <input type="password" placeholder="Enter your password" id="password" class="login__input">
+              </div>
+           </div>
+
+           <div>
+              <p class="login__signup">
+                 You do not have an account? <a href="#">Sign up</a>
+              </p>
+  
+              <a href="#" class="login__forgot">
+                 You forgot your password
+              </a>
+  
+              <button type="submit" class="login__button">Log In</button>
+           </div>
+        </form>
+
+        <i class="ri-close-line login__close" id="login-close"></i>
+     </div>
+
     <br>
 <br>
 <br>
+
 {% block contenido %} {% endblock %}
 
 <br>
@@ -246,6 +221,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 </script>
+
+
 
 
 

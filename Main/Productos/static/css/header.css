@@ -236,7 +236,7 @@
   /* Estilos para iPads en modo horizontal y otros dispositivos de pantalla más pequeña */
   #container-slider .arrowPrev,
   #container-slider .arrowNext {
-    font-size: 20pt;
+    font-size: 25pt;
     left: 15px;
     right: 15px !important;
   }
@@ -247,11 +247,11 @@
   }
 
   #slider li .content_slider {
-    padding: 10px 35px;
+    padding: 15px 50px;
   }
 
   .btnSlider {
-    padding: 10px 30px;
+    padding: 10px 40px;
     font-size: 12pt;
   }
 }
