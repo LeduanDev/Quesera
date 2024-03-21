@@ -4,66 +4,90 @@
 {% block titulo %} Carro {% endblock %}
 
 {% block contenido %}
-<link rel="stylesheet" href="{% static 'css/carrito.css' %}?v=1">
-<link rel="stylesheet" href="{% static 'css/boots.css' %}?v=1">
 
+<script src="https://cdn.tailwindcss.com"></script>
 <br>
 
-<div class="card">
-    <div class="row">
-        <div class="col-md-8 cart">
-            <div class="title">
-                <div class="row">
-                    <div class="col"><h4><b>Shopping Cart</b></h4></div>
-                    <div class="col align-self-center text-right text-muted">{{ carrito.productos.count }} items</div>
-                </div>
-            </div>    
-            {% for detalle in carrito.detallecarrito_set.all %}
-            <div class="row border-top border-bottom detalle-carrito" data-detalle-id="{{ detalle.id }}">
-                <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="{{ detalle.producto.imagen.url }}"></div>
-                    <div class="col">
-                        <div class="row text-muted">{{ detalle.producto.nombre }}</div>
-                        <div class="row">{{ detalle.producto.descripcion }}</div>
-                    </div>
-                    <div class="col">
-                        <form action="{% url 'aumentar_cantidad' detalle.id %}" method="post" class="cantidad-form" data-detalle-id="{{ detalle.id }}">
-                            {% csrf_token %}
-                            <button type="submit" class="border">+</button>
-                        </form>
+
+<section>
+    <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <div class="mx-auto max-w-3xl">
+            <header class="text-center">
+                <h1 class="text-xl font-bold text-gray-900 sm:text-3xl">Carrito de compras</h1>
+            </header>
+
+            <div class="mt-8">
+                <ul class="space-y-4">
+                    {% for detalle in carrito.detallecarrito_set.all %}
+                    <li class="flex items-center gap-4 detalle-carrito" data-detalle-id="{{ detalle.id }}">
+                        <img src="{{ detalle.producto.imagen.url }}" alt="{{ detalle.producto.nombre }}"
+                            class="size-16 rounded object-cover">
+
+                        <div>
+                            <h3 class="text-sm text-gray-900">{{ detalle.producto.nombre }}</h3>
+
+                            <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
+                                <div>
+                                    <dt class="inline">Description:</dt>
+                                    <dd class="inline">{{ detalle.producto.descripcion }}</dd>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <div class="flex flex-1 items-center justify-end gap-2">
+                            <form action="{% url 'aumentar_cantidad' detalle.id %}" method="post" class="cantidad-form" data-detalle-id="{{ detalle.id }}">
+                                {% csrf_token %}
+                                <button type="submit" class="text-gray-600 transition hover:text-red-600">
+                                    <span class="sr-only">Añadir Cantidad</span>
+                                    <i class="ri-add-line"></i> <!-- Aquí se encuentra el icono de "add-line" de Remix Icons -->
+                                </button>
+                            </form>
                         
-                        <span class="cantidad">{{ detalle.cantidad }}</span>
-                        
+                            <span class="cantidad">{{ detalle.cantidad }}</span>
+
                         <form action="{% url 'disminuir_cantidad' detalle.id %}" method="post" class="cantidad-form" data-detalle-id="{{ detalle.id }}">
-                            {% csrf_token %}
-                            <button type="submit">-</button>
-                        </form>
-                    </div>
-                    <div class="col">COP <span class="precio-total">{{ detalle.precio_total }}</span></div>
+                               
+                                {% csrf_token %}
+                                <button type="submit"
+                                    class="text-gray-600 transition hover:text-red-600">-</button>
+                            </form>
+                        </div>
+                        <div class="col">COP <span class="precio-total">{{ detalle.precio_total }}</span></div>
+                    </li>
+                    {% endfor %}
+                </ul>
 
-                    
+                <div class="mt-8 flex justify-end border-t border-gray-100 pt-8">
+                    <div class="w-screen max-w-lg space-y-4">
+                        <dl class="space-y-0.5 text-sm text-gray-700">
+                            <div class="flex justify-between">
+                                <dt>Total Price</dt>
+                                <dd  id="total-neto">COP {{ carrito.total|floatformat:2 }}</dd>
+                            </div>
+                        </dl>
+
+                        <div class="flex justify-end">
+                            <a href="{% url 'home' %}"
+                                class="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600">Back
+                                to shop</a>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <a href="{% url 'eliminar_carrito' %}"
+                                class="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600">Vaciar
+                                el carro</a>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <a href="{% url 'pedido' %}" class="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
+                                onclick="return irAlPedido();">Ir al Pedido</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            {% endfor %}
-            <div class="back-to-shop"><a href="{% url  'home' %}">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
-            <div class="back-to-shop"><a href="{% url 'eliminar_carrito' %}">&leftarrow;</a><span class="button">Vaciar el carro</span></div>
-            
-
-            <div class="go-to-order">
-                <a href="{% url 'pedido' %}" class="button" onclick="return irAlPedido();">Ir al Pedido</a>
-            </div>
-        </div>
-        
-        <div class="col-md-4 summary">
-            <div><h5><b>Summary</b></h5></div>
-            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                <div class="col">TOTAL PRICE</div>
-                <div class="col text-right" id="total-neto">COP {{ carrito.total|floatformat:2 }}</div>
-            </div>
-           
         </div>
     </div>
-</div>
+</section>
 
 
 <script src="{% static 'js/carrito.js' %}"></script>
