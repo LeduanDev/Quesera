@@ -1,8 +1,9 @@
 /*=============== GOOGLE FONTS ===============*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
 
 /*=============== VARIABLES CSS ===============*/
 :root {
+  
   --header-height: 3.5rem;
 
   /*========== Colors ==========*/
@@ -16,7 +17,7 @@
 
   /*========== Font and typography ==========*/
   /*.5rem = 8px | 1rem = 16px ...*/
-  --body-font: "Syne", sans-serif;
+  --body-font: ;
   --h2-font-size: 1.25rem;
   --normal-font-size: .938rem;
 
