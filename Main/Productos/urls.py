@@ -6,8 +6,8 @@ from django.conf.urls.static import static
 urlpatterns = [
   path('', views.home, name= 'home'),
   path('shop', views.shop, name='shop'),
-  path('pedido2', views.pedido_correcto, name = 'pedido2'),
-  path('pedido/', views_carrito.pedido, name='pedido'),
+  path('crear_pedido/', views_carrito.crear_pedido, name='crear_pedido'),
+  path('pedido/<int:pedido_id>/', views_carrito.vista_pedido, name='vista_pedido'),
   path('carrito/', views_carrito.carrito, name='carrito'),
   path('carrito/agregar/<int:producto_id>/', views_carrito.agregar_al_carrito, name='agregar_al_carrito'),
   path('eliminar_del_carrito/<int:producto_id>/', views_carrito.eliminar_del_carrito, name='eliminar_del_carrito'),

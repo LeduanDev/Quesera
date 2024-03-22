@@ -12,9 +12,6 @@ def home(request):
     return render(request, 'principal/home.html', {'imagen': imagen, 'productos': productos_especiales, 'categoria': categoria})
 
 
-def pedido_correcto(request):
-    return render(request, 'principal/correcto.html')
-
 def shop(request):
     categorias = Categoria.objects.all()
     categoria_seleccionada = None

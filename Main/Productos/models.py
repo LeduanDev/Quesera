@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.sessions.models import Session
 
 
 class SliderImage(models.Model):
@@ -33,7 +34,6 @@ class Producto(models.Model):
 class Carrito(models.Model):
     productos = models.ManyToManyField('Producto', through='DetalleCarrito')
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-
     def calcular_total(self):
         self.total = sum(detalle.precio_total() for detalle in self.detallecarrito_set.all())
         self.save()
@@ -47,13 +47,18 @@ class DetalleCarrito(models.Model):
     def precio_total(self):
         return self.producto.precio * self.cantidad
 
+
 class Pedido(models.Model):
     nombre = models.CharField(max_length=100)
     direccion = models.CharField(max_length=200)
-    numero = models.CharField(max_length=20)
-    descripcion = models.TextField(blank=True)
-    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE)
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    telefono = models.CharField(max_length=20)
+    fecha_pedido = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"Pedido de {self.nombre} - {self.fecha_creacion}"
+
+class DetallePedido(models.Model):
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
+    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
+    precio_total = models.DecimalField(max_digits=10, decimal_places=2)
+

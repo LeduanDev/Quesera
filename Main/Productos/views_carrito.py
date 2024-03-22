@@ -1,13 +1,12 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse
+
 from Productos.forms import PedidoForm
-from .models import Pedido, SliderImage
-from .models import Carrito, Producto, DetalleCarrito, Categoria
+from .models import Carrito, DetallePedido, Pedido, Producto, DetalleCarrito
 from django.db import transaction
 from django.template.defaultfilters import floatformat
 from django.db.models import Q
-from django.contrib.postgres.search import SearchVector
+
 
 
 def carrito(request):
@@ -25,7 +24,9 @@ def carrito(request):
     return render(request, "principal/carrito.html", {"carrito": carrito})
 
 
-def pedido(request):
+
+
+def crear_pedido(request):
     carrito_id = request.session.get("carrito_id")
     carrito = Carrito.objects.get(id=carrito_id)
 
@@ -35,37 +36,46 @@ def pedido(request):
                 "mensaje": "Tu carrito está vacío. Por favor, agrega productos antes de proceder al pedido."
             }
         )
-
-    if request.method == "POST":
+    if request.method == 'POST':
         form = PedidoForm(request.POST)
         if form.is_valid():
-            nombre = form.cleaned_data["nombre"]
-            direccion = form.cleaned_data["direccion"]
-            numero = form.cleaned_data["numero"]
-            descripcion = form.cleaned_data["descripcion"]
+            pedido = form.save()
+            carrito_id = request.session.get("carrito_id")
+            if carrito_id:
+                carrito = Carrito.objects.get(id=carrito_id)
+                for detalle_carrito in carrito.detallecarrito_set.all():  # Acceder a los detalles del carrito
+                    DetallePedido.objects.create(
+                        pedido=pedido,
+                        producto=detalle_carrito.producto,
+                        cantidad=detalle_carrito.cantidad,
+                        precio_unitario=detalle_carrito.producto.precio,
+                        precio_total=detalle_carrito.precio_total()
+                    )
 
-            pedido = Pedido.objects.create(
-                nombre=nombre,
-                direccion=direccion,
-                numero=numero,
-                descripcion=descripcion,
-                carrito=carrito,
-            )
-
-            carrito.productos.clear()
-            carrito.total = 0
-            carrito.save()
-
-            return redirect("pedido2")
+                carrito.productos.clear()
+                carrito.total = 0
+                carrito.save()
+            return redirect('vista_pedido', pedido_id=pedido.id)
     else:
         form = PedidoForm()
+    return render(request, 'principal/pedido.html', {'form': form})
 
-    context = {
-        "form": form,
-        "carrito": carrito,
-    }
 
-    return render(request, "principal/pedido.html", context)
+
+def vista_pedido(request, pedido_id):
+    pedido = Pedido.objects.get(id=pedido_id)
+    detalles = DetallePedido.objects.filter(pedido=pedido)
+    total_pedido = sum(detalle.precio_total for detalle in detalles)
+    return render(request, 'principal/correcto.html', {'pedido': pedido, 'detalles': detalles, 'total_pedido': total_pedido})
+
+
+
+
+def vista_pedido(request, pedido_id):
+    pedido = Pedido.objects.get(id=pedido_id)
+    detalles = DetallePedido.objects.filter(pedido=pedido)
+    total_pedido = sum(detalle.precio_total for detalle in detalles)
+    return render(request, 'principal/correcto.html', {'pedido': pedido, 'detalles': detalles, 'total_pedido': total_pedido})
 
 
 @transaction.atomic

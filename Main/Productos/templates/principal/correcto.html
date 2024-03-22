@@ -7,19 +7,38 @@
 
 
 
-<h1>Pedido Confirmado</h1>
-<p>Su pedido ha sido exitoso. ¡Gracias por su compra!</p>
+<h1>Detalle del Pedido</h1>
+<h2>Información del Cliente:</h2>
+<p><strong>Nombre:</strong> {{ pedido.nombre }}</p>
+<p><strong>Email:</strong> {{ pedido.email }}</p>
+<p><strong>Dirección:</strong> {{ pedido.direccion }}</p>
+<p><strong>Teléfono:</strong> {{ pedido.telefono }}</p>
 
-<h2>Detalles del Pedido:</h2>
-<p>Total del Pedido: ${{ detalles_pedido.total }}</p>
-<p>Número de Productos: {{ detalles_pedido.numero_productos }}</p>
+<h2>Productos:</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Precio Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for detalle in detalles %}
+        <tr>
+            <td>{{ detalle.producto.nombre }}</td>
+            <td>{{ detalle.cantidad }}</td>
+            <td>{{ detalle.precio_unitario }}</td>
+            <td>{{ detalle.precio_total }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-<h3>Productos:</h3>
-<ul>
-    {% for producto in detalles_pedido.productos %}
-        <li>{{ producto.nombre }} - Precio: ${{ producto.precio }}</li>
-    {% endfor %}
-</ul>
+<h2>Total del Pedido: {{ total_pedido }}</h2>
+
+<a href="{% url 'home' %}">Volver al inicio</a>
 
 
 
