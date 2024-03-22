@@ -1,1 +1,26 @@
-well done
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %} Pedido {% endblock %}
+
+{% block contenido %}
+
+
+
+<h1>Pedido Confirmado</h1>
+<p>Su pedido ha sido exitoso. ¡Gracias por su compra!</p>
+
+<h2>Detalles del Pedido:</h2>
+<p>Total del Pedido: ${{ detalles_pedido.total }}</p>
+<p>Número de Productos: {{ detalles_pedido.numero_productos }}</p>
+
+<h3>Productos:</h3>
+<ul>
+    {% for producto in detalles_pedido.productos %}
+        <li>{{ producto.nombre }} - Precio: ${{ producto.precio }}</li>
+    {% endfor %}
+</ul>
+
+
+
+{% endblock %}

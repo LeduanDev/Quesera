@@ -7,17 +7,12 @@ from .models import Carrito, Producto, DetalleCarrito, Categoria
 
 def home(request):
     imagen = SliderImage.objects.all()
-    # Esto solo carga los productos que esten marcados como especiales, en este caso carga al menos 10 como maximo
     productos_especiales = Producto.objects.filter(especial=True)[:10]
     categoria = Categoria.objects.all()
-  
-    
     return render(request, 'principal/home.html', {'imagen': imagen, 'productos': productos_especiales, 'categoria': categoria})
 
 
-
 def pedido_correcto(request):
-    hola = "sdas"
     return render(request, 'principal/correcto.html')
 
 def shop(request):

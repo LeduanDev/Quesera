@@ -52,15 +52,15 @@ textarea{
 textarea:focus,
 input:focus{
     outline: none;
-    border-color: #6f6df4;
+    border-color: #000000;
 }
 .boton{
     border: none;
     padding: 10px 20px;
     background: linear-gradient(
         130deg,
-        #3367d8,
-        #1f18f5
+        #919294,
+        #010101
     );
     color: #ffffff;
     border-radius: 3px;

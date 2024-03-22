@@ -29,9 +29,7 @@ def pedido(request):
     carrito_id = request.session.get("carrito_id")
     carrito = Carrito.objects.get(id=carrito_id)
 
-    # Verificar si el carrito está vacío
     if carrito.productos.count() == 0:
-        # return HttpResponse("Tu carrito está vacío. Por favor, agrega productos antes de proceder al pedido.")
         return JsonResponse(
             {
                 "mensaje": "Tu carrito está vacío. Por favor, agrega productos antes de proceder al pedido."
@@ -62,7 +60,12 @@ def pedido(request):
     else:
         form = PedidoForm()
 
-    return render(request, "principal/pedido.html", {"form": form})
+    context = {
+        "form": form,
+        "carrito": carrito,
+    }
+
+    return render(request, "principal/pedido.html", context)
 
 
 @transaction.atomic
