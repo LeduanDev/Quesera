@@ -5,65 +5,62 @@
 
 {% block contenido %}
 <link rel="stylesheet" href="{% static 'css/carrito.css' %}?v=1">
-<link rel="stylesheet" href="{% static 'css/boots.css' %}?v=1">
+
 
 <br>
 
-<div class="card">
-    <div class="row">
-        <div class="col-md-8 cart">
-            <div class="title">
-                <div class="row">
-                    <div class="col"><h4><b>Shopping Cart</b></h4></div>
-                    <div class="col align-self-center text-right text-muted">{{ carrito.productos.count }} items</div>
-                </div>
-            </div>    
-            {% for detalle in carrito.detallecarrito_set.all %}
-            <div class="row border-top border-bottom detalle-carrito" data-detalle-id="{{ detalle.id }}">
-                <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="{{ detalle.producto.imagen.url }}"></div>
-                    <div class="col">
-                        <div class="row text-muted">{{ detalle.producto.nombre }}</div>
-                        <div class="row">{{ detalle.producto.descripcion }}</div>
-                    </div>
-                    <div class="col">
-                        <form action="{% url 'aumentar_cantidad' detalle.id %}" method="post" class="cantidad-form" data-detalle-id="{{ detalle.id }}">
-                            {% csrf_token %}
-                            <button type="submit" class="border">+</button>
-                        </form>
-                        
-                        <span class="cantidad">{{ detalle.cantidad }}</span>
-                        
-                        <form action="{% url 'disminuir_cantidad' detalle.id %}" method="post" class="cantidad-form" data-detalle-id="{{ detalle.id }}">
-                            {% csrf_token %}
-                            <button type="submit">-</button>
-                        </form>
-                    </div>
-                    <div class="col">COP <span class="precio-total">{{ detalle.precio_total }}</span></div>
+<section class="carrito-container">
+    <div class="carrito-header">
+        <h1 class="text-xl font-bold text-gray-900">Carrito de compras</h1>
+    </div>
 
+    <div class="carrito-items">
+        <ul class="carrito-list">
+            <!-- Itera sobre los elementos del carrito -->
+            {% for detalle in carrito.detallecarrito_set.all %}
+            <li class="detalle-carrito" data-detalle-id="{{ detalle.id }}">
+                <img src="{{ detalle.producto.imagen.url }}" alt="{{ detalle.producto.nombre }}" class="detalle-imagen">
+                <div class="detalle-info">
+                    <h3 class="detalle-nombre">{{ detalle.producto.nombre }}</h3>
+                    <p class="detalle-descripcion">{{ detalle.producto.descripcion }}</p>
+                </div>
+                <div class="detalle-acciones">
+                    <form action="{% url 'aumentar_cantidad' detalle.id %}" method="post" class="cantidad-form" data-detalle-id="{{ detalle.id }}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-accion">
+                            <i class="ri-add-line"></i>
+                        </button>
+                    </form>
+                    <span class="cantidad">{{ detalle.cantidad }}</span>
+                    <form action="{% url 'disminuir_cantidad' detalle.id %}" method="post" class="cantidad-form" data-detalle-id="{{ detalle.id }}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-accion">
+                            <i class="ri-subtract-line"></i>
+                        </button>
+                    </form>
+                    <span class="precio-total">{{ detalle.precio_total }}</span>
                     
                 </div>
-            </div>
+            </li>
             {% endfor %}
-            <div class="back-to-shop"><a href="{% url  'home' %}">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
-            <div class="back-to-shop"><a href="{% url 'eliminar_carrito' %}">&leftarrow;</a><span class="button">Vaciar el carro</span></div>
-            
+        </ul>
+    </div>
 
-            <div class="go-to-order">
-                <a href="{% url 'pedido' %}" class="button" onclick="return irAlPedido();">Ir al Pedido</a>
+    <div class="carrito-footer">
+        <dl class="text-sm text-gray-700">
+            <div class="total">
+                <dt>Precio total:</dt>
+                <dd id="total-neto">{{ carrito.total|floatformat:2 }}</dd>
             </div>
-        </div>
-        
-        <div class="col-md-4 summary">
-            <div><h5><b>Summary</b></h5></div>
-            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                <div class="col">TOTAL PRICE</div>
-                <div class="col text-right" id="total-neto">COP {{ carrito.total|floatformat:2 }}</div>
-            </div>
-           
+        </dl>
+
+        <div class="botones">
+            <a href="{% url 'home' %}" class="rounded bg-gray-700">Back to shop</a>
+            <a href="{% url 'eliminar_carrito' %}" class="rounded bg-gray-700">Vaciar el carro</a>
+            <a href="{% url 'pedido' %}" class="rounded bg-gray-700" onclick="return irAlPedido();">Ir al Pedido</a>
         </div>
     </div>
-</div>
+</section>
 
 
 <script src="{% static 'js/carrito.js' %}"></script>

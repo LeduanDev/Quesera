@@ -22,7 +22,7 @@
       <!--==================== HEADER ====================-->
       <header class="header" id="header">
         <nav class="nav container">
-           <a href="#" class="nav__logo">Qusera la moraleña</a>
+           <a href="{% url 'home' %}" class="nav__logo">Qusera la moraleña</a>
 
            <div class="nav__menu" id="nav-menu">
               <ul class="nav__list">
@@ -38,7 +38,7 @@
                     <a href="#" class="nav__link">Contact Me</a>
                  </li>
 
-                 <li>
+           
    
               </ul>
 
@@ -186,20 +186,6 @@
     </div>
   </footer>
   
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        actualizarNumeroProductosCarrito();
-    });
-
-    function actualizarNumeroProductosCarrito() {
-        fetch('{% url "obtener_numero_productos_en_carrito" %}')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('numero-productos-carrito').textContent = data.numero_productos;
-            })
-            .catch(error => console.error('Error al obtener el número de productos en el carrito:', error));
-    }
-</script> -->
 <script>
     function actualizarNumeroProductosCarrito() {
     fetch('{% url "obtener_numero_productos_en_carrito" %}')
@@ -208,95 +194,22 @@
             document.getElementById('numero-productos-carrito').textContent = data.numero_productos;
         })
         .catch(error => console.error('Error al obtener el número de productos en el carrito:', error));
-}
+    }
 
-// Llamar a esta función después de agregar o eliminar un producto del carrito
-function actualizarCarritoYProductos() {
-    actualizarNumeroProductosCarrito();
-    // Aquí puedes realizar cualquier otra actualización necesaria después de agregar o eliminar un producto del carrito
-}
 
-document.addEventListener('DOMContentLoaded', function() {
-    actualizarNumeroProductosCarrito();
-});
+      function actualizarCarritoYProductos() {
+          actualizarNumeroProductosCarrito();
+
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+          actualizarNumeroProductosCarrito();
+      });
 
 
 </script>
 
 
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const botonesAgregarCarrito = document.querySelectorAll('.agregar-al-carrito');
-    botonesAgregarCarrito.forEach(boton => {
-    boton.addEventListener('click', function() {
-        const productoId = boton.dataset.productoId;
-        agregarProductoAlCarrito(productoId);
-    });
-    });
-    });
-    
-    function agregarProductoAlCarrito(productoId) {
-        fetch(`/carrito/agregar/${productoId}/`, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': obtenerCSRFToken(),
-                'Content-Type': 'application/json'
-            },
-            credentials: 'same-origin'
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                return response.json().then(data => {
-                    // Muestra el mensaje de error en una alerta
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: data.mensaje,
-                        timer: 2000, // Auto-cerrar después de 2 segundos
-                        timerProgressBar: true,
-                        showConfirmButton: false
-                    });
-                });
-            }
-        })
-        .then(data => {
-            // Llamar a la función para actualizar el número de productos en el carrito
-            actualizarNumeroProductosCarrito();
-            
-            // Muestra el mensaje de éxito en una alerta
-            Swal.fire({
-                icon: 'success',
-                title: 'Éxito',
-                text: data.mensaje,
-                timer: 2000, // Auto-cerrar después de 2 segundos
-                timerProgressBar: true,
-                showConfirmButton: false
-            });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            // Muestra el mensaje de error en una alerta
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: data.mensaje,
-                timer: 2000, // Auto-cerrar después de 2 segundos
-                timerProgressBar: true,
-                showConfirmButton: false
-            });
-        });
-    }
-    
-    
-    function obtenerCSRFToken() {
-    const cookieValue = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
-    return cookieValue;
-    }
-    
-</script>
 
     <script src="{% static 'js/navbar.js' %}"></script>
 </body>

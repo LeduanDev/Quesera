@@ -1,6 +1,6 @@
 /*=============== GOOGLE FONTS ===============*/
 
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 /*=============== VARIABLES CSS ===============*/
 :root {
   
@@ -19,6 +19,7 @@
   /*.5rem = 8px | 1rem = 16px ...*/
   --body-font: ;
   --h2-font-size: 1.25rem;
+  --body-font: "Poppins", sans-serif;
   --normal-font-size: .938rem;
 
   /*========== Font weight ==========*/
