@@ -1,74 +1,3 @@
-// document.addEventListener('DOMContentLoaded', function() {
-//     const botonesAgregarCarrito = document.querySelectorAll('.agregar-al-carrito');
-//     botonesAgregarCarrito.forEach(boton => {
-//     boton.addEventListener('click', function() {
-//         const productoId = boton.dataset.productoId;
-//         agregarProductoAlCarrito(productoId);
-//     });
-//     });
-//     });
-    
-//     function agregarProductoAlCarrito(productoId) {
-//         fetch(`/carrito/agregar/${productoId}/`, {
-//             method: 'POST',
-//             headers: {
-//                 'X-CSRFToken': obtenerCSRFToken(),
-//                 'Content-Type': 'application/json'
-//             },
-//             credentials: 'same-origin'
-//         })
-//         .then(response => {
-//             if (response.ok) {
-//                 return response.json();
-//             } else {
-//                 return response.json().then(data => {
-//                     // Muestra el mensaje de error en una alerta
-//                     Swal.fire({
-//                         icon: 'error',
-//                         title: 'Error',
-//                         text: data.mensaje,
-//                         timer: 2000, // Auto-cerrar después de 2 segundos
-//                         timerProgressBar: true,
-//                         showConfirmButton: false
-//                     });
-//                 });
-//             }
-//         })
-//         .then(data => {
-//             // Llamar a la función para actualizar el número de productos en el carrito
-//             actualizarNumeroProductosCarrito();
-            
-//             // Muestra el mensaje de éxito en una alerta
-//             Swal.fire({
-//                 icon: 'success',
-//                 title: 'Éxito',
-//                 text: data.mensaje,
-//                 timer: 2000, // Auto-cerrar después de 2 segundos
-//                 timerProgressBar: true,
-//                 showConfirmButton: false
-//             });
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//             // Muestra el mensaje de error en una alerta
-//             Swal.fire({
-//                 icon: 'error',
-//                 title: 'Error',
-//                 text: data.mensaje,
-//                 timer: 2000, // Auto-cerrar después de 2 segundos
-//                 timerProgressBar: true,
-//                 showConfirmButton: false
-//             });
-//         });
-//     }
-    
-    
-//     function obtenerCSRFToken() {
-//     const cookieValue = document.cookie.match(/csrftoken=([^ ;]+)/)[1];
-//     return cookieValue;
-//     }
-    
-
 /*=============== SHOW MENU ===============*/
 const navMenu = document.getElementById('nav-menu'),
       navToggle = document.getElementById('nav-toggle'),
@@ -99,3 +28,17 @@ searchClose.addEventListener('click', () =>{
    search.classList.remove('show-search')
 })
 
+/*=============== LOGIN ===============*/
+const login = document.getElementById('login'),
+      loginBtn = document.getElementById('login-btn'),
+      loginClose = document.getElementById('login-close')
+
+/* Login show */
+loginBtn.addEventListener('click', () =>{
+   login.classList.add('show-login')
+})
+
+/* Login hidden */
+loginClose.addEventListener('click', () =>{
+   login.classList.remove('show-login')
+})
