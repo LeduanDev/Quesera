@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 detalleElement.querySelector('.precio-total').textContent = data.precio_total;
             
                 // Actualizar el contador de productos en el carrito
-                actualizarNumeroProductosCarrito();
+                actualizarContadorProductos();
             
                 // Verificar si el campo 'total' está presente en la respuesta JSON
                 if ('total' in data) {
@@ -54,3 +54,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+function obtenerCSRFToken() {
+    const csrfTokenElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
+    if (csrfTokenElement) {
+        return csrfTokenElement.value;
+    } else {
+        console.error('No se pudo encontrar el token CSRF en el formulario.');
+        return null;
+    }
+}

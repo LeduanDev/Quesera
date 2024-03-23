@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -186,27 +186,67 @@
     </div>
   </footer>
   
-<script>
-    function actualizarNumeroProductosCarrito() {
-    fetch('{% url "obtener_numero_productos_en_carrito" %}')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('numero-productos-carrito').textContent = data.numero_productos;
-        })
-        .catch(error => console.error('Error al obtener el número de productos en el carrito:', error));
+
+  
+  <script>
+    function actualizarContadorProductos() {
+        $.ajax({
+            type: "GET",
+            url: "{% url 'obtener_numero_productos_en_carrito' %}",
+            dataType: "json",
+            success: function(response) {
+                $("#numero-productos-carrito").text(response.numero_productos);
+            },
+            error: function(xhr, errmsg, err) {
+                console.error("Error al obtener el número de productos en el carrito.");
+            }
+        });
     }
 
-
-      function actualizarCarritoYProductos() {
-          actualizarNumeroProductosCarrito();
-
-      }
-
-      document.addEventListener('DOMContentLoaded', function() {
-          actualizarNumeroProductosCarrito();
-      });
-
-
+    $(document).ready(function() {
+        $(".agregar-al-carrito").on("click", function(event) {
+            event.preventDefault();
+            var producto_id = $(this).closest('.agregar-producto-form').data("producto-id");
+            $.ajax({
+                type: "POST",
+                url: "{% url 'agregar_al_carrito' 0 %}".replace('0', producto_id),
+                data: {
+                    csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                    producto_id: producto_id
+                },
+                dataType: "json"
+            })
+            .then(response => {
+                // Llamar a la función para actualizar el número de productos en el carrito
+                actualizarContadorProductos();
+                
+                // Muestra el mensaje de éxito en una alerta
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: response.mensaje,
+                    timer: 2000, // Auto-cerrar después de 2 segundos
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Muestra el mensaje de error en una alerta
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.message, // Accede al mensaje de error a través de error.message
+                    timer: 2000, // Auto-cerrar después de 2 segundos
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+            });
+        });
+        
+        // Llama a actualizarContadorProductos al cargar la página
+        actualizarContadorProductos();
+    });
 </script>
 
 
