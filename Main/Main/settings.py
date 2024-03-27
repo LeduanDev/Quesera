@@ -127,18 +127,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 # settings.py
+
+# Configuración existente
 STATIC_URL = "/static/"
-# settings.py
-
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MEDIA_URL = "/slider_images/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "slider_images")
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+LOGIN_URL = '/loginn/'
 
-LOGIN_REDIRECT_URL = "loginn"
+# Nueva configuración para STATIC_ROOT
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

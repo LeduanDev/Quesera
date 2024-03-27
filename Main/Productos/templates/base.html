@@ -87,18 +87,22 @@
 
      <!--==================== LOGIN ====================-->
      <div class="login" id="login">
-        <form action="" class="login__form">
+        <form action="{% url 'loginn' %}"  method="post"  id="login-form" class="login__form">
+        {% csrf_token %}
+        <div id="error-message" class="alert alert-danger" role="alert" style="display: none; color: red;">
+          {{ error|escapejs }}
+        </div>
            <h2 class="login__title">Log In</h2>
            
            <div class="login__group">
               <div>
                  <label for="email" class="login__label">Email</label>
-                 <input type="email" placeholder="Write your email" id="email" class="login__input">
+                 <input type="text" name="username" placeholder="Escribe tu usuario" id="email" class="login__input">
               </div>
               
               <div>
                  <label for="password" class="login__label">Password</label>
-                 <input type="password" placeholder="Enter your password" id="password" class="login__input">
+                 <input type="password" name="password" placeholder="Ingresa tu contraseña" id="password" class="login__input">
               </div>
            </div>
 
@@ -110,8 +114,8 @@
               <a href="#" class="login__forgot">
                  You forgot your password
               </a>
-  
-              <button type="submit" class="login__button">Log In</button>
+                
+              <input type="submit" class="login__button" name="Log in">
            </div>
         </form>
 
@@ -240,7 +244,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: error.message, // Accede al mensaje de error a través de error.message
+                    text: 'el producto ya esta en el carrito', // Accede al mensaje de error a través de error.message
                     timer: 2000, // Auto-cerrar después de 2 segundos
                     timerProgressBar: true,
                     showConfirmButton: false
@@ -253,6 +257,32 @@
     });
 </script>
 
+
+<script> 
+  $(document).ready(function () {
+    $("#login-form").submit(function (e) {
+      e.preventDefault();
+
+      $.ajax({
+        type: "POST",
+        url: $(this).attr("action"),
+        data: $(this).serialize(),
+        success: function (response) {
+          if (response.success) {
+            
+            window.location.href = "{% url 'home' %}";
+          } else {
+          
+            $("#error-message").text("Usuario o contraseña incorrectos ").show();
+          }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+          console.log(xhr.responseText);
+        }
+      });
+    });
+  });
+  </script>
 
 
     <script src="{% static 'js/navbar.js' %}"></script>

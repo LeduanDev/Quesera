@@ -58,7 +58,6 @@ class Pedido(models.Model):
     fecha_pedido = models.DateTimeField(auto_now_add=True)
 
 class DetallePedido(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField()

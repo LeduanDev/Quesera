@@ -6,7 +6,7 @@ from .models import Carrito, DetallePedido, Pedido, Producto, DetalleCarrito
 from django.db import transaction
 from django.template.defaultfilters import floatformat
 from django.db.models import Q
-from django.contrib.auth import authenticate, login, logout 
+from django.contrib.auth import authenticate, login, logout
 
 
 from django.shortcuts import get_object_or_404, render, redirect
@@ -17,7 +17,6 @@ def carrito(request):
     # Obtenemos el carrito asociado con el usuario actual
     carrito, created = Carrito.objects.get_or_create(user=request.user)
 
- 
     if created:
         request.session["carrito_id"] = carrito.id
 
@@ -28,7 +27,7 @@ def carrito(request):
 @transaction.atomic
 def agregar_al_carrito(request, producto_id):
     producto = get_object_or_404(Producto, pk=producto_id)
-    
+
     # Obtenemos el carrito asociado con el usuario actual
     carrito, created = Carrito.objects.get_or_create(user=request.user)
 
@@ -55,21 +54,24 @@ def agregar_al_carrito(request, producto_id):
         )
 
 
-@login_required
 def crear_pedido(request):
     try:
         carrito = Carrito.objects.get(user=request.user)
     except Carrito.DoesNotExist:
         return JsonResponse(
-            {"mensaje": "Tu carrito está vacío. Por favor, agrega productos antes de proceder al pedido."}
+            {
+                "mensaje": "Tu carrito está vacío. Por favor, agrega productos antes de proceder al pedido."
+            }
         )
 
     if carrito.productos.count() == 0:
         return JsonResponse(
-            {"mensaje": "Tu carrito está vacío. Por favor, agrega productos antes de proceder al pedido."}
+            {
+                "mensaje": "Tu carrito está vacío. Por favor, agrega productos antes de proceder al pedido."
+            }
         )
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PedidoForm(request.POST)
         if form.is_valid():
             pedido = form.save(commit=False)
@@ -81,27 +83,28 @@ def crear_pedido(request):
                     producto=detalle_carrito.producto,
                     cantidad=detalle_carrito.cantidad,
                     precio_unitario=detalle_carrito.producto.precio,
-                    precio_total=detalle_carrito.precio_total()
+                    precio_total=detalle_carrito.precio_total(),
                 )
 
             carrito.productos.clear()
             carrito.total = 0
             carrito.save()
-            return redirect('vista_pedido', pedido_id=pedido.id)
+            return redirect("vista_pedido", pedido_id=pedido.id)
     else:
         form = PedidoForm()
 
-    return render(request, 'principal/pedido.html', {'form': form})
-
+    return render(request, "principal/pedido.html", {"form": form})
 
 @login_required
 def vista_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, id=pedido_id, user=request.user)
     detalles = DetallePedido.objects.filter(pedido=pedido)
     total_pedido = sum(detalle.precio_total for detalle in detalles)
-    return render(request, 'principal/correcto.html', {'pedido': pedido, 'detalles': detalles, 'total_pedido': total_pedido})
-
-
+    return render(
+        request,
+        "principal/correcto.html",
+        {"pedido": pedido, "detalles": detalles, "total_pedido": total_pedido},
+    )
 
 
 def eliminar_del_carrito(request, producto_id):
@@ -120,7 +123,6 @@ def eliminar_del_carrito(request, producto_id):
     return redirect("carrito")
 
 
-@login_required
 def eliminar_carrito(request):
     # Obtenemos el carrito asociado con el usuario actual
     carrito = Carrito.objects.get(user=request.user)
@@ -129,7 +131,8 @@ def eliminar_carrito(request):
     carrito.delete()
 
     return redirect("carrito")
-@login_required
+
+
 def aumentar_cantidad(request, detalle_id):
     detalle = get_object_or_404(DetalleCarrito, pk=detalle_id)
     detalle.cantidad += 1
@@ -142,13 +145,18 @@ def aumentar_cantidad(request, detalle_id):
     total_carrito = detalle.carrito.total
     numero_productos = detalle.carrito.detallecarrito_set.count()
 
-    return JsonResponse({
-        "cantidad": detalle.cantidad,
-        "numero_productos": numero_productos,
-        "total": total_carrito,
-        "precio_total": floatformat(precio_total, 2),  # Formatear el precio total con dos decimales
-    })
-@login_required
+    return JsonResponse(
+        {
+            "cantidad": detalle.cantidad,
+            "numero_productos": numero_productos,
+            "total": total_carrito,
+            "precio_total": floatformat(
+                precio_total, 2
+            ),  # Formatear el precio total con dos decimales
+        }
+    )
+
+
 def disminuir_cantidad(request, detalle_id):
     detalle = get_object_or_404(DetalleCarrito, pk=detalle_id)
     if detalle.cantidad > 1:
@@ -166,13 +174,17 @@ def disminuir_cantidad(request, detalle_id):
     total_carrito = detalle.carrito.total
     numero_productos = detalle.carrito.detallecarrito_set.count()
 
-    return JsonResponse({
-        "cantidad": detalle.cantidad,
-        "numero_productos": numero_productos,
-        "total": total_carrito,
-        "precio_total": floatformat(precio_total, 2),  # Formatear el precio total con dos decimales
-        "eliminado_completamente": eliminado_completamente,
-    })
+    return JsonResponse(
+        {
+            "cantidad": detalle.cantidad,
+            "numero_productos": numero_productos,
+            "total": total_carrito,
+            "precio_total": floatformat(
+                precio_total, 2
+            ),  # Formatear el precio total con dos decimales
+            "eliminado_completamente": eliminado_completamente,
+        }
+    )
 
 
 def obtener_numero_productos_en_carrito(request):
@@ -185,9 +197,8 @@ def obtener_numero_productos_en_carrito(request):
     return JsonResponse({"numero_productos": numero_productos})
 
 
-
 def buscar_productos(request):
-    query = request.GET.get('q')
+    query = request.GET.get("q")
     palabras_clave = query.split() if query else []
 
     # Inicializar una consulta vacía
@@ -196,13 +207,14 @@ def buscar_productos(request):
     # Agregar condiciones de búsqueda para cada palabra clave
     for palabra in palabras_clave:
         consulta |= (
-            Q(nombre__icontains=palabra) |
-            Q(categoria__nombre__icontains=palabra) 
-          # Asegúrate de que "descripcion" sea un campo en tu modelo Producto
+            Q(nombre__icontains=palabra)
+            | Q(categoria__nombre__icontains=palabra)
+            # Asegúrate de que "descripcion" sea un campo en tu modelo Producto
         )
 
     # Ejecutar la consulta
     productos = Producto.objects.filter(consulta)
 
-    return render(request, 'principal/shop.html', {'productos': productos, 'query': query})
-
+    return render(
+        request, "principal/shop.html", {"productos": productos, "query": query}
+    )

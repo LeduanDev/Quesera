@@ -17,6 +17,6 @@ urlpatterns = [
   path('obtener-numero-productos-en-carrito/', views_carrito.obtener_numero_productos_en_carrito, name='obtener_numero_productos_en_carrito'),
   path('buscar/', views_carrito.buscar_productos, name='buscar_productos'),
   path("registro", views.registro, name="registro"),
-  path("loginn", views.loginn, name="loginn"),
+  path("loginn/", views.loginn, name="loginn"),
       path('logout', views.cerrar, name='logout'),
 ]  
