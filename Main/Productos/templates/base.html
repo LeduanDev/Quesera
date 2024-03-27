@@ -18,7 +18,6 @@
 </head>
 
 <body>
-      
       <!--==================== HEADER ====================-->
       <header class="header" id="header">
         <nav class="nav container">
@@ -39,17 +38,11 @@
                  </li>
                  <li class="nav__item">
                   <a href="{% url 'loginn' %}" class="nav__link">Cdasar</a>
-               </li>
 
-
-           
-   
-              </ul>
-
-              <!-- Close button -->
-              <div class="nav__close" id="nav-close">
-                 <i class="ri-close-line"></i>
-              </div>
+                <!-- Close button -->
+                <div class="nav__close" id="nav-close">
+                  <i class="ri-close-line"></i>
+                </div>
            </div>
 
            <div class="nav__actions">
@@ -212,49 +205,72 @@
     }
 
     $(document).ready(function() {
-        $(".agregar-al-carrito").on("click", function(event) {
-            event.preventDefault();
-            var producto_id = $(this).closest('.agregar-producto-form').data("producto-id");
-            $.ajax({
-                type: "POST",
-                url: "{% url 'agregar_al_carrito' 0 %}".replace('0', producto_id),
-                data: {
-                    csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
-                    producto_id: producto_id
-                },
-                dataType: "json"
-            })
-            .then(response => {
-                // Llamar a la función para actualizar el número de productos en el carrito
-                actualizarContadorProductos();
-                
-                // Muestra el mensaje de éxito en una alerta
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Éxito',
-                    text: response.mensaje,
-                    timer: 2000, // Auto-cerrar después de 2 segundos
-                    timerProgressBar: true,
-                    showConfirmButton: false
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Muestra el mensaje de error en una alerta
+    $(".agregar-al-carrito").on("click", function(event) {
+        event.preventDefault();
+        var producto_id = $(this).closest('.agregar-producto-form').data("producto-id");
+        $.ajax({
+            type: "POST",
+            url: "{% url 'agregar_al_carrito' 0 %}".replace('0', producto_id),
+            data: {
+                csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                producto_id: producto_id
+            },
+            dataType: "json"
+        })
+        .then(response => {
+            // Llamar a la función para actualizar el número de productos en el carrito
+            actualizarContadorProductos();
+            
+            // Muestra el mensaje de éxito en una alerta
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: response.mensaje,
+                timer: 2000, // Auto-cerrar después de 2 segundos
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            if (error.status === 401) {
+                // Usuario no autenticado
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'el producto ya esta en el carrito', // Accede al mensaje de error a través de error.message
-                    timer: 2000, // Auto-cerrar después de 2 segundos
+                    text: error.responseJSON.mensaje,
+                    timer: 2000,
                     timerProgressBar: true,
                     showConfirmButton: false
                 });
-            });
+            } else if (error.status === 400) {
+                // Producto ya en el carrito
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.responseJSON.mensaje,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+            } else {
+                // Otro tipo de error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un error al procesar su solicitud.',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+            }
         });
-        
-        // Llama a actualizarContadorProductos al cargar la página
-        actualizarContadorProductos();
     });
+    
+    // Llama a actualizarContadorProductos al cargar la página
+    actualizarContadorProductos();
+});
+
 </script>
 
 

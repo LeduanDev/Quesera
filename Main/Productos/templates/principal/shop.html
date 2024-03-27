@@ -32,6 +32,7 @@
                             <input type="hidden" name="producto_id" value="{{ producto.id }}">
                             <button type="button" class="bn632-hover bn25 agregar-al-carrito">Agregar al carrito</button>
                         </form>
+                        <a class="bn632-hover bn25" href="{% url 'detalles' producto.id %}">Detalles</a>
                     </div>
                 </div>
             {% endfor %}

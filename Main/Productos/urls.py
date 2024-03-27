@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.urls import include, path
-from . import views, views_carrito
+from . import views, views_carrito, controlador_sesion
 from django.conf.urls.static import static
 
 urlpatterns = [
@@ -16,7 +16,8 @@ urlpatterns = [
   path('carrito/disminuir/<int:detalle_id>/', views_carrito.disminuir_cantidad, name='disminuir_cantidad'),
   path('obtener-numero-productos-en-carrito/', views_carrito.obtener_numero_productos_en_carrito, name='obtener_numero_productos_en_carrito'),
   path('buscar/', views_carrito.buscar_productos, name='buscar_productos'),
-  path("registro", views.registro, name="registro"),
-  path("loginn/", views.loginn, name="loginn"),
-      path('logout', views.cerrar, name='logout'),
+  path("registro", controlador_sesion.registro, name="registro"),
+  path("loginn/", controlador_sesion.loginn, name="loginn"),
+  path('logout', controlador_sesion.cerrar, name='logout'),
+  path('<int:id>', views.detalles_producto , name='detalles')
 ]  

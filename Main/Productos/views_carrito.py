@@ -23,33 +23,34 @@ def carrito(request):
     return render(request, "principal/carrito.html", {"carrito": carrito})
 
 
-@login_required
 @transaction.atomic
 def agregar_al_carrito(request, producto_id):
+    if not request.user.is_authenticated:
+        return JsonResponse(
+            {"mensaje": "Debes iniciar sesión para agregar productos al carrito."}, 
+            status=401
+        )
+
     producto = get_object_or_404(Producto, pk=producto_id)
-
-    # Obtenemos el carrito asociado con el usuario actual
     carrito, created = Carrito.objects.get_or_create(user=request.user)
-
     detalle_carrito, created = DetalleCarrito.objects.get_or_create(
         carrito=carrito, producto=producto
     )
 
-    # Actualizamos la cantidad de productos en el carrito
-    numero_productos = carrito.detallecarrito_set.count()
-
     if not created:
         return JsonResponse(
-            {"mensaje": "El producto ya está en el carrito."}, status=400
+            {"mensaje": "El producto ya está en el carrito."}, 
+            status=400
         )
     else:
         detalle_carrito.cantidad = 1
         detalle_carrito.save()
         carrito.calcular_total()
+        numero_productos = carrito.detallecarrito_set.count()
         return JsonResponse(
             {
                 "mensaje": "El producto se ha agregado al carrito.",
-                "numero_productos": numero_productos + 1,  # Incrementamos el contador
+                "numero_productos": numero_productos,
             }
         )
 
