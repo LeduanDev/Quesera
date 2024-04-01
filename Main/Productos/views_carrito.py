@@ -12,10 +12,8 @@ from django.db.models import Q
 def carrito(request):
     # Obtenemos el carrito asociado con el usuario actual
     carrito, created = Carrito.objects.get_or_create(user=request.user)
-
     if created:
         request.session["carrito_id"] = carrito.id
-
     return render(request, "principal/carrito.html", {"carrito": carrito})
 
 

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %} Pedido {% endblock %}
+
+{% block contenido %}
+
+<br>
+<br>
+
+
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+
+<h1>Detalles del Pedido</h1>
+<p>Usuario: {{ pedido.user }}</p>
+<p>Nombre: {{ pedido.nombre }}</p>
+<p>Dirección: {{ pedido.direccion }}</p>
+<p>Teléfono: {{ pedido.telefono }}</p>
+<p>Fecha de Pedido: {{ pedido.fecha_pedido }}</p>
+
+<h2>Detalles de los Productos:</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Precio Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for detalle in pedido.detallepedido_set.all %}
+        <tr>
+            <td>{{ detalle.producto }}</td>
+            <td>{{ detalle.cantidad }}</td>
+            <td>{{ detalle.precio_unitario }}</td>
+            <td>{{ detalle.precio_total }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>Total del Pedido: {{ pedido.detallepedido_set.aggregate(total=Sum('precio_total'))['total'] }}</p>
+
+
+
+
+
+<br>
+<br>
+
+<br>
+
+
+{% endblock %}

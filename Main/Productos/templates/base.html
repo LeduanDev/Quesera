@@ -14,7 +14,6 @@
     <!-- <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"> -->
     <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
     
-
 </head>
 
 <body>
@@ -33,12 +32,23 @@
                     <a href="{% url 'shop' %}" class="nav__link">Producos y categoria</a>
                  </li>
 
+                 {% if request.user.is_authenticated %}
                  <li class="nav__item">
-                    <a href="{% url 'logout' %}" class="nav__link">Cerrar</a>
+                     <a href="{% url 'logout' %}" class="nav__link">Cerrar</a>
                  </li>
-                 <li class="nav__item">
-                  <a href="{% url 'loginn' %}" class="nav__link">Cdasar</a>
+                 {% endif %}
+             
 
+                 {% if request.user.is_authenticated and request.user.is_staff %}
+                <li class="nav__item">
+                    <a href="{% url 'lista_pedidos' %}" class="nav__link">Pedidos</a>
+                </li>
+                {% endif %}
+
+
+                 <li class="nav__item">
+                  <a href="{% url 'loginn' %}" class="nav__link">login</a>
+                 </li>
                 <!-- Close button -->
                 <div class="nav__close" id="nav-close">
                   <i class="ri-close-line"></i>

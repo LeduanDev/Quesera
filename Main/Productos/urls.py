@@ -2,7 +2,7 @@ from django.conf import settings
 from django.urls import include, path
 from . import views, views_carrito, controlador_sesion
 from django.conf.urls.static import static
-
+from .views import DetallesPedidoView, ListaPedidos
 urlpatterns = [
   path('', views.home, name= 'home'),
   path('shop', views.shop, name='shop'),
@@ -19,5 +19,7 @@ urlpatterns = [
   path("registro", controlador_sesion.registro, name="registro"),
   path("loginn/", controlador_sesion.loginn, name="loginn"),
   path('logout', controlador_sesion.cerrar, name='logout'),
-  path('<int:id>', views.detalles_producto , name='detalles')
+  path('<int:id>', views.detalles_producto , name='detalles'),
+  path('pedidos/', ListaPedidos.as_view(), name='lista_pedidos'),
+  path('pedido/<int:pk>/', DetallesPedidoView.as_view(), name='detalles_pedido'),
 ]  

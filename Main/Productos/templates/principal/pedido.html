@@ -41,12 +41,7 @@
         <div id="alerta"></div> 
     </div>
 
-    <h2>Detalles del Carrito:</h2>
-    <ul>
-        {% for detalle in carrito.detallecarrito_set.all %}
-        <li>{{ detalle.producto.nombre }} - Cantidad: {{ detalle.cantidad }} - Precio Total: {{ detalle.precio_total }}</li>
-        {% endfor %}
-    </ul>
+    
     
 
 {% endblock %}
