@@ -6,10 +6,6 @@ from .models import Carrito, DetallePedido, Pedido, Producto, DetalleCarrito
 from django.db import transaction
 from django.template.defaultfilters import floatformat
 from django.db.models import Q
-from django.contrib.auth import authenticate, login, logout
-
-
-from django.shortcuts import get_object_or_404, render, redirect
 
 
 @login_required
@@ -27,8 +23,8 @@ def carrito(request):
 def agregar_al_carrito(request, producto_id):
     if not request.user.is_authenticated:
         return JsonResponse(
-            {"mensaje": "Debes iniciar sesión para agregar productos al carrito."}, 
-            status=401
+            {"mensaje": "Debes iniciar sesión para agregar productos al carrito."},
+            status=401,
         )
 
     producto = get_object_or_404(Producto, pk=producto_id)
@@ -39,8 +35,7 @@ def agregar_al_carrito(request, producto_id):
 
     if not created:
         return JsonResponse(
-            {"mensaje": "El producto ya está en el carrito."}, 
-            status=400
+            {"mensaje": "El producto ya está en el carrito."}, status=400
         )
     else:
         detalle_carrito.cantidad = 1
@@ -53,6 +48,7 @@ def agregar_al_carrito(request, producto_id):
                 "numero_productos": numero_productos,
             }
         )
+
 
 
 def crear_pedido(request):
@@ -95,6 +91,7 @@ def crear_pedido(request):
         form = PedidoForm()
 
     return render(request, "principal/pedido.html", {"form": form})
+
 
 @login_required
 def vista_pedido(request, pedido_id):
@@ -189,10 +186,13 @@ def disminuir_cantidad(request, detalle_id):
 
 
 def obtener_numero_productos_en_carrito(request):
-    try:
-        carrito = Carrito.objects.get(user=request.user)
-        numero_productos = carrito.detallecarrito_set.count()
-    except Carrito.DoesNotExist:
+    if request.user.is_authenticated:
+        try:
+            carrito = Carrito.objects.get(user=request.user)
+            numero_productos = carrito.detallecarrito_set.count()
+        except Carrito.DoesNotExist:
+            numero_productos = 0
+    else:
         numero_productos = 0
 
     return JsonResponse({"numero_productos": numero_productos})

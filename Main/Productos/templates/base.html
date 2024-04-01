@@ -189,118 +189,17 @@
   
 
   
-  <script>
-    function actualizarContadorProductos() {
-        $.ajax({
-            type: "GET",
-            url: "{% url 'obtener_numero_productos_en_carrito' %}",
-            dataType: "json",
-            success: function(response) {
-                $("#numero-productos-carrito").text(response.numero_productos);
-            },
-            error: function(xhr, errmsg, err) {
-                console.error("Error al obtener el número de productos en el carrito.");
-            }
-        });
-    }
-
-    $(document).ready(function() {
-    $(".agregar-al-carrito").on("click", function(event) {
-        event.preventDefault();
-        var producto_id = $(this).closest('.agregar-producto-form').data("producto-id");
-        $.ajax({
-            type: "POST",
-            url: "{% url 'agregar_al_carrito' 0 %}".replace('0', producto_id),
-            data: {
-                csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
-                producto_id: producto_id
-            },
-            dataType: "json"
-        })
-        .then(response => {
-            // Llamar a la función para actualizar el número de productos en el carrito
-            actualizarContadorProductos();
-            
-            // Muestra el mensaje de éxito en una alerta
-            Swal.fire({
-                icon: 'success',
-                title: 'Éxito',
-                text: response.mensaje,
-                timer: 2000, // Auto-cerrar después de 2 segundos
-                timerProgressBar: true,
-                showConfirmButton: false
-            });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            if (error.status === 401) {
-                // Usuario no autenticado
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: error.responseJSON.mensaje,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    showConfirmButton: false
-                });
-            } else if (error.status === 400) {
-                // Producto ya en el carrito
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: error.responseJSON.mensaje,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    showConfirmButton: false
-                });
-            } else {
-                // Otro tipo de error
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Hubo un error al procesar su solicitud.',
-                    timer: 2000,
-                    timerProgressBar: true,
-                    showConfirmButton: false
-                });
-            }
-        });
-    });
-    
-    // Llama a actualizarContadorProductos al cargar la página
-    actualizarContadorProductos();
-});
+<script>
+  const obtenerNumeroProductosURL = "{% url 'obtener_numero_productos_en_carrito' %}";
+  const agregarAlCarritoURL = "{% url 'agregar_al_carrito' 0 %}";
+  const homeURL = "{% url 'home' %}";
 
 </script>
 
 
-<script> 
-  $(document).ready(function () {
-    $("#login-form").submit(function (e) {
-      e.preventDefault();
 
-      $.ajax({
-        type: "POST",
-        url: $(this).attr("action"),
-        data: $(this).serialize(),
-        success: function (response) {
-          if (response.success) {
-            
-            window.location.href = "{% url 'home' %}";
-          } else {
-          
-            $("#error-message").text("Usuario o contraseña incorrectos ").show();
-          }
-        },
-        error: function (xhr, textStatus, errorThrown) {
-          console.log(xhr.responseText);
-        }
-      });
-    });
-  });
-  </script>
-
-
+    <script src="{% static 'js/login.js' %}"></script>
+    <script src="{% static 'js/productos.js' %}"></script>
     <script src="{% static 'js/navbar.js' %}"></script>
 </body>
 </html>
