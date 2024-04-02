@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{% static 'css/home_tarjetas.css' %}?v=1">
     <link rel="stylesheet" href="{% static 'css/header.css' %}?v=1">
   
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
 
@@ -28,7 +27,7 @@
                     <div>
                         <h2>{{ slide.title }}</h2>
                         <p>{{ slide.description }}</p>
-                        <!-- <a href="#" class="btnSlider">Ver más</a> -->
+                        <a href="#" class="btnSlider">Ver más</a>
                     </div>
                 </div>
             </li>
@@ -56,8 +55,11 @@
                         <form class="agregar-producto-form" data-producto-id="{{ producto.id }}">
                             {% csrf_token %}
                             <input type="hidden" name="producto_id" value="{{ producto.id }}">
-                            <button type="button" class="bn632-hover bn25 agregar-al-carrito">Agregar al carrito</button>
+                            <!-- <button type="button" class="bn632-hover bn25 agregar-al-carrito">Agregar al carrito</button> -->
+                    
+                            <button type="button" class="button-50 agregar-al-carrito">Agregar al carrito</button>
                         </form>
+                        <a class="button-50 agregar-al-carrito" href="{% url 'detalles' producto.id %}">Detalles</a>
                     </div>
                 </div>
             {% endfor %}
@@ -67,9 +69,5 @@
 
     <br>
     <br>
-
-    <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/templatemo.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
 {% endblock %}

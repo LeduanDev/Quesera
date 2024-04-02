@@ -62,7 +62,7 @@
               <!-- Login button -->
               <!-- <i class="ri-car-line nav__login" id="login-btn"></i> -->
 
-              <i class="ri-shopping-cart-2-fill"></i> <a href="{% url 'carrito' %}" class="nav__link">   <span> Carrito: <span id="numero-productos-carrito">0</span> </span>
+              <i class="ri-shopping-cart-2-fill"> <a href="{% url 'carrito' %}" class="nav__link">  </i> <span> Carro : <span id="numero-productos-carrito">0</span> </span>
               </a>
 
               <!-- Toggle button -->
@@ -188,9 +188,13 @@
       <div style="display: flex; flex-wrap: wrap; justify-content: center;">
         <div style="width: 100%; max-width: 50%; padding-right: 15px; padding-left: 15px; margin: auto;">
           <div style="font-size: 0.75rem; color: #4a5568; font-weight: 600; padding-top: 0.25rem;">
-            Copyright © <span id="get-current-year">2021</span>
-            <a href="https://www.creative-tim.com/product/notus-js" style="color: #4a5568; text-decoration: none; font-weight: 600; transition: color 0.2s ease-in-out;" target="_blank"> Notus JS</a> by
-            <a href="https://www.creative-tim.com" style="color: #4a5568; text-decoration: none; font-weight: 600; transition: color 0.2s ease-in-out;">Creative Tim</a>.
+            Quesera la moraleña ©
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+              Todos los derechos reservados
+            <!-- <a href="https://www.creative-tim.com/product/notus-js" style="color: #4a5568; text-decoration: none; font-weight: 600; transition: color 0.2s ease-in-out;" target="_blank"> Notus JS</a> by
+            <a href="https://www.creative-tim.com" style="color: #4a5568; text-decoration: none; font-weight: 600; transition: color 0.2s ease-in-out;">Creative Tim</a>. -->
           </div>
         </div>
       </div>

@@ -1,45 +1,103 @@
-{% extends "base.html" %}
+
 {% load static %}
 
-{% block titulo %} Pedido {% endblock %}
+{% block titulo %}  {% endblock %}
 
 {% block contenido %}
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<br>
+<br> 
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-4">Detalle del Pedido</h1>
+
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-2">Información del Cliente:</h2>
+        <div class="grid grid-cols-2 gap-4">
+            <p><strong>Nombre:</strong> {{ pedido.nombre }}</p>
+            <p><strong>Email:</strong> {{ pedido.email }}</p>
+            <p><strong>Dirección:</strong> {{ pedido.direccion }}</p>
+            <p><strong>Teléfono:</strong> {{ pedido.telefono }}</p>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-2">Productos:</h2>
+        <div class="overflow-x-auto">
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2">Producto</th>
+                        <th class="px-4 py-2">Cantidad</th>
+                        <th class="px-4 py-2">Precio Unitario</th>
+                        <th class="px-4 py-2">Precio Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detalle in detalles %}
+                    <tr>
+                        <td class="border px-4 py-2">{{ detalle.producto.nombre }}</td>
+                        <td class="border px-4 py-2">{{ detalle.cantidad }}</td>
+                        <td class="border px-4 py-2">{{ detalle.precio_unitario }}</td>
+                        <td class="border px-4 py-2">{{ detalle.precio_total }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-2">Total del Pedido: {{ total_pedido }}</h2>
+    </div>
+
+    
+    <a href="{% url 'home' %}" class="button-35" role="button">Volver al inicio</a>
+    <br>
+
+    {% if request.user.is_authenticated and request.user.is_staff %}
+     <a  type="button" href="{% url 'lista_pedidos' %}" class="button-35" role="button">Volver a pedidos</a>  
+    {% endif %}
+</div>
+
+<!-- HTML !-->
 
 
+<style>    
 
-<h1>Detalle del Pedido</h1>
-<h2>Información del Cliente:</h2>
-<p><strong>Nombre:</strong> {{ pedido.nombre }}</p>
-<p><strong>Email:</strong> {{ pedido.email }}</p>
-<p><strong>Dirección:</strong> {{ pedido.direccion }}</p>
-<p><strong>Teléfono:</strong> {{ pedido.telefono }}</p>
+/* CSS */
+.button-35 {
+  align-items: center;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: transparent 0 0 0 3px,rgba(18, 18, 18, .1) 0 6px 20px;
+  box-sizing: border-box;
+  color: #121212;
+  cursor: pointer;
+  display: inline-flex;
+  flex: 1 1 auto;
+  font-family: Inter,sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1;
+  margin: 0;
+  outline: none;
+  padding: 1rem 1.2rem;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow .2s,-webkit-box-shadow .2s;
+  white-space: nowrap;
+  border: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
 
-<h2>Productos:</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Precio Unitario</th>
-            <th>Precio Total</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for detalle in detalles %}
-        <tr>
-            <td>{{ detalle.producto.nombre }}</td>
-            <td>{{ detalle.cantidad }}</td>
-            <td>{{ detalle.precio_unitario }}</td>
-            <td>{{ detalle.precio_total }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+.button-35:hover {
+  box-shadow: #121212 0 0 0 3px, transparent 0 0 0 0;
+}
 
-<h2>Total del Pedido: {{ total_pedido }}</h2>
-
-<a href="{% url 'home' %}">Volver al inicio</a>
-
+</style>
 
 
 {% endblock %}

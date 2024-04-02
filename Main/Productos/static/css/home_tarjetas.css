@@ -1,5 +1,3 @@
-
-
 *{
     margin: 0;
     padding: 0;
@@ -22,7 +20,7 @@
 
 .product {
     overflow: hidden;
-    background: #ffffff;
+    background: #fffefe;
     color: #21201e;
     text-align: center;
     width: 100%;
@@ -61,36 +59,6 @@
     }
 }
 
-
-.bn632-hover {
-    width: 100px; /* Reducir el ancho */
-    font-size: 14px; /* Reducir el tamaño del texto */
-    font-weight: 500; /* Modificar el peso de la fuente */
-    color: #fff;
-    cursor: pointer;
-    margin: 10px; /* Reducir el margen */
-    height: 45px; /* Reducir la altura */
-    text-align: center;
-    border: none;
-    border-radius: 25px; /* Reducir el radio del borde */
-    background-size: 300% 100%;
-    transition: background-position 0.4s ease-in-out;
-}
-
-.bn632-hover:hover {
-    background-position: 100% 0;
-}
-
-.bn632-hover:focus {
-    outline: none;
-}
-
-.bn632-hover.bn25 {
-    background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
-    box-shadow: 0 4px 10px rgba(45, 54, 65, 0.5); /* Reducir el tamaño de la sombra */
-}
-
-
   /* === HEADING STYLE #5 === */
 .five h1 {
     text-align: center;
@@ -120,8 +88,6 @@
     background-color: #ffffff;
   }
   
- 
-  
   /* Estilos para el contenedor de filtros */
 .filters {
   margin-bottom: 20px; /* Espacio entre el contenedor de filtros y otros elementos */
@@ -134,7 +100,7 @@
 .categoria-label {
   font-size: 16px; /* Tamaño de la fuente */
   font-weight: bold; /* Peso de la fuente */
-  color: #333; /* Color del texto */
+  color: #000000; /* Color del texto */
   margin-right: 10px; /* Espacio entre el label y el select */
 }
 
@@ -159,4 +125,58 @@
 .categoria-select:focus {
   border-color: #007bff; /* Cambia el color del borde al enfocar */
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Agrega una sombra al enfocar */
+}
+
+
+/* CSS */
+.button-50 {
+  appearance: button;
+  background-color: #000;
+  background-image: none;
+  border: 1px solid #000;
+  border-radius: 4px;
+  box-shadow: #fff 4px 4px 0 0,#000 4px 4px 0 1px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: ITCAvantGardeStd-Bk,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  margin: 0 5px 10px 0;
+  overflow: visible;
+  padding: 12px 40px;
+  text-align: center;
+  text-transform: none;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 200px;
+}
+
+.button-50:focus {
+  text-decoration: none;
+}
+
+.button-50:hover {
+  text-decoration: none;
+}
+
+.button-50:active {
+  box-shadow: rgba(0, 0, 0, .125) 0 3px 5px inset;
+  outline: 0;
+}
+
+.button-50:not([disabled]):active {
+  box-shadow: #fff 2px 2px 0 0, #000 2px 2px 0 1px;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .button-50 {
+    padding: 12px 50px;
+  }
 }
