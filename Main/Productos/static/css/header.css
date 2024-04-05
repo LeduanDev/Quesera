@@ -1,6 +1,6 @@
 
 #container-slider {
-  position: relative;
+  margin-top: 65px;
   display: block;
   width: 100%;
 }
@@ -106,6 +106,7 @@
 
 .listslider {
   position: absolute;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
