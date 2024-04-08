@@ -6,12 +6,18 @@
     box-sizing: border-box;
 
 }
-
-h1{
-    font-size: 30px;
+.titulo {
+    font-size: 2rem; /* Tamaño del título en dispositivos de escritorio */
     text-align: center;
-    color: #1c093c;
 }
+
+/* Media query para dispositivos móviles */
+@media screen and (max-width: 768px) {
+    .titulo {
+        font-size: 1.5rem; /* Tamaño del título en dispositivos móviles */
+    }
+}
+
 p{
     position: relative;
     margin: auto;

@@ -128,25 +128,24 @@
 }
 
 
-/* CSS */
 .button-50 {
   appearance: button;
   background-color: #000;
   background-image: none;
   border: 1px solid #000;
   border-radius: 4px;
-  box-shadow: #fff 4px 4px 0 0,#000 4px 4px 0 1px;
+  box-shadow: #fff 4px 4px 0 0, #000 4px 4px 0 1px;
   box-sizing: border-box;
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-family: ITCAvantGardeStd-Bk,Arial,sans-serif;
-  font-size: 14px;
+  font-family: ITCAvantGardeStd-Bk, Arial, sans-serif;
+  font-size: 12px; /* Reducir el tamaño de la fuente */
   font-weight: 400;
-  line-height: 20px;
+  line-height: 16px; /* Ajustar el line-height según el nuevo tamaño de la fuente */
   margin: 0 5px 10px 0;
   overflow: visible;
-  padding: 12px 40px;
+  padding: 8px 24px; /* Reducir el padding del botón */
   text-align: center;
   text-transform: none;
   touch-action: manipulation;
@@ -154,7 +153,7 @@
   -webkit-user-select: none;
   vertical-align: middle;
   white-space: nowrap;
-  width: 200px;
+  width: auto; /* Ajustar el ancho automáticamente según el contenido */
 }
 
 .button-50:focus {
@@ -166,7 +165,7 @@
 }
 
 .button-50:active {
-  box-shadow: rgba(0, 0, 0, .125) 0 3px 5px inset;
+  box-shadow: rgba(0, 0, 0, 0.125) 0 3px 5px inset;
   outline: 0;
 }
 
@@ -177,6 +176,6 @@
 
 @media (min-width: 768px) {
   .button-50 {
-    padding: 12px 50px;
+    padding: 8px 30px; /* Ajustar el padding para pantallas más grandes si es necesario */
   }
 }

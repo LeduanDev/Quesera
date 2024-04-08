@@ -4,5 +4,50 @@
 {% block titulo %} Home {% endblock %}
 {% block contenido %}
 
+<link rel="stylesheet" href="{% static 'css/boots.css' %}">
+<br>
+<br>
+<br>
+<br>
+    <link rel="stylesheet" href="{% static 'css/home_tarjetas.css' %}?v=1">
 
+    <div class="card-wrapper">
+        <div class="card">
+            <div class="product-imgs">
+                <div class="img-display">
+                    <div class="img-showcase">
+                        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+                    </div>
+                </div>
+            </div>
+            <div class="product-content">
+                <h2 class="product-title">{{ producto.nombre }}</h2>
+                <div class="product-detail">
+                    <h3>Sobre este producto:</h3>
+                    <p>{{ producto.descripcion }}</p>
+                    <ul>
+                        <li><strong>Disponibilidad:</strong> <span>En stock</span></li>
+                        <li><strong>Categoría:</strong> <span>{{ producto.categoria }}</span></li>
+                    </ul>
+                </div>
+                <div class="purchase-info">
+                               <form class="agregar-producto-form" data-producto-id="{{ producto.id }}">
+                            {% csrf_token %}
+                            <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                            <!-- Agregar un campo de entrada para la cantidad -->
+                            <label for="cantidad">Cantidad:</label>
+                            <input type="number" name="cantidad" class="cantidad" value="1" min="1">
+                            <!-- <button type="button" class="bn632-hover bn25 agregar-al-carrito">Agregar al carrito</button> -->
+                            <button type="button" class="button-50 agregar-al-carrito">Agregar al carrito <i class = "fas fa-shopping-cart"></i></button>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+<h1>other prodcuts</h1>
+<p>dasdsaaaaaaaaaaaaaaaaaa</p>
 {% endblock %}

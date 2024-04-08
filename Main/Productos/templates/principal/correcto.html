@@ -53,7 +53,7 @@
     
     <a href="{% url 'home' %}" class="button-35" role="button">Volver al inicio</a>
     <br>
-
+    <br>
     {% if request.user.is_authenticated and request.user.is_staff %}
      <a  type="button" href="{% url 'lista_pedidos' %}" class="button-35" role="button">Volver a pedidos</a>  
     {% endif %}

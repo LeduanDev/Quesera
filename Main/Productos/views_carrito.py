@@ -16,7 +16,6 @@ def carrito(request):
         request.session["carrito_id"] = carrito.id
     return render(request, "principal/carrito.html", {"carrito": carrito})
 
-
 @transaction.atomic
 def agregar_al_carrito(request, producto_id):
     if not request.user.is_authenticated:
@@ -31,108 +30,30 @@ def agregar_al_carrito(request, producto_id):
         carrito=carrito, producto=producto
     )
 
-    if not created:
-        return JsonResponse(
-            {"mensaje": "El producto ya está en el carrito."}, status=400
-        )
-    else:
-        detalle_carrito.cantidad = 1
-        detalle_carrito.save()
-        carrito.calcular_total()
-        numero_productos = carrito.detallecarrito_set.count()
-        return JsonResponse(
-            {
-                "mensaje": "El producto se ha agregado al carrito.",
-                "numero_productos": numero_productos,
-            }
-        )
+    # Obtener la cantidad del formulario
+    cantidad = int(request.POST.get('cantidad', 1))
 
+    # Actualizar la cantidad del detalle del carrito
+    detalle_carrito.cantidad = cantidad
+    detalle_carrito.save()
 
+    # Calcular el total del carrito
+    carrito.calcular_total()
 
-def crear_pedido(request):
-    try:
-        carrito = Carrito.objects.get(user=request.user)
-    except Carrito.DoesNotExist:
-        return JsonResponse(
-            {
-                "mensaje": "Tu carrito está vacío. Por favor, agrega productos antes de proceder al pedido."
-            }
-        )
-
-    if carrito.productos.count() == 0:
-        return JsonResponse(
-            {
-                "mensaje": "Tu carrito está vacío. Por favor, agrega productos antes de proceder al pedido."
-            }
-        )
-
-    if request.method == "POST":
-        form = PedidoForm(request.POST)
-        if form.is_valid():
-            pedido = form.save(commit=False)
-            pedido.user = request.user  # Asignar el usuario al pedido
-            pedido.save()
-            for detalle_carrito in carrito.detallecarrito_set.all():
-                DetallePedido.objects.create(
-                    pedido=pedido,
-                    producto=detalle_carrito.producto,
-                    cantidad=detalle_carrito.cantidad,
-                    precio_unitario=detalle_carrito.producto.precio,
-                    precio_total=detalle_carrito.precio_total(),
-                )
-
-            carrito.productos.clear()
-            carrito.total = 0
-            carrito.save()
-            return redirect("vista_pedido", pedido_id=pedido.id)
-    else:
-        form = PedidoForm()
-
-    return render(request, "principal/pedido.html", {"form": form})
-
-
-@login_required
-def vista_pedido(request, pedido_id):
-    pedido = get_object_or_404(Pedido, id=pedido_id, user=request.user)
-    detalles = DetallePedido.objects.filter(pedido=pedido)
-    total_pedido = sum(detalle.precio_total for detalle in detalles)
-    return render(
-        request,
-        "principal/correcto.html",
-        {"pedido": pedido, "detalles": detalles, "total_pedido": total_pedido},
+    # Devolver una respuesta JSON
+    return JsonResponse(
+        {
+            "mensaje": "El producto se ha agregado al carrito.",
+            "cantidad": cantidad,  # Devolver la cantidad actualizada
+            "total_carrito": carrito.total,  # Devolver el total del carrito
+        }
     )
-
-
-def eliminar_del_carrito(request, producto_id):
-    producto = get_object_or_404(Producto, pk=producto_id)
-
-    # Obtenemos el carrito asociado con el usuario actual
-    carrito = Carrito.objects.get(user=request.user)
-
-    try:
-        detalle_carrito = DetalleCarrito.objects.get(carrito=carrito, producto=producto)
-        detalle_carrito.delete()
-        carrito.calcular_total()
-    except DetalleCarrito.DoesNotExist:
-        pass
-
-    return redirect("carrito")
-
-
-def eliminar_carrito(request):
-    # Obtenemos el carrito asociado con el usuario actual
-    carrito = Carrito.objects.get(user=request.user)
-
-    # Eliminamos el carrito
-    carrito.delete()
-
-    return redirect("carrito")
 
 
 def aumentar_cantidad(request, detalle_id):
     detalle = get_object_or_404(DetalleCarrito, pk=detalle_id)
     detalle.cantidad += 1
-    detalle.save()
+    detalle.save()  
 
     # Calcular el precio total del detalle multiplicando la cantidad por el precio unitario
     precio_total = detalle.producto.precio * detalle.cantidad
@@ -182,6 +103,31 @@ def disminuir_cantidad(request, detalle_id):
         }
     )
 
+def eliminar_del_carrito(request, producto_id):
+    producto = get_object_or_404(Producto, pk=producto_id)
+
+    # Obtenemos el carrito asociado con el usuario actual
+    carrito = Carrito.objects.get(user=request.user)
+
+    try:
+        detalle_carrito = DetalleCarrito.objects.get(carrito=carrito, producto=producto)
+        detalle_carrito.delete()
+        carrito.calcular_total()
+    except DetalleCarrito.DoesNotExist:
+        pass
+
+    return redirect("carrito")
+
+
+def eliminar_carrito(request):
+    # Obtenemos el carrito asociado con el usuario actual
+    carrito = Carrito.objects.get(user=request.user)
+
+    # Eliminamos el carrito
+    carrito.delete()
+
+    return redirect("carrito")
+
 
 def obtener_numero_productos_en_carrito(request):
     if request.user.is_authenticated:
@@ -215,5 +161,5 @@ def buscar_productos(request):
     productos = Producto.objects.filter(consulta)
 
     return render(
-        request, "principal/shop.html", {"productos": productos, "query": query}
+        request, "principal/busqueda.html", {"productos": productos, "query": query}
     )

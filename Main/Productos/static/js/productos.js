@@ -1,12 +1,13 @@
 
 // Función para manejar la petición AJAX de agregar al carrito
-function agregarAlCarrito(producto_id) {
+function agregarAlCarrito(producto_id, cantidad) {
     $.ajax({
         type: "POST",
         url: agregarAlCarritoURL.replace('0', producto_id),
         data: {
             csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
-            producto_id: producto_id
+            producto_id: producto_id,
+            cantidad: cantidad 
         },
         dataType: "json"
     })
@@ -57,15 +58,12 @@ function mostrarMensajeError(mensaje) {
 }
 
 // Manejador de eventos para el botón "Agregar al carrito"
-$(document).ready(function() {
-    $(".agregar-al-carrito").on("click", function(event) {
-        event.preventDefault();
-        var producto_id = $(this).closest('.agregar-producto-form').data("producto-id");
-        agregarAlCarrito(producto_id);
+document.querySelectorAll('.agregar-al-carrito').forEach(boton => {
+    boton.addEventListener('click', function() {
+        const producto_id = $(this).closest('form').data('producto-id'); // Obtener el ID del producto
+        const cantidad = $(this).closest('form').find('.cantidad').val(); // Obtener la cantidad seleccionada
+        agregarAlCarrito(producto_id, cantidad); // Llamar a la función agregarAlCarrito con el ID del producto y la cantidad
     });
-    
-    // Llama a actualizarContadorProductos al cargar la página
-    actualizarContadorProductos();
 });
 
 

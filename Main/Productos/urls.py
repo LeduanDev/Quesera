@@ -2,12 +2,12 @@ from django.conf import settings
 from django.urls import include, path
 from . import views, views_carrito, controlador_sesion
 from django.conf.urls.static import static
-from .views import DetallesPedidoView, ListaPedidos
+from .views import  ListaPedidos
 urlpatterns = [
   path('', views.home, name= 'home'),
   path('shop', views.shop, name='shop'),
-  path('crear_pedido/', views_carrito.crear_pedido, name='crear_pedido'),
-  path('pedido/<int:pedido_id>/', views_carrito.vista_pedido, name='vista_pedido'),
+  path('crear_pedido/', views.crear_pedido, name='crear_pedido'),
+  path('pedido/<int:pedido_id>/', views.vista_pedido, name='vista_pedido'),
   path('carrito/', views_carrito.carrito, name='carrito'),
   path('carrito/agregar/<int:producto_id>/', views_carrito.agregar_al_carrito, name='agregar_al_carrito'),
   path('eliminar_del_carrito/<int:producto_id>/', views_carrito.eliminar_del_carrito, name='eliminar_del_carrito'),
@@ -21,5 +21,5 @@ urlpatterns = [
   path('logout', controlador_sesion.cerrar, name='logout'),
   path('<int:id>', views.detalles_producto , name='detalles'),
   path('pedidos/', ListaPedidos.as_view(), name='lista_pedidos'),
-  path('pedido/<int:pk>/', DetallesPedidoView.as_view(), name='detalles_pedido'),
+
 ]  

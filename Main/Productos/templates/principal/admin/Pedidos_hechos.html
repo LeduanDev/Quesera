@@ -5,15 +5,20 @@
 
 {% block contenido %}
 
-<br>
-<br>
+
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 <!-- Font Awesome Icons -->
 <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="{% static 'css/tabla.css' %}">
+<br>
+<br>
+<br>
+<br>
+<br>
 
-<h1>Lista de Pedidos</h1>
+<h1 class="titulo">Lista de Pedidos</h1>
+
 
 
 <div class="w-full px-6 py-6 mx-auto">
@@ -50,7 +55,7 @@
                                     <td class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent font-semibold">{{ pedido.fecha_pedido }}</td>
                                     <td class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                         <div class="flex-none w-1/2 max-w-full px-3 text-right">
-                                            <a class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25" href="{% url 'detalles_pedido' pedido.id %}">
+                                            <a class="inline-block px-5 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-transparent rounded-lg cursor-pointer text-sm ease-in shadow-md bg-150 bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 hover:shadow-xs active:opacity-85 hover:-translate-y-px tracking-tight-rem bg-x-25" href="{% url 'vista_pedido' pedido.id %}">
                                                 <i class="fas fa-plus"></i>&nbsp;&nbsp;Detalles
                                             </a>
                                         </div>
