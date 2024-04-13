@@ -11,11 +11,10 @@
   <link rel="icon" href="{% static 'img/base.jpg' %}" type="image/x-icon">
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  
 </head>
 
-<body class="m-0 font-sans antialiased font-normal bg-white text-start text-base leading-default text-slate-500">
-
-
+<body class="m-0 font-sans antialiased font-normal text-start text-base leading-default text-slate-500 bg-gradient-to-r from-white to-teal-200">
 
   <nav class="absolute top-0 left-0 right-0 z-30 flex flex-wrap items-center justify-center px-4 py-2 m-6 mb-0 shadow-sm rounded-xl bg-white/80 backdrop-blur-2xl backdrop-saturate-200 lg:flex-nowrap lg:justify-start">
 
@@ -26,7 +25,7 @@
 <br>
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <img class="mx-auto h-40 w-auto" src="{% static 'img/logo.png' %}" alt="Your Company">
+    <img class="mx-auto h-20 w-auto" src="{% static 'img/logoT-transformed.png' %}" alt="Your Company">
     <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Inicia sesón para continuar</h2>
   </div>
 
@@ -35,7 +34,7 @@
       <div>
         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Nombre usuario</label>
         <div class="mt-2">
-          <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          <input id="email" name="usernma" type="text"  required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
         </div>
       </div>
 
@@ -66,17 +65,20 @@
   <footer class="py-12">
     <div class="container">
       
-      <!-- <div class="flex flex-wrap -mx-3">
+      <div class="flex flex-wrap -mx-3">
         <div class="flex-shrink-0 w-full max-w-full mx-auto mb-6 text-center lg:flex-0 lg:w-8/12">
           <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Company </a>
-          <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> About Us </a>
-          <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Team </a>
-          <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Products </a>
-          <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Blog </a>
-          <a href="javascript:;" target="_blank" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Pricing </a>
-          
-        </div> -->
-        
+          <a href="#" class="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12" id="openModal">About Us</a> 
+        </div>
+
+        <!-- Modal de Información -->
+        <div class="modal" id="myModal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Información sobre nosotros...</p>
+          </div>
+        </div> 
+
         <div class="flex-shrink-0 w-full max-w-full mx-auto mt-2 mb-6 text-center lg:flex-0 lg:w-8/12">
           <a href="javascript:;" target="_blank" class="mr-6 text-slate-400">
             <span class="text-lg fab fa-dribbble"></span>
@@ -141,7 +143,9 @@
       });
     });
   });
+
   </script>
+    <script src="{% static 'js/modal.js' %}"></script>
 
 
 </html>

@@ -133,9 +133,6 @@
   display: block;
 }
 
-.item-select-slid {
-  background: #fff !important;
-}
 
 @media screen and (max-width: 768px) {
   .content_slider h2 {
@@ -171,6 +168,10 @@
   .btnSlider {
     padding: 10px 30px;
     font-size: 12pt;
+  }
+  .logo2 {
+    width: 200px; /* Define el ancho de la imagen del logo */
+    height: auto;
   }
 }
 
@@ -247,4 +248,20 @@
     padding: 10px 30px;
     font-size: 12pt;
   }
+  .logo2 {
+    width: 200px; /* Define el ancho de la imagen del logo */
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .nav__logo img {
+    width: 150px; /* Define el ancho de la imagen del logo en pantallas de teléfono */
+    height: auto; /* Mantiene la proporción de aspecto */
+  }
+}
+
+.logo2 {
+  width: 300px; /* Define el ancho de la imagen del logo */
+  height: auto;
 }

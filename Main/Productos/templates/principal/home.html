@@ -14,11 +14,7 @@
     <div id="container-slider">
         <a href="#" onclick="fntExecuteSlide('prev');" class="arrowPrev"><i class="fas fa-chevron-circle-left"></i></a>
         <a href="#" onclick="fntExecuteSlide('next');" class="arrowNext"><i class="fas fa-chevron-circle-right"></i></a>
-        <ul class="listslider">
-            {% for slide in imagen %}
-            <li><a itlist="itList_{{ forloop.counter0 }}" href="#" class="item-select-slid"></a></li>
-            {% endfor %}
-        </ul>
+
         <ul id="slider">
             {% for slide in imagen %}
             <li style="background-image: url('{{ slide.image.url }}'); z-index:{{ forloop.counter0 }}; opacity: {{ forloop.first|yesno:'1,0' }}"> <!-- Ajusta el estilo del slide -->
@@ -26,7 +22,7 @@
                     <div>
                         <h2>{{ slide.title }}</h2>
                         <p>{{ slide.description }}</p>
-                        <a href="#" class="btnSlider">Ver más</a>
+                        <!-- <a href="#" class="btnSlider">Ver más</a> -->
                     </div>
                 </div>
             </li>
@@ -45,7 +41,6 @@
             <h1 class="titulo">Nuestros productos <span>Principales</span></h1>
         </div>
 
- 
         <div class="all-products">
             {% for producto in productos %}
                 <div class="product">

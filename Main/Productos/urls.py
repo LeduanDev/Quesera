@@ -21,5 +21,6 @@ urlpatterns = [
   path('logout', controlador_sesion.cerrar, name='logout'),
   path('<int:id>', views.detalles_producto , name='detalles'),
   path('pedidos/', ListaPedidos.as_view(), name='lista_pedidos'),
+  path('base', views.base_view, name='base'),
 
 ]  

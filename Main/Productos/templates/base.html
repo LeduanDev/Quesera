@@ -13,15 +13,17 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <!-- <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"> -->
     <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
-    
+
 </head>
 
 <body>
       <!--==================== HEADER ====================-->
       <header class="header" id="header">
-        <nav class="nav container">
-           <a href="{% url 'home' %}" class="nav__logo">Qusera la moraleña</a>
+          <nav class="nav container">
+           <div class="logo">
+            <a href="{% url 'home' %}" class="nav__logo">  <img src="{% static 'img/logoT-transformed.png' %}" class="logo2" alt="Logo de tu empresa"></a>
 
+           </div> 
            <div class="nav__menu" id="nav-menu">
               <ul class="nav__list">
                  <li class="nav__item">
@@ -46,9 +48,12 @@
                 {% endif %}
 
 
-                 <li class="nav__item">
-                  <a href="{% url 'loginn' %}" class="nav__link">login</a>
-                 </li>
+                {% if not request.user.is_authenticated %}
+                  <li class="nav__item">
+                      <a href="{% url 'loginn' %}" class="nav__link">login</a>
+                  </li>
+               {% endif %}
+
                 <!-- Close button -->
                 <div class="nav__close" id="nav-close">
                   <i class="ri-close-line"></i>
@@ -58,11 +63,13 @@
            <div class="nav__actions">
               <!-- Search button -->
               <i class="ri-search-line nav__search" id="search-btn"></i>
+              {% if not request.user.is_authenticated %}
               <i class="ri-user-line nav__login" id="login-btn"></i>
+              {% endif %}
               <!-- Login button -->
               <!-- <i class="ri-car-line nav__login" id="login-btn"></i> -->
 
-              <i class="ri-shopping-cart-2-fill"> <a href="{% url 'carrito' %}" class="nav__link">  </i> <span> Carro : <span id="numero-productos-carrito">0</span> </span>
+              <i class="ri-shopping-cart-2-fill"> <a href="{% url 'carrito' %}" class="nav__link">  </i> <span>: <span id="numero-productos-carrito">0</span> </span>
               </a>
 
               <!-- Toggle button -->
@@ -85,12 +92,13 @@
 
         
 
-        <i class="ri-close-line search__close" id="search-close"></i>
+      <i class="ri-close-line search__close" id="search-close"></i>
      </div>
 
      <!--==================== LOGIN ====================-->
-     <div class="login" id="login">
-        <form action="{% url 'loginn' %}"  method="post"  id="login-form" class="login__form">
+     {% if not request.user.is_authenticated %}
+    <div class="login" id="login">
+        <form action="{% url 'loginn' %}" method="post" id="login-form" class="login__form">
         {% csrf_token %}
         <div id="error-message" class="alert alert-danger" role="alert" style="display: none; color: red;">
           {{ error|escapejs }}
@@ -126,6 +134,10 @@
      </div>
 
 
+    {% endif %}
+
+
+
 
 {% block contenido %} {% endblock %}
 
@@ -134,6 +146,20 @@
 <br>
 <br>
 <br>
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div class="flex items-start gap-8">
+      <div>
+        <h2 class="text-lg font-medium">{{ info.titulo }}</h2>
+        <p class="text-sm text-gray-700">{{ info.descripcion }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <footer style="background-color: #edf2f7; padding-top: 2rem; padding-bottom: 1.5rem;">
@@ -164,7 +190,7 @@
             <div style="width: 100%; max-width: 48%; padding-right: 15px; padding-left: 15px;">
               <span style="text-transform: uppercase; font-size: 0.875rem; font-weight: 600; color: #4299e1; margin-bottom: 0.5rem;">Useful Links</span>
               <ul style="list-style: none; padding-left: 0;">
-                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">About Us</a></li>
+                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;" id="openModal">About Us</a></li>
                 <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Blog</a></li>
                 <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Github</a></li>
                 <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Free Products</a></li>

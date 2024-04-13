@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import DetallePedido, Pedido, SliderImage
+from .models import DetallePedido, Pedido, SliderImage, informacion
 from .models import Producto, DetalleCarrito, Categoria
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
@@ -114,3 +114,7 @@ class ListaPedidos(ListView):
         # Obtener los pedidos ordenados por fecha de pedido de forma descendente
         return Pedido.objects.all().order_by('-fecha_pedido')
 
+def base_view(request):
+    # Consulta el modelo informacion
+    info = informacion.objects.first()  # Suponiendo que solo hay un registro
+    return render(request, 'base.html', {'info': info})

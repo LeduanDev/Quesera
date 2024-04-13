@@ -11,8 +11,7 @@
   --first-color: hsl(230, 75%, 56%);
   --title-color: hsl(230, 75%, 15%);
   --text-color: hsl(230, 12%, 40%);
-  --body-color: hsl(230, 100%, 98%);
-  --container-color: hsl(230, 100%, 97%);
+  background-image: linear-gradient(to right top, #ffffff, #fbfeff, #f2ffff, #ebfffd, #edfff1);  --container-color: hsl(230, 100%, 97%);
   --border-color: hsl(230, 25%, 80%);
 
   /*========== Font and typography ==========*/
@@ -130,7 +129,7 @@ a {
   color: var(--title-color);
   font-weight: var(--font-semi-bold);
   transition: color .4s;
-}
+  margin-right: auto; /* Mueve el logo a la izquierda */}
 
 .nav__actions {
   display: flex;
@@ -372,4 +371,52 @@ a {
   .container {
     margin-inline: auto;
   }
+}
+@media screen and (max-width: 480px) {
+  .nav__logo img {
+    width: 150px; /* Define el ancho de la imagen del logo en pantallas de teléfono */
+    height: auto; /* Mantiene la proporción de aspecto */
+  }
+}
+
+.logo2 {
+  width: 300px; /* Define el ancho de la imagen del logo */
+  height: auto;
+}
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+/* Estilos del contenido del modal */
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 600px;
+}
+
+/* Estilos del botón de cierre */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
