@@ -1,10 +1,12 @@
 
 {% load static %}
-
+{% load my_filters %}
 {% block titulo %}  {% endblock %}
 
 {% block contenido %}
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
 <br>
 <br> 
 <div class="container mx-auto p-4">
@@ -14,11 +16,19 @@
         <h2 class="text-xl font-semibold mb-2">Información del Cliente:</h2>
         <div class="grid grid-cols-2 gap-4">
             <p><strong>Nombre:</strong> {{ pedido.nombre }}</p>
-            <p><strong>Email:</strong> {{ pedido.email }}</p>
+            {% if pedido.descripcion %}
+                <p><strong>Descripción:</strong> {{ pedido.descripcion }}</p>
+            {% else %}
+                <p><strong>Descripción:</strong> No hay descripción</p>
+            {% endif %}
             <p><strong>Dirección:</strong> {{ pedido.direccion }}</p>
             <p><strong>Teléfono:</strong> {{ pedido.telefono }}</p>
+            <p><strong>Método de pago:</strong> {{ pedido.metodo_pago }}</p>
+            <p><strong>Fecha de pedido:</strong> {{ pedido.fecha_pedido }}</p>
+
         </div>
     </div>
+
 
     <div class="mb-8">
         <h2 class="text-xl font-semibold mb-2">Productos:</h2>
@@ -37,8 +47,8 @@
                     <tr>
                         <td class="border px-4 py-2">{{ detalle.producto.nombre }}</td>
                         <td class="border px-4 py-2">{{ detalle.cantidad }}</td>
-                        <td class="border px-4 py-2">{{ detalle.precio_unitario }}</td>
-                        <td class="border px-4 py-2">{{ detalle.precio_total }}</td>
+                        <td class="border px-4 py-2">{{ detalle.precio_unitario|formato_moneda }}</td>
+                        <td class="border px-4 py-2">{{ detalle.precio_total|formato_moneda }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -47,14 +57,14 @@
     </div>
 
     <div class="mb-8">
-        <h2 class="text-xl font-semibold mb-2">Total del Pedido: {{ total_pedido }}</h2>
+        <h2 class="text-xl font-semibold mb-2">Total del Pedido: {{ total_pedido|formato_moneda }}</h2>
     </div>
 
     
     <a href="{% url 'home' %}" class="button-35" role="button">Volver al inicio</a>
     <br>
     <br>
-    {% if request.user.is_authenticated and request.user.is_staff %}
+    {% if request.user.is_authenticated  %}
      <a  type="button" href="{% url 'lista_pedidos' %}" class="button-35" role="button">Volver a pedidos</a>  
     {% endif %}
 </div>

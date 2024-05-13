@@ -6,14 +6,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
-
+from django.core.cache import cache
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from Productos.forms import PedidoForm
 from .models import Carrito, DetallePedido, Pedido, Producto, DetalleCarrito
 from django.template.defaultfilters import floatformat
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView
+from .models import Pedido
 
 def home(request):
     imagen = SliderImage.objects.all()
@@ -22,10 +24,17 @@ def home(request):
     return render(request, 'principal/home.html', {'imagen': imagen, 'productos': productos_especiales, 'categoria': categoria})
 
 
+
 def shop(request):
     categorias = Categoria.objects.all()
     categoria_seleccionada = None
-    productos = Producto.objects.all()
+
+    # Obtener productos de la caché o realizar la consulta si no está en caché
+    productos_cache_key = 'productos_tienda'
+    productos = cache.get(productos_cache_key)
+    if not productos:
+        productos = Producto.objects.all()
+        cache.set(productos_cache_key, productos)
 
     if 'categoria_id' in request.GET:
         categoria_id = request.GET['categoria_id']
@@ -34,6 +43,7 @@ def shop(request):
             productos = productos.filter(categoria=categoria_seleccionada)
 
     return render(request, 'principal/shop.html', {'categorias': categorias, 'productos': productos, 'categoria_seleccionada': categoria_seleccionada})
+
 
 
 
@@ -78,9 +88,20 @@ def crear_pedido(request):
 
     return render(request, "principal/pedido.html", {"form": form})
 
+
+
 def detalles_producto(request, id):
-    producto = get_object_or_404(Producto, pk =id)
-    return render(request, 'principal/detalles.html', {'producto' : producto})
+    producto = get_object_or_404(Producto, pk=id)
+
+    # Obtener productos relacionados de la caché o realizar la consulta si no está en caché
+    productos_relacionados_cache_key = f'productos_relacionados_{producto.categoria.id}'
+    productos_relacionados = cache.get(productos_relacionados_cache_key)
+    if not productos_relacionados:
+        productos_relacionados = Producto.objects.filter(categoria=producto.categoria).exclude(id=producto.id).order_by('?')[:8]
+        cache.set(productos_relacionados_cache_key, productos_relacionados)
+
+    return render(request, 'principal/detalles.html', {'producto': producto, 'productos_relacionados': productos_relacionados})
+
 
 
 # Verificar si el usuario es administrador
@@ -104,15 +125,22 @@ def vista_pedido(request, pedido_id):
     )
 
 
-@method_decorator(user_passes_test(es_admin), name='dispatch')
-class ListaPedidos(ListView):
+
+
+class ListaPedidos(LoginRequiredMixin, ListView):
     model = Pedido
-    template_name = 'principal/admin/Pedidos_hechos.html'  # Nombre del template donde mostrarás la lista de pedidos
-    context_object_name = 'pedidos'  # Nombre del objeto que pasará a tu template, por ejemplo {{ pedidos }}
+    template_name = 'principal/admin/Pedidos_hechos.html'
+    context_object_name = 'pedidos'
 
     def get_queryset(self):
-        # Obtener los pedidos ordenados por fecha de pedido de forma descendente
-        return Pedido.objects.all().order_by('-fecha_pedido')
+        # Si el usuario es un administrador, mostrar todos los pedidos
+        if self.request.user.is_staff:
+            return Pedido.objects.all().order_by('-fecha_pedido')
+        # Si el usuario no es un administrador, mostrar solo sus propios pedidos
+        else:
+            return Pedido.objects.filter(user=self.request.user).order_by('-fecha_pedido')
+
+
 
 def base_view(request):
     # Consulta el modelo informacion

@@ -11,7 +11,7 @@
 }
 .all-products {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Grid adaptable */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Grid adaptable */
     gap: 2rem;
     justify-items: center;
     padding: 0 2rem; /* Ajusta el padding según necesidades */
@@ -19,29 +19,30 @@
 }
 
 .product {
-    overflow: hidden;
-    background: #fffefe;
-    color: #21201e;
-    text-align: center;
-    width: 100%;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 1.2rem;
-    box-shadow: 5px 15px 25px #fffefe;
-    transition: box-shadow 0.3s ease;
+  overflow: hidden;
+  background: #fffefe;
+  color: #21201e;
+  text-align: center;
+  width: fit-content; /* Reducir el ancho de la tarjeta */
+  height: fit-content; /* Reducir la altura de la tarjeta */
+  padding: 1rem; /* Reducir el espacio interno de la tarjeta */
+  margin: 0.5rem; /* Reducir el margen exterior de la tarjeta */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.2rem;
+  box-shadow: 5px 15px 25px #ffffff;
+  transition: box-shadow 0.3s ease;
 }
-
 .product:hover {
     box-shadow: 5px 15px 35px #f7f7f7;
 }
 
 .product img {
-    height: 200px;
-    margin: 1rem;
-    transition: transform 0.3s ease;
+  max-width: 100%; /* Ajustar la imagen para que se ajuste al contenedor */
+  max-height: 150px; /* Reducir la altura máxima de la imagen */
+  margin: 1rem auto; /* Centrar la imagen y ajustar el espacio */
 }
 
 .product:hover img {
@@ -49,16 +50,17 @@
 }
 
 @media screen and (max-width: 768px) {
-    .all-products {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Cambia el tamaño de las columnas en pantallas más pequeñas */
-        padding: 0 1rem; /* Ajusta el padding para pantallas más pequeñas */
-    }
+  .product {
+      width: 200px; /* Reducir el ancho de la tarjeta en pantallas más pequeñas */
+      height: fit-content; /* Reducir la altura de la tarjeta en pantallas más pequeñas */
+      padding: 0.5rem; /* Reducir el espacio interno de la tarjeta en pantallas más pequeñas */
+      margin: 0.25rem; /* Reducir el margen exterior de la tarjeta en pantallas más pequeñas */
+  }
 
-    .product img {
-        height: 150px; /* Ajusta el tamaño de la imagen en pantallas más pequeñas */
-    }
+  .product img {
+      max-height: 100px; /* Reducir la altura máxima de la imagen en pantallas más pequeñas */
+  }
 }
-
   /* === HEADING STYLE #5 === */
 .five h1 {
     text-align: center;
@@ -85,13 +87,6 @@
 
   }
   
-  /* Estilos para el contenedor de filtros */
-.filters {
-  margin-bottom: 20px; /* Espacio entre el contenedor de filtros y otros elementos */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 /* Estilos para el label */
 .categoria-label {
@@ -108,7 +103,7 @@
   border: 1px solid #ccc; /* Borde del select */
   border-radius: 5px; /* Radio de borde */
   background-color: #fff; /* Color de fondo */
-  color: #333; /* Color del texto */
+  color: #000000; /* Color del texto */
   cursor: pointer; /* Cursor al pasar por encima */
   outline: none; /* Elimina el contorno al enfocar */
 }
@@ -175,4 +170,89 @@
   .button-50 {
     padding: 8px 30px; /* Ajustar el padding para pantallas más grandes si es necesario */
   }
+}
+/* titulo de la pagina de home */
+.five {
+  cursor: pointer;
+  margin: auto;
+  font-size: 5vmin;
+  font-weight: 300;
+  transition: font-weight 250ms ease-in-out;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+div:hover {
+  font-weight: 600;
+}
+
+
+:root {
+
+  --gray: #ffffff;
+  --darkgray: #000000;
+}
+
+select {
+  /* Reset Select */
+  appearance: none;
+  outline: 10px red;
+  border: 0;
+  box-shadow: none;
+  /* Personalize */
+  flex: 1;
+  padding: 0 1em;
+  color: #fff;
+  background-color: var(--darkgray);
+  background-image: none;
+  cursor: pointer;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select wrapper */
+.select {
+  position: relative;
+  display: flex;
+  width: 20em;
+  height: 3em;
+  border-radius: .25em;
+  overflow: hidden;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1em;
+  background-color: rgb(26, 243, 146);
+  transition: .25s all ease;
+  pointer-events: none;
+}
+/* Transition */
+.select:hover::after {
+  color: #ffffff;
+}
+
+
+.container2 {
+    justify-content: center;
+    text-align: center;
+    display: flex;
+}
+
+.down_note {
+    display: flex;
+    justify-content: center;
+
+}
+
+
+.posicion {
+  position: relative; /* Establece la posición relativa */
+  top: 120px; /* Mueve el contenedor hacia abajo 50px */
+  margin-bottom: 200px; /* Ajusta según sea necesario para evitar el solapamiento con el footer */
 }

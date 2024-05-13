@@ -1,6 +1,11 @@
+from pyexpat import model
+from turtle import mode
 from django.db import models
 from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
+from sqlalchemy import false, true
+from autoslug import AutoSlugField
+import uuid
 
 class SliderImage(models.Model):
     image = models.ImageField(upload_to='slider_images', null=False)
@@ -24,6 +29,7 @@ class Producto(models.Model):
     imagen = models.ImageField( upload_to='imagenes/', verbose_name="Imagen", null=True, blank=True)
     descripcion = models.TextField(null=True)
     especial = models.BooleanField(default=False, verbose_name="Producto especial")
+    disponible = models.BooleanField(default=False, verbose_name="Disponibilidad del producto")
 
     def __str__(self):
       return self.nombre
@@ -51,12 +57,22 @@ class DetalleCarrito(models.Model):
         return self.producto.precio * self.cantidad
 
 
+
+class Metodos_pago(models.Model):
+    nombre =  models.CharField(max_length=100)
+   
+    def __str__(self):
+        return self.nombre
+
 class Pedido(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
     nombre = models.CharField(max_length=100)
     direccion = models.CharField(max_length=200)
     telefono = models.CharField(max_length=20)
     fecha_pedido = models.DateTimeField(auto_now_add=True)
+    metodo_pago = models.ForeignKey(Metodos_pago, on_delete=models.CASCADE, null=True)
+    descripcion = models.CharField(null=True, max_length=300, blank=True)
 
 class DetallePedido(models.Model):
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
@@ -68,5 +84,7 @@ class DetallePedido(models.Model):
 class informacion(models.Model):
     titulo =  models.CharField(max_length=40, null=True)
     descripcion = models.TextField(null=True)
+    direccion = models.TextField(null=True)
+    numero = models.TextField(null=True)
     def __str__(self):
         return self.titulo

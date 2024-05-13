@@ -1,53 +1,56 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% block titulo %} Home {% endblock %}
+{% load my_filters %}
+{% block titulo %}  {% endblock %}
 {% block contenido %}
     <link rel="stylesheet" href="{% static 'css/home_tarjetas.css' %}?v=1">
     
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+
+<div class="posicion">  
     <section class="products">
-        <div class="filters">
-            <label class="categoria-label" for="categoria">Selecciona una categoría:</label>
-            <select name="categoria" id="categoria" class="categoria-select">
-                <option value="">Todas</option>
+        <div class= "container2">
+         
+            <div class="select">
+            <select name="categoria" id="categoria">
+                <option value="">Categorias</option>
                 {% for categoria in categorias %}
                     <option value="{{ categoria.id }}" {% if categoria_seleccionada == categoria %}selected{% endif %}>{{ categoria.nombre }}</option>
                 {% endfor %}
             </select>
-        </div>
-            
-
-
+          </div>
+        </div> 
+        <br>
         <div class="all-products">
             {% for producto in productos %}
                 <div class="product">
-                    <img src="{{ producto.imagen.url }}" alt="">
+                    <img src="{{ producto.imagen.url }}" alt="" loading="lazy">
+
                     <div class="product-info">
                         <h4 class="product-title">{{ producto.nombre }}</h4>
-                        <p class="product-price">$  {{ producto.precio }}</p>
+                        <p class="product-price">$ {{ producto.precio|formato_moneda }}</p>
+                        <h5 class="product-title">categoria: {{ producto.categoria }}</h5>
+                        {% if producto.disponible %}
+                        
+                        {% else %}
+                        <h4 class="product-title" style="color: red;">No disponible</h4>
+                        {% endif %}
+                        <br>
                         <form class="agregar-producto-form" data-producto-id="{{ producto.id }}">
                             {% csrf_token %}
                             <input type="hidden" name="producto_id" value="{{ producto.id }}">
-                            <!-- Agregar un campo de entrada para la cantidad -->
-                            <!-- <label for="cantidad">Cantidad:</label>
-                            <input type="number" name="cantidad" class="cantidad" value="1" min="1"> -->
-                            <!-- <button type="button" class="bn632-hover bn25 agregar-al-carrito">Agregar al carrito</button> -->
                             <button type="button" class="button-50 agregar-al-carrito">Agregar al carrito</button>
+                         
                         </form>
-                        
-                        <a class="button-50" href="{% url 'detalles' producto.id %}">Detalles</a>
+                        <a class="button-50" href="{% url 'detalles' producto.id %}">Detalles</a>   
                     </div>
+                 
                 </div>
             {% endfor %}
         </div>
     </section>
-    
+</div>
+
+
     <script>
         document.getElementById('categoria').addEventListener('change', function() {
             var categoriaId = this.value;

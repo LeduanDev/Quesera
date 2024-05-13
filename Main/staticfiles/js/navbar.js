@@ -42,3 +42,28 @@ loginBtn.addEventListener('click', () =>{
 loginClose.addEventListener('click', () =>{
    login.classList.remove('show-login')
 })
+
+
+// contador de productos en el carrito
+
+$(document).ready(function () {
+   $("#login-form").submit(function (e) {
+       e.preventDefault();
+
+       $.ajax({
+           type: "POST",
+           url: loginFormActionURL,
+           data: $(this).serialize(),
+           success: function (response) {
+               if (response.success) {
+                   window.location.href = "{% url 'home' %}";
+               } else {
+                   $("#error-message").text("Usuario o contraseña incorrectos ").show();
+               }
+           },
+           error: function (xhr, textStatus, errorThrown) {
+               console.log(xhr.responseText);
+           }
+       });
+   });
+});

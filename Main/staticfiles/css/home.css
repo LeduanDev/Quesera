@@ -8,17 +8,16 @@
 
   /*========== Colors ==========*/
   /*Color mode HSL(hue, saturation, lightness)*/
-  --first-color: hsl(230, 75%, 56%);
+  --first-color: hsl(137, 76%, 54%);
   --title-color: hsl(230, 75%, 15%);
   --text-color: hsl(230, 12%, 40%);
-  --body-color: hsl(230, 100%, 98%);
-  --container-color: hsl(230, 100%, 97%);
+  background-color: #FFFFFF;
   --border-color: hsl(230, 25%, 80%);
 
   /*========== Font and typography ==========*/
   /*.5rem = 8px | 1rem = 16px ...*/
   --body-font: ;
-  --h2-font-size: 1.25rem;
+  --h2-font-size: 1.10rem;
   --body-font: "Poppins", sans-serif;
   --normal-font-size: .938rem;
 
@@ -130,7 +129,7 @@ a {
   color: var(--title-color);
   font-weight: var(--font-semi-bold);
   transition: color .4s;
-}
+  margin-right: auto; /* Mueve el logo a la izquierda */}
 
 .nav__actions {
   display: flex;
@@ -201,6 +200,7 @@ a {
   border-radius: .5rem;
   transform: translateY(-1rem);
   transition: transform .4s;
+  
 }
 
 .search__icon {
@@ -372,4 +372,79 @@ a {
   .container {
     margin-inline: auto;
   }
+}
+@media screen and (max-width: 480px) {
+  .nav__logo img {
+    width: 150px; /* Define el ancho de la imagen del logo en pantallas de teléfono */
+    height: auto; /* Mantiene la proporción de aspecto */
+  }
+}
+
+.logo2 {
+  width: 300px; /* Define el ancho de la imagen del logo */
+  height: auto;
+}
+
+
+/* Estilos del botón de cierre */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+footer {
+position: relative;
+bottom: 0;
+}
+.modal {
+display: none;
+position: fixed;
+inset: 0;
+z-index: 50;
+overflow: auto;
+background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+margin: auto;
+margin-top: 12rem;
+padding: 2rem;
+border: 1px solid #ccc;
+border-radius: 0.75rem;
+background-color: #f0f0f0;
+text-align: center;
+}
+
+.modal-content > div {
+margin-top: 0.5rem;
+}
+
+.modal-content button {
+margin-top: 1rem;
+padding: 0.5rem 1rem;
+background-color: #ccc;
+color: #333;
+font-weight: bold;
+border: none;
+border-radius: 0.25rem;
+}
+
+.modal-content button:hover {
+background-color: #ddd;
+}
+
+.titulo {
+  color: red;
+  font: bold;
 }

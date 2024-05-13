@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load my_filters %}
 {% block titulo %} Carro {% endblock %}
 
 {% block contenido %}
@@ -11,6 +11,24 @@
 <br>
 <br>
 <br>
+<style>
+    .carrito-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.detalle-carrito {
+    border-bottom: 1px solid #ccc; /* Agrega una línea divisoria entre cada elemento */
+    padding: 20px 0; /* Espacio entre cada elemento */
+}
+
+/* Estilos adicionales para los elementos del carrito */
+.detalle-carrito:last-child {
+    border-bottom: none; /* Quita la línea divisoria en el último elemento */
+}
+
+</style>
 <section class="carrito-container">
     <div class="carrito-header">
         <h1 class="text-xl font-bold text-gray-900">Carrito de compras</h1>
@@ -40,7 +58,7 @@
                             <i class="ri-subtract-line"></i>
                         </button>
                     </form>
-                    <span class="precio-total"> {{ detalle.precio_total }}</span>
+                    <span class="precio-total"> {{ detalle.precio_total|formato_moneda }}</span>
                     
                 </div>
             </li>
@@ -52,7 +70,7 @@
         <dl class="text-sm text-gray-700">
             <div class="total">
                 <dt>Precio total:</dt>
-                <dd id="total-neto">COP {{ carrito.total|floatformat:2 }}</dd>
+                <dd id="total-neto">{{ carrito.total|formato_moneda }}</dd>
             </div>
         </dl>
 

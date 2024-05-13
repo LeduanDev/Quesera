@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load my_filters %}
 {% block titulo %} Home {% endblock %}
 {% block contenido %}
 
 <link rel="stylesheet" href="{% static 'css/boots.css' %}">
+<link rel="stylesheet" href="{% static 'css/home_tarjetas.css' %}?v=1">
 <br>
 <br>
 <br>
 <br>
-    <link rel="stylesheet" href="{% static 'css/home_tarjetas.css' %}?v=1">
+
 
     <div class="card-wrapper">
         <div class="card">
@@ -23,12 +24,17 @@
             <div class="product-content">
                 <h2 class="product-title">{{ producto.nombre }}</h2>
                 <div class="product-detail">
-                    <h3>Sobre este producto:</h3>
-                    <p>{{ producto.descripcion }}</p>
+                    
                     <ul>
-                        <li><strong>Disponibilidad:</strong> <span>En stock</span></li>
+                        <h2>precio: <p>{{producto.precio|formato_moneda}}</p></h3>
+                        {% if producto.disponible %}
+                            <li><strong>Disponibilidad:</strong> <span>En stock</span></li>
+                        {% else %}
+                            <li><strong>Disponibilidad:</strong> <span style="color: red;">No disponible</span></li>
+                        {% endif %}
                         <li><strong>Categoría:</strong> <span>{{ producto.categoria }}</span></li>
                     </ul>
+                    <p>{{ producto.descripcion }}</p>
                 </div>
                 <div class="purchase-info">
                                <form class="agregar-producto-form" data-producto-id="{{ producto.id }}">
@@ -46,8 +52,35 @@
     </div>
     
 
+    <br>
 
+    <section class="related-products">
+        <div class="five">
+            <div>Productos relacionados</div>
+        </div>
+    
+        <div class="all-products">
+            {% for producto_relacionado in productos_relacionados %}
+                <div class="product">
+                    <img src="{{ producto_relacionado.imagen.url }}">
 
-<h1>other prodcuts</h1>
-<p>dasdsaaaaaaaaaaaaaaaaaa</p>
+                    <div class="product-info">
+                        <h4 class="">{{ producto_relacionado.nombre }}</h4>
+                        <h5 class="">Categoría: {{ producto_relacionado.categoria }}</h5>
+                        <p class="product-price">$ {{ producto_relacionado.precio|formato_moneda }}</p>
+                      
+                        <form class="agregar-producto-form" data-producto-id="{{ producto.id }}">
+                            {% csrf_token %}
+                            <input type="hidden" name="producto_id" value="{{ producto_relacionado.id }}">
+                            <button type="button" class="button-50 agregar-al-carrito">Agregar al carrito</button>
+         
+                        </form>
+                        <a class="button-50" href="{% url 'detalles' producto_relacionado.id %}">Detalles</a>
+                    </div>
+           
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    
 {% endblock %}

@@ -2,7 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from Productos.forms import PedidoForm
-from .models import Carrito, DetallePedido, Pedido, Producto, DetalleCarrito
+from Productos.templatetags.my_filters import formato_moneda
+from .models import Carrito, Categoria, DetallePedido, Pedido, Producto, DetalleCarrito
 from django.db import transaction
 from django.template.defaultfilters import floatformat
 from django.db.models import Q
@@ -25,6 +26,14 @@ def agregar_al_carrito(request, producto_id):
         )
 
     producto = get_object_or_404(Producto, pk=producto_id)
+    
+    # Verificar disponibilidad del producto
+    if not producto.disponible:
+        return JsonResponse(
+            {"mensaje": "El producto no está disponible para agregar al carrito."},
+            status=400,
+        )
+
     carrito, created = Carrito.objects.get_or_create(user=request.user)
     detalle_carrito, created = DetalleCarrito.objects.get_or_create(
         carrito=carrito, producto=producto
@@ -50,6 +59,8 @@ def agregar_al_carrito(request, producto_id):
     )
 
 
+from django.template.defaultfilters import floatformat
+
 def aumentar_cantidad(request, detalle_id):
     detalle = get_object_or_404(DetalleCarrito, pk=detalle_id)
     detalle.cantidad += 1
@@ -67,12 +78,9 @@ def aumentar_cantidad(request, detalle_id):
             "cantidad": detalle.cantidad,
             "numero_productos": numero_productos,
             "total": total_carrito,
-            "precio_total": floatformat(
-                precio_total, 2
-            ),  # Formatear el precio total con dos decimales
+            "precio_total": formato_moneda(precio_total),
         }
     )
-
 
 def disminuir_cantidad(request, detalle_id):
     detalle = get_object_or_404(DetalleCarrito, pk=detalle_id)
@@ -96,12 +104,11 @@ def disminuir_cantidad(request, detalle_id):
             "cantidad": detalle.cantidad,
             "numero_productos": numero_productos,
             "total": total_carrito,
-            "precio_total": floatformat(
-                precio_total, 2
-            ),  # Formatear el precio total con dos decimales
+            "precio_total": formato_moneda(precio_total),
             "eliminado_completamente": eliminado_completamente,
         }
     )
+
 
 def eliminar_del_carrito(request, producto_id):
     producto = get_object_or_404(Producto, pk=producto_id)
@@ -145,7 +152,7 @@ def obtener_numero_productos_en_carrito(request):
 def buscar_productos(request):
     query = request.GET.get("q")
     palabras_clave = query.split() if query else []
-
+    categorias = Categoria.objects.all()
     # Inicializar una consulta vacía
     consulta = Q()
 
@@ -161,5 +168,5 @@ def buscar_productos(request):
     productos = Producto.objects.filter(consulta)
 
     return render(
-        request, "principal/busqueda.html", {"productos": productos, "query": query}
+        request, "principal/busqueda.html", {"productos": productos, "query": query, "categorias": categorias}
     )

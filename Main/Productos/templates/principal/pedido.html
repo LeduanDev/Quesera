@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load my_filters %}
 {% block titulo %} Pedido {% endblock %}
 
 {% block contenido %}
@@ -34,6 +34,19 @@
                     <label for="id_numero">Número de telefono</label>
                     {{ form.telefono }}
                 </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <label for="id_nombre">Metodo de pago</label>
+                    {{ form.metodo_pago  }}
+                    
+                </div>
+                <div class="column">
+                    <label for="id_direccion"> Descripcion del pedido <div style="font: bold; color: red;">(No es necesario llenar este campo) </div></label>
+                    {{ form.descripcion   }}
+                    {{ form.nombre.errors }}
+                </div>
+  
             </div>
 
             <button class="boton" type="submit">Submit</button>

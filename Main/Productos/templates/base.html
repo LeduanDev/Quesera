@@ -14,22 +14,17 @@
     <!-- <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"> -->
     
     <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
-    <style>
-      .modal {
-        display: none;
-      }
-    </style>
 </head>
 
 <body>
       <!--==================== HEADER ====================-->
-      <header class="header" id="header">
+      <header class="header" id="header" style="background-color: #fff;">
           <nav class="nav container">
            <div class="logo">
             <a href="{% url 'home' %}" class="nav__logo">  <img src="{% static 'img/logoT-transformed.png' %}" class="logo2" alt="Logo de tu empresa"></a>
 
            </div> 
-           <div class="nav__menu" id="nav-menu">
+           <div class="nav__menu" id="nav-menu" style="background-color: #fff;">
               <ul class="nav__list">
                  <li class="nav__item">
                     <a href="{% url 'home' %}" class="nav__link">Inicio</a>
@@ -41,16 +36,16 @@
 
                  {% if request.user.is_authenticated %}
                  <li class="nav__item">
-                     <a href="{% url 'logout' %}" class="nav__link">Cerrar</a>
+                     <a href="{% url 'logout' %}" class="nav__link">Cerrar sesión</a>
                  </li>
                  {% endif %}
              
-
-                 {% if request.user.is_authenticated and request.user.is_staff %}
-                <li class="nav__item">
-                    <a href="{% url 'lista_pedidos' %}" class="nav__link">Pedidos</a>
-                </li>
-                {% endif %}
+                 <li class="nav__item">
+                     <a href="{% url 'lista_pedidos' %}" class="nav__link">Mis Pedidos</a>
+                 </li>
+        
+       
+             
 
 
                 {% if not request.user.is_authenticated %}
@@ -65,7 +60,7 @@
                 </div>
            </div>
 
-           <div class="nav__actions">
+           <div class="nav__actions"style="background-color: #fff;">
               <!-- Search button -->
               <i class="ri-search-line nav__search" id="search-btn"></i>
               <!-- {% if not request.user.is_authenticated %}
@@ -89,6 +84,7 @@
      <!--==================== SEARCH ====================-->
      <div class="search" id="search">
         <form  class="search__form" method="GET" action="{% url 'buscar_productos' %}">
+          {% csrf_token %}
            <i class="ri-search-line search__icon"></i>
            <input type="search" placeholder="Buscar tu producto" class="search__input" name="q" arial-label="Buscar">
            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
@@ -144,93 +140,120 @@
 
 
 
-{% block contenido %} {% endblock %}
 
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <h6 id="titulo" class="text-lg font-semibold leading-none">{{info.titulo}}</h6>
-    <p id="descripcion" class="text-gray-600 md:text-xl">{{info.descripcion}}</p>
-    <div>
-      <span id="direccion" class="text-xb text-gray-500">Dirección: </span>
+
+
+{% block contenido %} {% endblock %}  
+<div class="modal hidden fixed inset-0 z-50 overflow-auto bg-gray-500 bg-opacity-50">
+<div class="modal-content mx-auto my-12 p-8 border border-gray-100 rounded-xl bg-gray-50 text-center md:w-1/2 max-w-screen-sm md:mx-auto">
+    <!-- contenido -->
+    <div class="h-full flex flex-col justify-center space-y-4">
+      <h4 class="text-xl font-semibold leading-none color titulo">{{ info.titulo}}</h4>
+      <p class="text-gray-700 md:text-2xl"> <span class="font-serif">"</span>{{info.descripcion}} <span class="font-serif">"</span></p>
+        
+      <div>
+        <span class="text-lg text-gray-600">Dirección: {{info.direccion}} </span>
+        <br>
+        <span class="text-lg text-gray-600">Numero: {{info.numero}} </span>
+      </div>
     </div>
-    <button id="closeModal">Cerrar</button>
+    <button id="closeModal" class="mt-4 px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-md focus:outline-none">Cerrar</button>
   </div>
 </div>
 
 
 
+  <br>
 
-<footer style="background-color: #edf2f7; padding-top: 2rem; padding-bottom: 1.5rem;">
+  <footer style="background-color: #edf2f7; padding-top: 2rem; padding-bottom: 1.5rem;">
     <div style="max-width: 1140px; margin: 0 auto; padding: 0 15px;">
-      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; text-align: left;">
-        <div style="width: 100%; max-width: 48%; padding-right: 15px; padding-left: 15px;">
-          <h4 style="font-size: 1.875rem; font-weight: 600; color: #4a5568;">Let's keep in touch!</h4>
-          <h5 style="font-size: 1.125rem; margin-top: 0; margin-bottom: 0.5rem; color: #4a5568;">
-            Find us on any of these platforms, we respond 1-2 business days.
-          </h5>
-          <div style="margin-top: 1.5rem;">
-            <button style="background-color: #fff; color: #63b3ed; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-weight: 400; height: 2.5rem; width: 2.5rem; display: inline-flex; justify-content: center; align-items: center; border-radius: 9999px; outline: none; border: none; margin-right: 0.5rem;">
-              <i class="fab fa-twitter"></i>
-            </button>
-            <button style="background-color: #fff; color: #3182ce; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-weight: 400; height: 2.5rem; width: 2.5rem; display: inline-flex; justify-content: center; align-items: center; border-radius: 9999px; outline: none; border: none; margin-right: 0.5rem;">
-              <i class="fab fa-facebook-square"></i>
-            </button>
-            <button style="background-color: #fff; color: #ed64a6; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-weight: 400; height: 2.5rem; width: 2.5rem; display: inline-flex; justify-content: center; align-items: center; border-radius: 9999px; outline: none; border: none; margin-right: 0.5rem;">
-              <i class="fab fa-dribbble"></i>
-            </button>
-            <button style="background-color: #fff; color: #4a5568; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-weight: 400; height: 2.5rem; width: 2.5rem; display: inline-flex; justify-content: center; align-items: center; border-radius: 9999px; outline: none; border: none; margin-right: 0.5rem;">
-              <i class="fab fa-github"></i>
-            </button>
-          </div>
-        </div>
-        <div style="width: 100%; max-width: 48%; padding-right: 15px; padding-left: 15px;">
-          <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
-            <div style="width: 100%; max-width: 48%; padding-right: 15px; padding-left: 15px;">
-              <span style="text-transform: uppercase; font-size: 0.875rem; font-weight: 600; color: #4299e1; margin-bottom: 0.5rem;">Useful Links</span>
-              <ul style="list-style: none; padding-left: 0;">
-                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;" id="openModalButton">Sobre nosostros</a></li>
-                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Blog</a></li>
-                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Github</a></li>
-                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Free Products</a></li>
-              </ul>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; text-align: left;">
+            <div style="width: 100%; max-width: 48%; padding-right: 15px; padding-left: 15px; flex-basis: 100%;">
+                <h4 style="font-size: 1.875rem; font-weight: 600; color: #4a5568;">¡Todo sobre nosotros!</h4>
+                <h5 style="font-size: 1.125rem; margin-top: 0; margin-bottom: 0.5rem; color: #4a5568;">
+                    Visita alguna de nuestras plataformas, contestamos en poco tiempo.
+                </h5>
+                <div style="margin-top: 1.5rem;">
+                    <button style="background-color: #fff; color: #d250b3; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-weight: 400; height: 2.5rem; width: 10%; display: inline-flex; justify-content: center; align-items: center; border-radius: 9999px; outline: none; border: none; margin-right: 0.5rem;">
+                        <i class="fab fa-instagram"></i>
+                    </button>
+                    <button style="background-color: #fff; color: #3182ce; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-weight: 400; height: 2.5rem; width: 10%; display: inline-flex; justify-content: center; align-items: center; border-radius: 9999px; outline: none; border: none; margin-right: 0.5rem;">
+                        <i class="fab fa-facebook-square"></i>
+                    </button>
+                    <button style="background-color: #fff; color: #31ee37; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-weight: 400; height: 2.5rem; width: 10%; display: inline-flex; justify-content: center; align-items: center; border-radius: 9999px; outline: none; border: none; margin-right: 0.5rem;">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    <a href="https://github.com/" style="background-color: #fff; color: #4a5568; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); font-weight: 400; height: 2.5rem; width: 10%; display: inline-flex; justify-content: center; align-items: center; border-radius: 9999px; outline: none; border: none; margin-right: 0.5rem;">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
             </div>
-            <div style="width: 100%; max-width: 48%; padding-right: 15px; padding-left: 15px;">
-              <span style="text-transform: uppercase; font-size: 0.875rem; font-weight: 600; color: #4299e1; margin-bottom: 0.5rem;">Other Resources</span>
-              <ul style="list-style: none; padding-left: 0;">
-                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">MIT License</a></li>
-                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Terms & Conditions</a></li>
-                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Privacy Policy</a></li>
-                <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Contact Us</a></li>
-              </ul>
+            <div style="width: 100%; max-width: 48%; padding-right: 15px; padding-left: 15px; flex-basis: 100%;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+                    <div style="width: 100%; max-width: 48%; padding-right: 15px; padding-left: 15px;">
+                        <span style="text-transform: uppercase; font-size: 0.875rem; font-weight: 600; color: #4299e1; margin-bottom: 0.5rem;">Información de la tienda</span>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;" id="openModalButton">Sobre nosostros</a></li>
+                            <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Contactanos </a></li>
+                            <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Github</a></li>
+                            <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Free Products</a></li>
+                        </ul>
+                    </div>
+                    <div style="width: 100%; max-width: 48%; padding-right: 15px; padding-left: 15px;">
+                        <span style="text-transform: uppercase; font-size: 0.875rem; font-weight: 600; color: #4299e1; margin-bottom: 0.5rem;">Other Resources</span>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">MIT License</a></li>
+                            <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Terms & Conditions</a></li>
+                            <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Privacy Policy</a></li>
+                            <li><a href="#" style="color: #4a5568; text-decoration: none; font-weight: 600; font-size: 0.875rem; display: block; margin-bottom: 0.25rem;">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <hr style="margin-top: 2rem; margin-bottom: 2rem; border-color: #cbd5e0;">
-      <div style="display: flex; flex-wrap: wrap; justify-content: center;">
-        <div style="width: 100%; max-width: 50%; padding-right: 15px; padding-left: 15px; margin: auto;">
-          <div style="font-size: 0.75rem; color: #4a5568; font-weight: 600; padding-top: 0.25rem;">
-            Quesera la moraleña ©
-            <script>
-              document.write(new Date().getFullYear());
-            </script>
-              Todos los derechos reservados
-            <a href="https://www.creative-tim.com/product/notus-js" style="color: #4a5568; text-decoration: none; font-weight: 600; transition: color 0.2s ease-in-out;" target="_blank"> Notus JS</a> by
-            <a href="https://www.creative-tim.com" style="color: #4a5568; text-decoration: none; font-weight: 600; transition: color 0.2s ease-in-out;">Creative Tim</a>.
-          </div>
+        <hr style="margin-top: 2rem; margin-bottom: 2rem; border-color: #cbd5e0;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+            <div style="width: 100%; max-width: 50%; padding-right: 15px; padding-left: 15px; margin: auto;">
+                <div style="font-size: 0.75rem; color: #4a5568; font-weight: 600; padding-top: 0.25rem;">
+                    Quesera la moraleña ©
+                    <script>
+                        document.write(new Date().getFullYear());
+                    </script>
+                    Todos los derechos reservados
+                    <a href="https://www.creative-tim.com/product/notus-js" style="color: #4a5568; text-decoration: none; font-weight: 600; transition: color 0.2s ease-in-out;" target="_blank"> Notus JS</a> by
+                    <a href="https://www.creative-tim.com" style="color: #4a5568; text-decoration: none; font-weight: 600; transition: color 0.2s ease-in-out;">Creative Tim</a>.
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </footer>
-  
+    
+    <style>
+        @media screen and (max-width: 768px) {
+            /* Estilos para pantallas más pequeñas */
+            [style*="flex-basis: 100%;"] {
+                max-width: 100% !important;
+            }
+            [style*="width: 2.5rem;"] {
+                width: 10% !important;
+            }
+        }
+    </style>
+</footer>
 
   
-<script>
-  const obtenerNumeroProductosURL = "{% url 'obtener_numero_productos_en_carrito' %}";
-  const agregarAlCarritoURL = "{% url 'agregar_al_carrito' 0 %}";
-  const homeURL = "{% url 'home' %}";
 
-</script>
+
+  
+  <script>
+    const obtenerNumeroProductosURL = "{% url 'obtener_numero_productos_en_carrito' %}";
+    const agregarAlCarritoURL = "{% url 'agregar_al_carrito' 0 %}";
+    const homeURL = "{% url 'home' %}";
+    // Obtener la altura del footer
+    var footerHeight = document.querySelector('footer').offsetHeight;
+
+  
+
+  </script>
 
 
     <script src="{% static 'js/modal.js' %}"></script>

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load my_filters %}
 {% block titulo %}
     Home
 {% endblock %}
@@ -20,8 +20,8 @@
             <li style="background-image: url('{{ slide.image.url }}'); z-index:{{ forloop.counter0 }}; opacity: {{ forloop.first|yesno:'1,0' }}"> <!-- Ajusta el estilo del slide -->
                 <div class="content_slider">
                     <div>
-                        <h2>{{ slide.title }}</h2>
-                        <p>{{ slide.description }}</p>
+                        <h2>{{slide.title}}</h2>
+                        <p>{{slide.description}}</p>
                         <!-- <a href="#" class="btnSlider">Ver más</a> -->
                     </div>
                 </div>
@@ -32,30 +32,28 @@
     
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
+
+
     <section class="products">
         <div class="five">
-            <h1 class="titulo">Nuestros productos </h1>
+            <div>Productos principales</div>
         </div>
 
         <div class="all-products">
             {% for producto in productos %}
                 <div class="product">
-                    <img src="{{ producto.imagen.url }}" alt="">
+                    <img src="{{ producto.imagen.url }}" alt="" loading="lazy">
+
                     <div class="product-info">
-                        <h4 class="product-title">{{ producto.nombre }}</h4>
-                        <p class="product-price">$  {{ producto.precio }}</p>
+                        <h4 class="product-title">{{producto.nombre}}</h4>
+                        <h5 class="product-title">categoria: {{ producto.categoria }}</h5>
+                        <p class="product-price">$  {{ producto.precio|formato_moneda }}</p>
                         <form class="agregar-producto-form" data-producto-id="{{ producto.id }}">
                             {% csrf_token %}
-                            <input type="hidden" name="producto_id" value="{{ producto.id }}">
-                            <!-- <button type="button" class="bn632-hover bn25 agregar-al-carrito">Agregar al carrito</button> -->
-                    
+                            <input type="hidden" name="producto_id" value="{{ producto.id }}">                    
                             <button type="button" class="button-50 agregar-al-carrito">Agregar al carrito</button>
                         </form>
-                        <a class="button-50 agregar-al-carrito" href="{% url 'detalles' producto.id %}">Detalles</a>
+                        <a class="button-50" href="{% url 'detalles' producto.id %}">Detalles</a>
                     </div>
                 </div>
             {% endfor %}
@@ -63,7 +61,6 @@
         
     </section>
 
-    <br>
-    <br>
+
     <script src="{% static 'js/custom.js' %}"></script>
 {% endblock %}

@@ -5,6 +5,8 @@
     <head>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/motion-tailwind/motion-tailwind.css" rel="stylesheet">
         <script src="https://cdn.tailwindcss.com"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     </head>
 
     <style>
@@ -13,68 +15,83 @@
       }
     </style>
     
-    <body class="bg-gradient-to-r from-white to-teal-200">    
-        <div class="container flex flex-col mx-auto bg-gradient-to-r from-white to-teal-200 pt-1 ">
-           <div class="flex justify-center w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5 draggable">
-      <div class="flex items-center justify-center w-full lg:p-12 "  >
-        <div class="flex items-center xl:p-10">
-          <form class="flex flex-col w-full h-full pb-6 text-center bg-gradient-to-white">
-            <h3 class="mb-3 text-4xl font-extrabold text-dark-black-900">Incio de sesión</h3>
-            <p class="mb-4 text-black-700">Ingresa tu nombre de usuaruio y contraseña contraseña</p>
-            <a class="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-black-900 bg-black-300 hover:bg-black-400 focus:ring-4 focus:ring-gray-300">
-              <img class="h-10 mr-2" src="{% static 'img/logoT-transformed.png' %}" alt="">
+   <body class="bg-gradient-to-r from-white to-teal-200">  
+    
+    
+    <div class="container flex flex-col mx-auto bg-gradient-to-r from-white to-teal-200 pt-1">
+      <div class="flex justify-center w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5 draggable">
+          <div class="flex items-center justify-center w-full lg:p-12">
+              <div class="flex items-center xl:p-10">
+
+                <form id="login-form" class="flex flex-col w-full h-full pb-6 text-center bg-gradient-to-white" method="POST" action="{% url 'loginn' %}">
+                  {% csrf_token %}
+                  <h3 class="mb-3 text-4xl font-extrabold text-dark-black-900">Inicio de sesión</h3>
+                  <p class="mb-4 text-black-700">Ingresa tu nombre de usuario y contraseña</p>
+                  <div id="error-message" class="alert alert-danger" role="alert" style="display: none; color: red;">
+                    {{ error|escapejs }}
+                  </div>
+                  <a href="{% url 'home' %}" class="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-black-900 bg-black-300 hover:bg-black-400 focus:ring-4 focus:ring-gray-300">
+                      <img class="h-10 mr-2" src="{% static 'img/logoT-transformed.png' %}" alt="">
+                  </a>
+                  <div class="flex items-center mb-3">
+                      <hr class="h-0 border-b border-solid border-black-500 grow">
+                      <p class="mx-4 text-black-600"></p>
+                      <hr class="h-0 border-b border-solid border-black-500 grow">
+                  </div>
+                  <label for="text" class="mb-2 text-sm text-start text-black-900">Usuario</label>
+                  <input id="text" type="text" placeholder="juan134" name="username" class="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-black-400 mb-7 placeholder:text-black-700 bg-black-200 text-dark-black-900 rounded-2xl"/>
+                  <div id="username-error" class="text-red-500"></div> <!-- Error div for username -->
+                  <label for="password" class="mb-2 text-sm text-start text-black-900">Contraseña*</label>
+                  <div class="relative">
+                      <input id="password" type="password" name="password" placeholder="Enter a password" class="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-black-400 placeholder:text-black-700 bg-black-200 text-dark-black-900 rounded-2xl"/>
+                      <button id="togglePassword" type="button" class="absolute inset-y-0 right-0 flex items-center px-3 bg-transparent border-0 text-black-600 focus:outline-none">
+                          <svg id="lockIcon" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                              <path d="M3 8V6a5 5 0 0110 0v2h2V6a7 7 0 00-14 0v2h2zm2 4v3a1 1 0 001 1h8a1 1 0 001-1v-3H5zm7-4h2v2h-2V8zm-4 0h2v2H8V8zm-2 0H4v2h2V8zm4 0h2v2h-2V8z" />
+                          </svg>
+                      </button>
+                  </div>           
+                  <div class="flex flex-row justify-between mb-8">
+                      <label class="relative inline-flex items-center mr-3 cursor-pointer select-none">
+                          <input type="checkbox" checked value="" class="sr-only peer">
+                          <div class="w-5 h-5 bg-white border-2 rounded-sm border-black-500 peer peer-checked:border-0 peer-checked:bg-purple-blue-500">
+                              <img class="" src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/icons/check.png" alt="tick">
+                          </div>
+                          <span class="ml-3 text-sm font-normal text-black-900">Mantenerme logeado</span>
+                      </label>
+                      <a href="javascript:void(0)" class="mr-4 text-sm font-medium text-green-600">¿Olvidaste tu contraseña?</a>
+                  </div>
+                  <button class="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-green-500 focus:ring-4 focus:ring-purple-blue-100 bg-green-600">Iniciar sesión</button>
+                  <p class="text-sm leading-relaxed text-black-900">¿No estás registrado todavía? <a href="{% url 'registro' %}" class="font-bold text-black-700">Crea una cuenta</a></p>
+                </form>
               
-            </a>
-            <div class="flex items-center mb-3">
-              <hr class="h-0 border-b border-solid border-black-500 grow">
-              <p class="mx-4 text-black-600">or</p>
-              <hr class="h-0 border-b border-solid border-black-500 grow">
-            </div>
-            <label for="email" class="mb-2 text-sm text-start text-black-900">Usuario</label>
-            <input id="email" type="email" placeholder="mail@loopple.com" class="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-black-400 mb-7 placeholder:text-black-700 bg-black-200 text-dark-black-900 rounded-2xl"/>
-            <label for="password" class="mb-2 text-sm text-start text-black-900">Contraseña*</label>
-            <input id="password" type="password" placeholder="Enter a password" class="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-black-400 placeholder:text-black-700 bg-black-200 text-dark-black-900 rounded-2xl"/>
-            <div class="flex flex-row justify-between mb-8">
-              <label class="relative inline-flex items-center mr-3 cursor-pointer select-none">
-                <input type="checkbox" checked value="" class="sr-only peer">
-                <div
-                  class="w-5 h-5 bg-white border-2 rounded-sm border-black-500 peer peer-checked:border-0 peer-checked:bg-purple-blue-500">
-                  <img class="" src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/icons/check.png" alt="tick">
-                </div>
-                <span class="ml-3 text-sm font-normal text-black-900">Keep me logged in</span>
-              </label>
-              <a href="javascript:void(0)" class="mr-4 text-sm font-medium text-green-600">Forget password?</a>
-            </div>
-            <button class="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-green-500 focus:ring-4 focus:ring-purple-blue-100 bg-green-600">Sign In</button>
-            <p class="text-sm leading-relaxed text-black-900">Not registered yet? <a href="javascript:void(0)" class="font-bold text-black-700">Create an Account</a></p>
-          </form>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+
+  
+  
+   
+
+  <div class="modal hidden fixed inset-0 z-50 overflow-auto bg-gray-500 bg-opacity-50">
+    <div class="modal-content mx-auto my-12 p-8 border border-gray-100 rounded-xl bg-gray-50 text-center md:w-1/2 max-w-screen-sm">
+      <!-- contenido -->
+      <div class="h-full flex flex-col justify-center space-y-4">
+        <h6 class="text-xl font-semibold leading-none">{{ info.titulo}}</h6>
+        <p class="text-gray-700 md:text-2xl"> <span class="font-serif">"</span>{{info.descripcion}} <span class="font-serif">"</span></p>
+          
+        <div>
+          <span class="text-lg text-gray-600">Dirección: {{info.direccion}} </span>
+          <span class="text-lg text-gray-600">Numero: {{info.numero}} </span>
         </div>
       </div>
-    </div>
-   </div>
-   
-
-   
-
-   
-
-<div class="modal hidden fixed inset-0 z-50 overflow-auto bg-gray-500 bg-opacity-50">
-  <div class="modal-content mx-auto my-12 p-6 border border-gray-100 rounded-xl bg-gray-50 text-center">
-    <!-- contenido -->
-      <div class="row-span-2 p-6 border border-gray-100 rounded-xl bg-gray-50 text-center sm:p-8">
-        <div class="h-full flex flex-col justify-center space-y-4">
-          <h6 class="text-lg font-semibold leading-none">{{ info.titulo}}</h6>
-          <p class="text-gray-600 md:text-xl"> <span class="font-serif">"</span>{{info.descripcion}} <span class="font-serif">"</span></p>
-          <div>
-             
-              <span class="text-xb text-gray-500">Dirección: </span>
-          </div>
-        </div>
-        <button id="closeModal" class="mt-4 px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-md focus:outline-none">Cerrar</button>
-  
+      <button id="closeModal" class="mt-4 px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-md focus:outline-none">Cerrar</button>
     </div>
   </div>
-</div>
+  
+  
+  
 
 
 <footer class="py-8 text-center">
@@ -90,7 +107,32 @@
     </div>
   </div>
 </footer>
-  
+
+<script>
+  $(document).ready(function () {
+    $("#login-form").submit(function (e) {
+      e.preventDefault();
+
+      $.ajax({
+        type: "POST",
+        url: $(this).attr("action"),
+        data: $(this).serialize(),
+        success: function (response) {
+          if (response.success) {
+            // Redirige al usuario a la página de inicio si el inicio de sesión fue exitoso
+            window.location.href = "{% url 'home' %}";
+          } else {
+            // Muestra el mensaje de error
+            $("#error-message").text("Usuario o contraseña incorrectos ").show();
+          }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+          console.log(xhr.responseText);
+        }
+      });
+    });
+  });
+</script>
 <script src="{% static 'js/modal.js' %}"></script>
 </body>
 

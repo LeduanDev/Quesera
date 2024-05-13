@@ -1,107 +1,127 @@
+
 {% load static %}
+<!DOCTYPE html>
 <html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Loopple/loopple-public-assets@main/motion-tailwind/motion-tailwind.css" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    </head>
 
-<head>
-  <meta charset="utf-8">
-  <title>: Sign in</title>
-  <link rel="stylesheet" href="{% static 'css/registro.css' %}?v=1">
-  <link rel="icon" href="{% static 'img/base.jpg' %}" type="image/x-icon">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+    <style>
+      .modal {
+        display: none;
+      }
+    </style>
+    
+   <body class="bg-gradient-to-r from-white to-teal-200">  
+    
+    
+    <div class="container flex flex-col mx-auto bg-gradient-to-r from-white to-teal-200 pt-1">
+      <div class="flex justify-center w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5 draggable">
+          <div class="flex items-center justify-center w-full lg:p-12">
+              <div class="flex items-center xl:p-10">
 
-<body>
+                <form id="login-form" class="flex flex-col w-full h-full pb-6 text-center bg-gradient-to-white" method="POST" action="">
+                  {% csrf_token %}
+                  <h3 class="mb-3 text-4xl font-extrabold text-dark-black-900">Registro de usuarios</h3>
+                  <p class="mb-4 text-black-700">Ingresa tus datos</p>
+  
+                  <a href="{% url 'home' %}" class="flex items-center justify-center w-full py-4 mb-6 text-sm font-medium transition duration-300 rounded-2xl text-black-900 bg-black-300 hover:bg-black-400 focus:ring-4 focus:ring-gray-300">
+                      <img class="h-10 mr-2" src="{% static 'img/logoT-transformed.png' %}" alt="">
+                  </a>
+                  <div class="flex items-center mb-3">
+                      <hr class="h-0 border-b border-solid border-black-500 grow">
+                      <p class="mx-4 text-black-600"></p>
+                      <hr class="h-0 border-b border-solid border-black-500 grow">
+                  </div>
+                  <label for="text" class="mb-2 text-sm text-start text-black-900">Nombre</label>
+                  <input id="text" type="text" placeholder="juan134" name="first_name" class="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-black-400 mb-7 placeholder:text-black-700 bg-black-200 text-dark-black-900 rounded-2xl"/>
+                  {% if form.errors.first_name %}
+                  <p class="text-red-500 text-sm">{{ form.errors.first_name }}</p>
+                  {% endif %}
+                  <label for="text" class="mb-2 text-sm text-start text-black-900">Apellido</label>
+                  <input id="text" type="text" placeholder="juan134" name="last_name" class="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-black-400 mb-7 placeholder:text-black-700 bg-black-200 text-dark-black-900 rounded-2xl"/>
+                  {% if form.errors.last_name %}
+                  <p class="text-red-500 text-sm">{{ form.errors.last_name }}</p>
+                   {% endif %}
+                  <label for="text" class="mb-2 text-sm text-start text-black-900">Usuario(Con este te iniciaras sesion)</label>
+                  <input id="text" type="text" placeholder="juan134" name="username" class="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-black-400 mb-7 placeholder:text-black-700 bg-black-200 text-dark-black-900 rounded-2xl"/>
+                  {% if form.errors.username %}
+                  <p class="text-red-500 text-sm">{{ form.errors.username }}</p>
+                  {% endif %}
+          
+      
 
-  <div class="login-root">
-    <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
-      <div class="loginbackground box-background--white padding-top--64">
-        <div class="loginbackground-gridContainer">
-          <div class="box-root flex-flex" style="grid-area: top / start / 8 / end;">
-            <div class="box-root"
-              style="background-image: linear-gradient(white 0%, rgb(247, 250, 252) 33%); flex-grow: 1;">
-            </div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 4 / 2 / auto / 5;">
-            <div class="box-root box-divider--light-all-2 animationLeftRight tans3s" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 6 / start / auto / 2;">
-            <div class="box-root box-background--blue800" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 7 / start / auto / 4;">
-            <div class="box-root box-background--blue animationLeftRight" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 8 / 4 / auto / 6;">
-            <div class="box-root box-background--gray100 animationLeftRight tans3s" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 2 / 15 / auto / end;">
-            <div class="box-root box-background--cyan200 animationRightLeft tans4s" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 3 / 14 / auto / end;">
-            <div class="box-root box-background--blue animationRightLeft" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 4 / 17 / auto / 20;">
-            <div class="box-root box-background--gray100 animationRightLeft tans4s" style="flex-grow: 1;"></div>
-          </div>
-          <div class="box-root flex-flex" style="grid-area: 5 / 14 / auto / 17;">
-            <div class="box-root box-divider--light-all-2 animationRightLeft tans3s" style="flex-grow: 1;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
-        <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
-          <h1><a href="http://blog.stackfindover.com/" rel="dofollow">Estudios de tiempos</a></h1>
-        </div>
-        <div class="formbg-outer">
-          <div class="formbg">
-            <div class="formbg-inner padding-horizontal--48">
-              <span class="padding-bottom--15">Registra tu cuenta</span>
-              <form action="" method="POST" id="stripe-login" class="mt-4">
-                {% csrf_token %}
-                {{ error }}
+                  <label for="password" class="mb-2 text-sm text-start text-black-900">Contraseña*</label>
+                  <input id="password" type="password" name="password1" placeholder="Enter a password" class="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-black-400 placeholder:text-black-700 bg-black-200 text-dark-black-900 rounded-2xl"/>
+                  {% if form.errors.password1 %}
+                  <p class="text-red-500 text-sm">{{ form.errors.password1 }}</p>
+                  {% endif %}
 
-                <div class="field padding-bottom--24">
-                  <label for="id_username">Primer nombre</label>
-                  {{ form.first_name }}
-                </div>
-                <div class="field padding-bottom--24">
-                  <label for="id_username">Apellido</label>
-                  {{ form.last_name }}
-                </div>
+                  <label for="password" class="mb-2 text-sm text-start text-black-900">Confirma contraseña</label>
+                  <input id="password" type="password" name="password2" placeholder="Enter a password" class="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-black-400 placeholder:text-black-700 bg-black-200 text-dark-black-900 rounded-2xl"/>
 
-                <div class="field padding-bottom--24">
-                  <label for="id_username">Nombre de usuario</label>
-                  {{ form.username }}
-                </div>
-                <div class="field padding-bottom--24">
-                  <label for="id_password1">Contraseña</label>
-                  {{ form.password1 }}
-                </div>
-                <div class="field padding-bottom--24">
-                  <label for="id_password2">Confirmar contraseña</label>
-                  {{ form.password2 }}
-                </div>
-                <div class="field padding-bottom--24">
-                  <label for="id_email">Correo electrónico</label>
-                  {{ form.email }}
-                </div>
-                <div class="field padding-bottom--24">
-                  <input type="submit" name="submit" value="Registrarse" class="btn btn-primary">
-                </div>
-              </form>
+                  {% if form.errors.password2 %}
+                  <p class="text-red-500 text-sm">{{ form.errors.password2 }}</p>
+                  {% endif %}
+                  <div class="flex flex-row justify-between mb-8">
+                      <label class="relative inline-flex items-center mr-3 cursor-pointer select-none">
+
+                      </label>
+                      <a href="javascript:void(0)" class="mr-4 text-sm font-medium text-green-600">¿Olvidaste tu contraseña?</a>
+                  </div>
+                  <input type="submit" name="submit" class="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-green-500 focus:ring-4 focus:ring-purple-blue-100 bg-green-600" value="registrame">
+                  <p class="text-sm leading-relaxed text-black-900">¿Si ya tienes una cuenta, inicia sesión? <a href="{% url 'loginn' %}" class="font-bold text-black-700">Inicio de sesión</a></p>
+                </form>
               
-            </div>
+              </div>
           </div>
-          <div class="footer-link padding-top--24">
-            <span>Si ya tienes una cuenta, inicia sesion <a href="{% url 'loginn' %}" style="color: #001ac3">Login</a></span>
-            <div class="listing padding-top--24 padding-bottom--24 flex-flex center-center">
-              <span><a href="#">© Estudios de tiempos</a></span>
-              <span><a href="#">Contact</a></span>
-              <span><a href="#">Privacy & terms</a></span>
-            </div>
-          </div>
+      </div>
+  </div>
+  
+
+  
+  
+   
+
+  <div class="modal hidden fixed inset-0 z-50 overflow-auto bg-gray-500 bg-opacity-50">
+    <div class="modal-content mx-auto my-12 p-8 border border-gray-100 rounded-xl bg-gray-50 text-center md:w-1/2 max-w-screen-sm">
+      <!-- contenido -->
+      <div class="h-full flex flex-col justify-center space-y-4">
+        <h6 class="text-xl font-semibold leading-none">{{ info.titulo}}</h6>
+        <p class="text-gray-700 md:text-2xl"> <span class="font-serif">"</span>{{info.descripcion}} <span class="font-serif">"</span></p>
+          
+        <div>
+          <span class="text-lg text-gray-600">Dirección: {{info.direccion}} </span>
+          <span class="text-lg text-gray-600">Numero: {{info.numero}} </span>
         </div>
       </div>
+      <button id="closeModal" class="mt-4 px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-md focus:outline-none">Cerrar</button>
     </div>
   </div>
+  
+  
+  
+
+
+<footer class="py-8 text-center">
+  <div class="container">
+    <div class="flex justify-center mb-6">
+      <a href="#" class="mr-4 text-gray-600">Compañia</a>
+      <a href="#" class="mr-4 text-gray-600" id="openModalButton">Sobre nosotros</a>
+    </div>
+    <div class="mb-1">
+      <p class="text-gray-600">
+        Quesera la moraleña © <script>document.write(new Date().getFullYear());</script> Todos los derechos reservados
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+<script src="{% static 'js/modal.js' %}"></script>
 </body>
 
-</html>
+<html>
